@@ -1,3 +1,3 @@
-export * from './api.constants.js';
-export * from './auth.constants.js';
-export * from './routes.constants.js';
+export * from './api.constants';
+export * from './auth.constants';
+export * from './routes.constants';
