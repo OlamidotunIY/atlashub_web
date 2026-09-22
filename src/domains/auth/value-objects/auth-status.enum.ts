@@ -1,0 +1,6 @@
+export enum AuthStatus {
+  ACTIVE = 'ACTIVE',
+  UNVERIFIED = 'UNVERIFIED',
+  SUSPENDED = 'SUSPENDED',
+  LOCKED = 'LOCKED'
+}
