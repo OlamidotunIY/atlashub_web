@@ -1,5 +1,5 @@
-import { AUTH_HEADER, BEARER_PREFIX } from '@org/shared';
-import { AxiosInstance } from 'axios';
+import { AUTH_HEADER, BEARER_PREFIX } from '@/constants';
+import type { AxiosInstance } from 'axios';
 
 export function applyAuthInterceptor(
   instance: AxiosInstance,
@@ -22,10 +22,10 @@ export function applyAuthInterceptor(
     (response) => response,
     async (error) => {
       const originalRequest = error.config;
-      
+
       if (
-        error.response?.status === 401 && 
-        !originalRequest._retried && 
+        error.response?.status === 401 &&
+        !originalRequest._retried &&
         !originalRequest.url?.includes('/auth/refresh')
       ) {
         originalRequest._retried = true;
