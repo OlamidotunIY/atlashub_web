@@ -17,10 +17,10 @@ export class AuthRepository implements IAuthRepository {
   async login(credentials: LoginRequest): Promise<TokenPair> {
     const response = await authApi.login(credentials)
     return TokenPair.fromJson({
-      accessToken: response.accessToken as string,
-      accessExpiresAt: response.accessTokenExpiresAt as string,
-      refreshExpiresAt: response.refreshTokenExpiresAt as string,
-      refreshToken: response.refreshToken as string,
+      accessToken: response.data?.accessToken as string,
+      accessExpiresAt: response.data?.accessTokenExpiresAt as string,
+      refreshExpiresAt: response.data?.refreshTokenExpiresAt as string,
+      refreshToken: response.data?.refreshToken as string,
     })
   }
 

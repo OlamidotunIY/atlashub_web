@@ -26,6 +26,8 @@ export interface AuthState {
   setTokens: (accessToken: string, refreshToken: string, expiresAt?: string) => void;
   clear: () => void;
   isAuthenticated: () => boolean;
+  /** Returns true if the access token exists but has passed its expiry timestamp */
+  isExpired: () => boolean;
   hydrate: () => Promise<void>;
 }
 
@@ -57,6 +59,13 @@ export const authStore = create<AuthState>()((set, get) => ({
   },
 
   isAuthenticated: () => !!get().accessToken,
+
+  isExpired: () => {
+    const { accessToken, expiresAt } = get();
+    if (!accessToken) return false;
+    if (!expiresAt) return false;
+    return Date.now() >= new Date(expiresAt).getTime();
+  },
 
   hydrate: async () => {
     if (globalStorageAdapter) {

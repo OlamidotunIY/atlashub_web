@@ -1,27 +1,17 @@
 import type { ApiResponse } from "@/shared"
 import { getGlobalApiClient } from "@/shared/api"
-import type {
-  CreateUserRequest,
-  CreateUserResult,
-  ListUsersRequestDto,
-  UserDto,
-} from "@/shared/api/generated"
+import type { RegisterRequest, RegisterResponse } from "@/shared/api/generated"
 
 const getApi = () => getGlobalApiClient()
 
 export const userApi = {
-  createUser: (req: CreateUserRequest): Promise<CreateUserResult> =>
+  createUser: (req: RegisterRequest): Promise<RegisterResponse> =>
     getApi()
-      .post<ApiResponse<CreateUserResult>>("/users", req)
+      .post<ApiResponse<RegisterResponse>>("/users", req)
       .then((r) => r.data.data),
 
-  listUsers: (params: ListUsersRequestDto): Promise<UserDto[]> =>
-    getApi()
-      .get<ApiResponse<UserDto[]>>("/users", { params })
-      .then((r) => r.data.data),
-
-  getUserById: (userId: string): Promise<UserDto> =>
-    getApi()
-      .get<ApiResponse<UserDto>>(`/users/${userId}`)
-      .then((r) => r.data.data),
+  // listUsers: (params: ListUsersRequestDto): Promise<UserDto[]> =>
+  //   getApi()
+  //     .get<ApiResponse<UserDto[]>>("/users", { params })
+  //     .then((r) => r.data.data),
 }
