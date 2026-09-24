@@ -1,16 +1,13 @@
-import { TokenPair } from '../entities/token-pair.entity.js';
-import { AuthAccount } from '../entities/auth-account.entity.js';
-
-export type AuthResult =
-  | { type: 'success'; tokens: TokenPair; onboardingStatus?: string }
-  | { type: 'requires_2fa'; preAuthToken: string }
-  | { type: 'requires_password_change'; identifier: string };
+import type { LogoutRequest, RefreshTokenRequest, VerifyEmailRequest } from "@/shared/api/generated"
+import type { TokenPair } from "../entities/token-pair.entity.js"
+import type { AuthAccount } from "../entities/auth-account.entity.js"
 
 export interface IAuthRepository {
-  login(credentials: { identifier: string; password: string }): Promise<TokenPair>;
-  verifyEmail(payload: { identifier: string; code: string; type: string }): Promise<{ nextAction?: string; sessionToken?: string }>;
-  verifyMfa(payload: { preAuthToken: string; code: string }): Promise<TokenPair>;
-  refreshToken(token: string): Promise<TokenPair>;
-  logout(jti: string): Promise<void>;
-  getAuthAccount(): Promise<AuthAccount>;
+  login(credentials: { email: string; password: string; deviceFingerprint: string }): Promise<TokenPair>
+  verifyEmail(payload: VerifyEmailRequest): Promise<void>
+  resendVerification(email: string): Promise<void>
+  refreshToken(req: RefreshTokenRequest): Promise<TokenPair>
+  logout(req: LogoutRequest): Promise<void>
+  logoutAll(): Promise<void>
+  getMe(): Promise<AuthAccount>
 }

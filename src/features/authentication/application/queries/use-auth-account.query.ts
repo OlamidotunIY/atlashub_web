@@ -13,7 +13,7 @@ export function useAuthAccount(
       // Use the details key for the auth account singleton
       ...options,
       queryKey: authQueryKeys.details(),
-      queryFn: () => authRepository.getAuthAccount(),
+      queryFn: () => authRepository.getMe(),
     },
     queryClient
   )

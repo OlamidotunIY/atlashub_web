@@ -1,48 +1,52 @@
 import {
   AuthAccount,
+  type IAuthRepository,
   TokenPair,
   type AuthAccountProps,
-  type AuthResult,
-  type IAuthRepository,
   type TokenPairProps,
 } from "@/domains/auth"
+import type {
+  LoginRequest,
+  LogoutRequest,
+  RefreshTokenRequest,
+  VerifyEmailRequest,
+} from "@/shared/api/generated"
 import { authApi } from "../rest/auth.api"
-import type { LoginRequest, LoginResponse } from "@/shared/api/generated"
 
 export class AuthRepository implements IAuthRepository {
   async login(credentials: LoginRequest): Promise<TokenPair> {
     const response = await authApi.login(credentials)
-    return {
+    return TokenPair.fromJson({
       accessToken: response.accessToken as string,
       accessExpiresAt: response.accessTokenExpiresAt as string,
       refreshExpiresAt: response.refreshTokenExpiresAt as string,
       refreshToken: response.refreshToken as string,
-    }
+    })
   }
 
-  async resendSetupToken(identifier: string): Promise<void> {
-    await authApi.resendSetupToken({ identifier })
+  async verifyEmail(payload: VerifyEmailRequest): Promise<void> {
+    await authApi.verifyEmail(payload)
   }
 
-  async verifyEmail(payload: {
-    identifier: string
-    code: string
-    type: string
-  }): Promise<VerificationResponseDto> {
-    return authApi.verifyEmail(payload as CompleteVerificationRequestDto)
+  async resendVerification(email: string): Promise<void> {
+    await authApi.resendVerification({ email })
   }
 
-  async refreshToken(token: string): Promise<TokenPair> {
-    const dto = await authApi.refreshToken({ refreshToken: token })
+  async refreshToken(req: RefreshTokenRequest): Promise<TokenPair> {
+    const dto = await authApi.refreshToken(req)
     return TokenPair.fromJson(dto as TokenPairProps)
   }
 
-  async logout(jti: string): Promise<void> {
-    await authApi.logout({ jti })
+  async logout(req: LogoutRequest): Promise<void> {
+    await authApi.logout(req)
   }
 
-  async getAuthAccount(): Promise<AuthAccount> {
-    const dto = await authApi.getAuthAccount()
+  async logoutAll(): Promise<void> {
+    await authApi.logoutAll()
+  }
+
+  async getMe(): Promise<AuthAccount> {
+    const dto = await authApi.getMe()
     return AuthAccount.fromJson(dto as AuthAccountProps)
   }
 }

@@ -178,11 +178,10 @@ export type ApiResponseListSessionResult = {
 }
 
 export type SessionResult = {
-  refreshTokenHash?: string
-  accessTokenExpiresAt?: string
-  refreshTokenExpiresAt?: string
-  deviceId?: number
-  orgId?: number
+  token?: string
+  expiresAt?: string
+  ipAddress?: string
+  userAgent?: string
 }
 
 export type ApiResponseListHubProductResponse = {

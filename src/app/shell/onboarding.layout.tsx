@@ -1,5 +1,5 @@
 import { MERCHANT_ROUTES } from '@/constants';
-import { useAuthAccount, useAuthStore, useLogout } from '@/features/authentication';
+import { useAuthAccount, authStore, useLogout } from '@/features/authentication';
 import { Avatar, AvatarFallback, AvatarImage, Button, Logo } from '@/shared/ui';
 import { SignOutIcon } from '@phosphor-icons/react';
 import { Outlet, useLocation } from 'react-router-dom';
@@ -31,16 +31,22 @@ const ONBOARDING_STEPS = [
   },
 ];
 
-export function OnboardingLayout() {
+export function OnboardingLayout()
+{
   const { data: user } = useAuthAccount();
-  const jti = useAuthStore(state => state.jti);
-  const clear = useAuthStore(state => state.clear);
+  const { clear, jti, refreshToken, expiresAt } = authStore()
   const { mutateAsync: logout } = useLogout();
   const location = useLocation();
 
-  const handleLogout = async () => {
-    if (jti) {
-      await logout(jti).catch(() => {});
+  const handleLogout = async () =>
+  {
+    if (jti)
+    {
+      await logout({
+        refreshToken: refreshToken as string,
+        accessTokenExpiresAt: expiresAt as string,
+        accessTokenJti: jti
+      }).catch(() => { });
     }
     clear();
   };
@@ -58,7 +64,8 @@ export function OnboardingLayout() {
 
         {/* Progress Stepper */}
         <div className="mt-16 flex flex-col relative shrink-0">
-          {ONBOARDING_STEPS.map((step, index) => {
+          {ONBOARDING_STEPS.map((step, index) =>
+          {
             const isActive = index === currentStepIndex;
             const isCompleted = index < currentStepIndex;
             const isLast = index === ONBOARDING_STEPS.length - 1;
@@ -87,8 +94,8 @@ export function OnboardingLayout() {
           <div className="flex flex-col">
             <span className="text-primary text-6xl leading-none font-serif font-black mb-1">“</span>
             <p className="text-white text-md font-medium leading-relaxed">
-              One business. One account.<br/>
-              One dashboard. One connected<br/>
+              One business. One account.<br />
+              One dashboard. One connected<br />
               ecosystem.
             </p>
             <p className="text-white/60 text-xl mt-4">

@@ -1,10 +1,13 @@
-import type { CompleteVerificationRequestDto } from '@/shared/api/generated';
-import { useMutation } from '@tanstack/react-query';
-import { authRepository } from '../../infrastructure';
-import { queryClient } from '@/shared/api';
+import type { VerifyEmailRequest } from "@/shared/api/generated"
+import { queryClient } from "@/shared/api"
+import { useMutation } from "@tanstack/react-query"
+import { authRepository } from "../../infrastructure"
 
 export function useVerifyEmail() {
-  return useMutation({
-    mutationFn: (payload: CompleteVerificationRequestDto) => authRepository.verifyEmail(payload),
-  }, queryClient);
+  return useMutation(
+    {
+      mutationFn: (payload: VerifyEmailRequest) => authRepository.verifyEmail(payload),
+    },
+    queryClient,
+  )
 }
