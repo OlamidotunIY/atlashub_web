@@ -11,10 +11,9 @@ import
   InputOTPGroup,
   InputOTPSlot,
 } from '@/shared/ui';
-import { AuthFormHeader, useAuthFlow } from '@/features/authentication';
+import { AuthFormHeader, useVerifyEmail } from '@/features/authentication';
 import { MERCHANT_ROUTES } from '@/constants';
 import { toast } from '@/shared/hooks';
-import { AuthStep } from '@/domains/auth';
 
 export function VerifyEmailPage()
 {
@@ -22,8 +21,7 @@ export function VerifyEmailPage()
   const navigate = useNavigate();
   const state = location.state as { identifier?: string; } | null;
   const identifier = state?.identifier;
-
-  const { submitEmailVerification, step, error } = useAuthFlow();
+  const { mutateAsync, error, isPending } = useVerifyEmail()
 
   const form = useForm({
     defaultValues: {
@@ -43,11 +41,10 @@ export function VerifyEmailPage()
     {
       if (!identifier) return;
 
-      const verificationPromise = submitEmailVerification({
-        identifier,
-        code: value.code,
-        type: 'EMAIL_VERIFICATION'
-      }, MERCHANT_ROUTES.LOGIN); // fallback doesn't matter much here since we delay navigation
+      const verificationPromise = mutateAsync({
+        email: identifier,
+        otp: value.code
+      })
 
       toast.promise(
         verificationPromise,
@@ -58,22 +55,10 @@ export function VerifyEmailPage()
         }
       );
 
-      try
+      setTimeout(() =>
       {
-        const targetRoute = await verificationPromise;
-        if (targetRoute)
-        {
-          // Delay navigation by a few seconds to let user read the success message
-          setTimeout(() =>
-          {
-            navigate(targetRoute, { replace: true });
-          }, 3500);
-        }
-      } catch (e)
-      {
-        // Error is handled by the toast
-        console.log(e)
-      }
+        navigate(MERCHANT_ROUTES.DASHBOARD, { replace: true });
+      }, 3500);
     },
   });
 
@@ -113,7 +98,7 @@ export function VerifyEmailPage()
                 maxLength={6}
                 value={field.state.value}
                 onChange={(val: string) => field.handleChange(val)}
-                disabled={step === AuthStep.LOADING}
+                disabled={isPending}
               >
                 <InputOTPGroup>
                   <InputOTPSlot index={0} />
@@ -137,8 +122,8 @@ export function VerifyEmailPage()
           selector={(state) => [state.canSubmit, state.isSubmitting]}
           children={([canSubmit]) => (
             <Field>
-              <Button type="submit" disabled={!canSubmit || step === AuthStep.LOADING}>
-                {step === AuthStep.LOADING ? 'Verifying...' : 'Verify Email'}
+              <Button type="submit" disabled={!canSubmit || isPending}>
+                {isPending ? 'Verifying...' : 'Verify Email'}
               </Button>
             </Field>
           )}

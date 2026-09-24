@@ -1,8 +1,8 @@
 import { createHashRouter, Navigate } from 'react-router-dom';
 import { AuthGuard, GuestGuard } from '../guard';
 import { MERCHANT_ROUTES } from '@/constants';
-import { InvitePage, LoginPage, SetupPasswordPage, SignupPage, VerifyEmailPage } from '@/pages/auth';
-import { CompleteOnboardingPage, OrganizationOnboardingPage, ProductsOnboardingPage, TeamOnboardingPage } from '@/pages/onboarding';
+import { InvitePage, LoginPage, SignupPage, VerifyEmailPage } from '@/pages/auth';
+import { CompleteOnboardingPage, ProductsOnboardingPage, TeamOnboardingPage } from '@/pages/onboarding';
 import { AuthLayout, OnboardingLayout } from '../shell';
 import { PlaceholderPage } from '@/pages/placeholder';
 import { OverviewPage } from '@/pages/main';
@@ -32,10 +32,6 @@ export const router = createHashRouter([
         element: <VerifyEmailPage />
       },
       {
-        path: MERCHANT_ROUTES.SETUP_PASSWORD,
-        element: <SetupPasswordPage />
-      },
-      {
         path: '/invite/:token',
         element: <InvitePage />
       }
@@ -48,10 +44,6 @@ export const router = createHashRouter([
       </AuthGuard>
     ),
     children: [
-      {
-        path: MERCHANT_ROUTES.ONBOARDING_ORGANIZATION,
-        element: <OrganizationOnboardingPage />
-      },
       {
         path: MERCHANT_ROUTES.ONBOARDING_PRODUCTS,
         element: <ProductsOnboardingPage />

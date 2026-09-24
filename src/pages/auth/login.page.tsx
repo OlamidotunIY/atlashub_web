@@ -1,6 +1,5 @@
 import { MERCHANT_ROUTES } from '@/constants';
-import { AuthStep } from '@/domains/auth';
-import { AuthFormHeader, LoginSchema, useAuthFlow } from '@/features/authentication';
+import { AuthFormHeader, LoginSchema, useLogin } from '@/features/authentication';
 import { Button, Field, FieldDescription, FieldGroup, FieldLabel, Input } from '@/shared/ui';
 import { useForm } from '@tanstack/react-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -9,8 +8,9 @@ export function LoginPage()
 {
   const location = useLocation();
   const navigate = useNavigate();
-  const { submitLogin, step, error } = useAuthFlow();
   const state = location.state as { invitedEmail?: string; from?: string } | null;
+  const login = useLogin()
+  const {error, isPending} = login
 
   const form = useForm({
     defaultValues: {
@@ -22,10 +22,14 @@ export function LoginPage()
     },
     onSubmit: async ({ value }) =>
     {
-      const targetRoute = await submitLogin(value, state?.from);
-      if (targetRoute) {
-        navigate(targetRoute, { replace: true });
-      }
+      await login.mutateAsync({
+        email: value.identifier,
+        password: value.password,
+        deviceFingerprint: ""
+      }).then(() =>
+      {
+        navigate(MERCHANT_ROUTES.DASHBOARD)
+      })
     },
   });
 
@@ -64,7 +68,7 @@ export function LoginPage()
                 value={field.state.value}
                 onChange={(e) => field.handleChange(e.target.value)}
                 onBlur={field.handleBlur}
-                disabled={step === AuthStep.LOADING}
+                disabled={isPending}
               />
               {field.state.meta.errors ? (
                 <p className="text-[0.8rem] font-medium text-destructive">
@@ -95,7 +99,7 @@ export function LoginPage()
                 value={field.state.value}
                 onChange={(e) => field.handleChange(e.target.value)}
                 onBlur={field.handleBlur}
-                disabled={step === AuthStep.LOADING}
+                disabled={isPending}
               />
               {field.state.meta.errors ? (
                 <p className="text-[0.8rem] font-medium text-destructive">
@@ -110,8 +114,8 @@ export function LoginPage()
           selector={(state) => [state.canSubmit, state.isSubmitting]}
           children={([canSubmit]) => (
             <Field>
-              <Button type="submit" disabled={!canSubmit || step === AuthStep.LOADING}>
-                {step === AuthStep.LOADING ? 'Logging in...' : 'Login'}
+              <Button type="submit" disabled={!canSubmit ||isPending}>
+                {isPending ? 'Logging in...' : 'Login'}
               </Button>
             </Field>
           )}
