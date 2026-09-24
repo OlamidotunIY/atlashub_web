@@ -1,6 +1,6 @@
 import { MERCHANT_ROUTES } from '@/constants';
-import { AuthFormHeader, LoginSchema, useLogin } from '@/features/authentication';
-import { Button, Field, FieldDescription, FieldGroup, FieldLabel, Input } from '@/shared/ui';
+import { AuthButtonWidget, AuthFieldWidget, AuthFormHeader, LoginSchema, useLogin } from '@/features/authentication';
+import { Field, FieldDescription, FieldGroup } from '@/shared/ui';
 import { useForm } from '@tanstack/react-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
@@ -10,7 +10,7 @@ export function LoginPage()
   const navigate = useNavigate();
   const state = location.state as { invitedEmail?: string; from?: string } | null;
   const login = useLogin()
-  const {error, isPending} = login
+  const { error, isPending } = login
 
   const form = useForm({
     defaultValues: {
@@ -58,66 +58,52 @@ export function LoginPage()
         <form.Field
           name="identifier"
           children={(field) => (
-            <Field>
-              <FieldLabel htmlFor={field.name}>Email</FieldLabel>
-              <Input
-                id={field.name}
-                name={field.name}
-                type="text"
-                placeholder="m@example.com"
-                value={field.state.value}
-                onChange={(e) => field.handleChange(e.target.value)}
-                onBlur={field.handleBlur}
-                disabled={isPending}
-              />
-              {field.state.meta.errors ? (
-                <p className="text-[0.8rem] font-medium text-destructive">
-                  {field.state.meta.errors.map((err) => typeof err === 'string' ? err : err?.message || JSON.stringify(err)).join(', ')}
-                </p>
-              ) : null}
-            </Field>
+            <AuthFieldWidget
+              id={field.name}
+              label="Email"
+              placeholder="m@example.com"
+              value={field.state.value}
+              onChange={(val) => field.handleChange(val)}
+              onBlur={field.handleBlur}
+              errors={field.state.meta.errors}
+              disabled={isPending}
+            />
           )}
         />
 
         <form.Field
           name="password"
           children={(field) => (
-            <Field>
-              <div className="flex items-center">
-                <FieldLabel htmlFor={field.name}>Password</FieldLabel>
-                <a
-                  href="#"
-                  className="ml-auto text-sm underline-offset-4 hover:underline"
+            <AuthFieldWidget
+              id={field.name}
+              label="Password"
+              type="password"
+              value={field.state.value}
+              onChange={(val) => field.handleChange(val)}
+              onBlur={field.handleBlur}
+              errors={field.state.meta.errors}
+              disabled={isPending}
+              labelAction={
+                <Link
+                  to="#"
+                  className="text-sm underline-offset-4 hover:underline"
                 >
                   Forgot your password?
-                </a>
-              </div>
-              <Input
-                id={field.name}
-                name={field.name}
-                type="password"
-                value={field.state.value}
-                onChange={(e) => field.handleChange(e.target.value)}
-                onBlur={field.handleBlur}
-                disabled={isPending}
-              />
-              {field.state.meta.errors ? (
-                <p className="text-[0.8rem] font-medium text-destructive">
-                  {field.state.meta.errors.map((err) => typeof err === 'string' ? err : err?.message || JSON.stringify(err)).join(', ')}
-                </p>
-              ) : null}
-            </Field>
+                </Link>
+              }
+            />
           )}
         />
 
         <form.Subscribe
           selector={(state) => [state.canSubmit, state.isSubmitting]}
           children={([canSubmit]) => (
-            <Field>
-              <Button type="submit" disabled={!canSubmit ||isPending}>
-                {isPending ? 'Logging in...' : 'Login'}
-              </Button>
-            </Field>
+            <AuthButtonWidget
+              text="Login"
+              loadingText="Logging in..."
+              isLoading={isPending}
+              disabled={!canSubmit}
+            />
           )}
         />
 
