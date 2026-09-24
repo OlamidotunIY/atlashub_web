@@ -16,3 +16,4 @@ export const getGlobalApiClient = (): ApiClient => {
 export * from './api-client';
 export * from './errors/index';
 export * from './interceptor/index';
+export * from './storage.api';

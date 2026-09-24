@@ -29,9 +29,9 @@ export type UpdateHubProductResponse = {
 }
 
 export type SetProductPricingWebRequest = {
-  cycle: "MONTHLY" | "ANNUALLY"
+  cycle: string
   amount: number
-  currency: "NGN"
+  currency: string
 }
 
 export type ApiResponseSetProductPricingResponse = {
@@ -87,14 +87,14 @@ export type RefreshTokenRequest = {
   refreshToken: string
 }
 
-export type ApiResponseRefreshTokenResponse = {
+export type ApiResponseRefreshTokenWebResponse = {
   status?: boolean
   message?: string
-  data?: RefreshTokenResponse
+  data?: RefreshTokenWebResponse
   meta?: Meta
 }
 
-export type RefreshTokenResponse = {
+export type RefreshTokenWebResponse = {
   accessToken?: string
   accessTokenExpiresAt?: string
   refreshToken?: string
@@ -102,7 +102,7 @@ export type RefreshTokenResponse = {
 }
 
 export type CreateHubProductWebRequest = {
-  key: "PAY" | "COMMERCE" | "LOGISTICS" | "HR" | "ACCOUNTING"
+  key: string
   name: string
   description: string
 }
@@ -149,15 +149,15 @@ export type LoginRequest = {
   deviceFingerprint: string
 }
 
-export type ApiResponseLoginResponse = {
+export type ApiResponseLoginWebResponse = {
   status?: boolean
   message?: string
-  data?: LoginResponse
+  data?: LoginWebResponse
   meta?: Meta
 }
 
-export type LoginResponse = {
-  status?: "SUCCESS" | "OTP_REQUIRED"
+export type LoginWebResponse = {
+  status?: string
   accessToken?: string
   accessTokenExpiresAt?: string
   refreshToken?: string
@@ -170,14 +170,32 @@ export type VerifyEmailRequest = {
   otp: string
 }
 
-export type ApiResponseListSessionResult = {
+export type SignedUrlRequest = {
+  objectPath: string
+  contentType: string
+  ttlMinutes?: number
+}
+
+export type ApiResponseSignedUrlResponse = {
   status?: boolean
   message?: string
-  data?: Array<SessionResult>
+  data?: SignedUrlResponse
   meta?: Meta
 }
 
-export type SessionResult = {
+export type SignedUrlResponse = {
+  signedUrl?: string
+  objectPath?: string
+}
+
+export type ApiResponseListSessionWebResponse = {
+  status?: boolean
+  message?: string
+  data?: Array<SessionWebResponse>
+  meta?: Meta
+}
+
+export type SessionWebResponse = {
   token?: string
   expiresAt?: string
   ipAddress?: string
@@ -193,10 +211,10 @@ export type ApiResponseListHubProductResponse = {
 
 export type HubProductResponse = {
   id?: number
-  key?: "PAY" | "COMMERCE" | "LOGISTICS" | "HR" | "ACCOUNTING"
+  key?: string
   name?: string
   description?: string
-  status?: "ACTIVE" | "INACTIVE" | "DEPRECATED"
+  status?: string
 }
 
 export type ApiResponseHubProductDetailsResponse = {
@@ -208,28 +226,28 @@ export type ApiResponseHubProductDetailsResponse = {
 
 export type HubProductDetailsResponse = {
   id?: number
-  key?: "PAY" | "COMMERCE" | "LOGISTICS" | "HR" | "ACCOUNTING"
+  key?: string
   name?: string
   description?: string
-  status?: "ACTIVE" | "INACTIVE" | "DEPRECATED"
+  status?: string
   pricing?: Array<Pricing>
 }
 
 export type Pricing = {
   id?: number
-  cycle?: "MONTHLY" | "ANNUALLY"
+  cycle?: string
   amount?: number
-  currency?: "NGN"
+  currency?: string
 }
 
-export type ApiResponseOrganizationDetailsResult = {
+export type ApiResponseOrganizationDetailsResponse = {
   status?: boolean
   message?: string
-  data?: OrganizationDetailsResult
+  data?: OrganizationDetailsResponse
   meta?: Meta
 }
 
-export type OrganizationDetailsResult = {
+export type OrganizationDetailsResponse = {
   id?: number
   businessName?: string
   businessType?: string
@@ -282,14 +300,14 @@ export type ApiResponseListActivityLogDto = {
   meta?: Meta
 }
 
-export type ApiResponseUserProfileResult = {
+export type ApiResponseUserProfileResponse = {
   status?: boolean
   message?: string
-  data?: UserProfileResult
+  data?: UserProfileResponse
   meta?: Meta
 }
 
-export type OrganizationSummary = {
+export type OrganizationSummaryResponse = {
   id?: number
   businessName?: string
   country?: string
@@ -297,7 +315,7 @@ export type OrganizationSummary = {
   logoUrl?: string
 }
 
-export type UserProfileResult = {
+export type UserProfileResponse = {
   id?: number
   firstName?: string
   lastName?: string
@@ -307,17 +325,17 @@ export type UserProfileResult = {
   country?: string
   activeOrganizationId?: number
   createdAt?: string
-  organizations?: Array<OrganizationSummary>
+  organizations?: Array<OrganizationSummaryResponse>
 }
 
-export type ApiResponseListTrustedDeviceResult = {
+export type ApiResponseListTrustedDeviceWebResponse = {
   status?: boolean
   message?: string
-  data?: Array<TrustedDeviceResult>
+  data?: Array<TrustedDeviceWebResponse>
   meta?: Meta
 }
 
-export type TrustedDeviceResult = {
+export type TrustedDeviceWebResponse = {
   id?: number
   deviceFingerprint?: string
   deviceName?: string
@@ -395,7 +413,7 @@ export type GetOrganizationResponses = {
   /**
    * OK
    */
-  200: ApiResponseOrganizationDetailsResult
+  200: ApiResponseOrganizationDetailsResponse
 }
 
 export type GetOrganizationResponse =
@@ -431,7 +449,7 @@ export type GetMeResponses = {
   /**
    * OK
    */
-  200: ApiResponseUserProfileResult
+  200: ApiResponseUserProfileResponse
 }
 
 export type GetMeResponse = GetMeResponses[keyof GetMeResponses]
@@ -480,7 +498,7 @@ export type RefreshResponses = {
   /**
    * OK
    */
-  200: ApiResponseRefreshTokenResponse
+  200: ApiResponseRefreshTokenWebResponse
 }
 
 export type RefreshResponse = RefreshResponses[keyof RefreshResponses]
@@ -632,10 +650,10 @@ export type LoginResponses = {
   /**
    * OK
    */
-  200: ApiResponseLoginResponse
+  200: ApiResponseLoginWebResponse
 }
 
-export type LoginResponse2 = LoginResponses[keyof LoginResponses]
+export type LoginResponse = LoginResponses[keyof LoginResponses]
 
 export type ReplayEventData = {
   body?: never
@@ -690,6 +708,25 @@ export type ResendVerificationResponses = {
 export type ResendVerificationResponse =
   ResendVerificationResponses[keyof ResendVerificationResponses]
 
+export type GetSignedUrlData = {
+  body?: never
+  path?: never
+  query: {
+    request: SignedUrlRequest
+  }
+  url: "/api/v1/storage/signed-url"
+}
+
+export type GetSignedUrlResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseSignedUrlResponse
+}
+
+export type GetSignedUrlResponse =
+  GetSignedUrlResponses[keyof GetSignedUrlResponses]
+
 export type GetSessionsData = {
   body?: never
   path?: never
@@ -701,7 +738,7 @@ export type GetSessionsResponses = {
   /**
    * OK
    */
-  200: ApiResponseListSessionResult
+  200: ApiResponseListSessionWebResponse
 }
 
 export type GetSessionsResponse =
@@ -756,7 +793,7 @@ export type GetDevicesResponses = {
   /**
    * OK
    */
-  200: ApiResponseListTrustedDeviceResult
+  200: ApiResponseListTrustedDeviceWebResponse
 }
 
 export type GetDevicesResponse = GetDevicesResponses[keyof GetDevicesResponses]

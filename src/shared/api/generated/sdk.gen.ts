@@ -25,6 +25,8 @@ import type {
   GetProductDetailsResponses,
   GetSessionsData,
   GetSessionsResponses,
+  GetSignedUrlData,
+  GetSignedUrlResponses,
   ListActivityData,
   ListActivityResponses,
   ListProductsData,
@@ -394,6 +396,20 @@ export const resendVerification = <ThrowOnError extends boolean = false>(
       "Content-Type": "application/json",
       ...options.headers,
     },
+  })
+
+/**
+ * Request a pre-signed Firebase Storage upload URL
+ *
+ * Returns a short-lived PUT URL. The frontend should upload the file directly to this URL using HTTP PUT with the matching Content-Type header.
+ */
+export const getSignedUrl = <ThrowOnError extends boolean = false>(
+  options: Options<GetSignedUrlData, ThrowOnError>
+): RequestResult<GetSignedUrlResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<GetSignedUrlResponses, unknown, ThrowOnError>({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/storage/signed-url",
+    ...options,
   })
 
 /**
