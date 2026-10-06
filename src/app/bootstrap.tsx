@@ -13,17 +13,23 @@ export function setupApiClient(): void
     getToken: () => authStore.getState().accessToken,
     onTokenRefresh: async () =>
     {
-      const { refreshToken } = authStore.getState();
-      if (!refreshToken) throw new Error('No refresh token available');
-      const tokens = await authRepository.refreshToken({
-        refreshToken: refreshToken
-      });
-      authStore.getState().setTokens(
-        tokens.accessToken,
-        tokens.refreshToken,
-        tokens.accessExpiresAt,
-      );
-      return tokens.accessToken;
+      try
+      {
+        const { refreshToken } = authStore.getState();
+        if (!refreshToken) throw new Error('No refresh token available');
+        const tokens = await authRepository.refreshToken({ refreshToken });
+        authStore.getState().setTokens(
+          tokens.accessToken,
+          tokens.refreshToken,
+          tokens.accessExpiresAt,
+        );
+        return tokens.accessToken;
+      }
+      catch (error)
+      {
+        authStore.getState().clear();
+        throw error;
+      }
     },
   });
   setGlobalApiClient(client);

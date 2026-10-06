@@ -8,6 +8,8 @@ export function applyAuthInterceptor(
     onTokenRefresh: () => Promise<string>;
   },
 ) {
+  let refreshPromise: Promise<string> | null = null;
+
   instance.interceptors.request.use((config) => {
     const token = options?.getToken();
 
@@ -26,15 +28,18 @@ export function applyAuthInterceptor(
       if (
         error.response?.status === 401 &&
         !originalRequest._retried &&
-        !originalRequest.url?.includes('/auth/refresh')
+        !originalRequest.url?.includes('/refresh')
       ) {
         originalRequest._retried = true;
         try {
-          const newToken = await options?.onTokenRefresh();
+          refreshPromise ??= options?.onTokenRefresh() ?? Promise.reject(new Error('Token refresh is not configured'));
+          const newToken = await refreshPromise;
           originalRequest.headers[AUTH_HEADER] = `${BEARER_PREFIX}${newToken}`;
           return instance(originalRequest);
         } catch (refreshError) {
           return Promise.reject(refreshError);
+        } finally {
+          refreshPromise = null;
         }
       }
 
