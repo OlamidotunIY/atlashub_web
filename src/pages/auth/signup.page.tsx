@@ -32,8 +32,7 @@ export function SignupPage()
     }
   }, [isError, error])
 
-  const form = useForm({
-    defaultValues: {
+  const defaultValues: SignupFormValues = {
       firstName: '',
       lastName: '',
       email: state?.invitedEmail || '',
@@ -45,9 +44,15 @@ export function SignupPage()
       industry: "",
       websiteUrl: "",
       registrationType: ""
-    } satisfies SignupFormValues,
+    };
+
+  const form = useForm<SignupFormValues>({
+    defaultValues,
     validators: {
-      onSubmit: SignupSchema,
+      onSubmit: ({ value }) => {
+        const result = SignupSchema.safeParse(value);
+        return result.success ? undefined : result.error.issues[0]?.message;
+      },
     },
     onSubmit: async ({ value }) =>
     {
@@ -156,7 +161,7 @@ export function SignupPage()
           )}
         />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full">
+        <div className="gap-5 w-full">
           <form.Field
             name="registrationType"
             children={(field) => (
