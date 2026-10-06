@@ -1,6 +1,6 @@
 import { MERCHANT_ROUTES } from '@/constants';
 import { AuthButtonWidget, AuthFieldWidget, AuthFormHeader, AuthLogoWidget, AuthSelectWidget, AuthTextareaWidget } from '@/features/authentication';
-import { BUSINESS_SIZE, BUSINESS_TYPES, SignupSchema, useCreateUser, type SignupFormValues } from '@/features/user';
+import { INDUSTRY_OPTIONS, REGISTRATION_TYPE_OPTIONS, SignupSchema, useCreateUser, type SignupFormValues } from '@/features/user';
 import { toast } from '@/shared/hooks';
 import
 {
@@ -9,20 +9,8 @@ import
   FieldGroup,
 } from '@/shared/ui';
 import { useForm } from '@tanstack/react-form';
-import { ShoppingCart, Landmark, GraduationCap, HeartPulse, Utensils, Truck, Building, Briefcase } from 'lucide-react';
 import { useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-
-const BUSINESS_TYPE_ICONS: Record<string, React.ReactNode> = {
-  RETAIL: <ShoppingCart className="size-4 text-muted-foreground" />,
-  FINANCE: <Landmark className="size-4 text-muted-foreground" />,
-  EDUCATION: <GraduationCap className="size-4 text-muted-foreground" />,
-  HEALTHCARE: <HeartPulse className="size-4 text-muted-foreground" />,
-  HOSPITALITY: <Utensils className="size-4 text-muted-foreground" />,
-  LOGISTICS: <Truck className="size-4 text-muted-foreground" />,
-  REAL_ESTATE: <Building className="size-4 text-muted-foreground" />,
-  OTHER: <Briefcase className="size-4 text-muted-foreground" />,
-};
 
 export function SignupPage()
 {
@@ -53,12 +41,11 @@ export function SignupPage()
       password: '',
       inviteToken: state?.invitationToken,
       businessName: "",
-      businessSize: undefined as unknown as string,
-      businessType: undefined as unknown as string,
       description: "",
       industry: "",
       logoUrl: "",
-      websiteUrl: ""
+      websiteUrl: "",
+      registrationType: ""
     } as SignupFormValues,
     validators: {
       onSubmit: SignupSchema,
@@ -187,42 +174,18 @@ export function SignupPage()
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full">
           <form.Field
-            name="businessType"
+            name="registrationType"
             children={(field) => (
               <AuthSelectWidget
                 id={field.name}
-                label="Business Type"
-                placeholder="Select business type"
+                label="Registration Type"
+                placeholder="Select registration type"
                 value={field.state.value}
                 onChange={(val) => field.handleChange(val)}
                 errors={field.state.meta.errors}
                 required
                 className="w-full"
-                options={Object.entries(BUSINESS_TYPES).map(([key, label]) => ({
-                  value: key,
-                  label,
-                  icon: BUSINESS_TYPE_ICONS[key],
-                }))}
-              />
-            )}
-          />
-
-          <form.Field
-            name="businessSize"
-            children={(field) => (
-              <AuthSelectWidget
-                id={field.name}
-                label="Business Size"
-                placeholder="Select business size"
-                value={field.state.value}
-                onChange={(val) => field.handleChange(val)}
-                errors={field.state.meta.errors}
-                required
-                className="w-full"
-                options={Object.entries(BUSINESS_SIZE).map(([key, label]) => ({
-                  value: key,
-                  label,
-                }))}
+                options={REGISTRATION_TYPE_OPTIONS}
               />
             )}
           />
@@ -249,15 +212,16 @@ export function SignupPage()
           <form.Field
             name="industry"
             children={(field) => (
-              <AuthFieldWidget
+              <AuthSelectWidget
                 id={field.name}
                 label="Industry"
-                placeholder="e.g. Technology"
+                placeholder="Select industry"
                 value={field.state.value}
                 onChange={(val) => field.handleChange(val)}
-                onBlur={field.handleBlur}
                 errors={field.state.meta.errors}
+                required
                 className="w-full"
+                options={INDUSTRY_OPTIONS}
               />
             )}
           />
