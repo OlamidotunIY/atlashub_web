@@ -1,5 +1,5 @@
 import { MERCHANT_ROUTES } from '@/constants';
-import { AuthButtonWidget, AuthFieldWidget, AuthFormHeader, AuthLogoWidget, AuthSelectWidget, AuthTextareaWidget } from '@/features/authentication';
+import { AuthButtonWidget, AuthFieldWidget, AuthFormHeader, AuthSelectWidget, AuthTextareaWidget } from '@/features/authentication';
 import { INDUSTRY_OPTIONS, REGISTRATION_TYPE_OPTIONS, SignupSchema, useCreateUser, type SignupFormValues } from '@/features/user';
 import { toast } from '@/shared/hooks';
 import
@@ -43,7 +43,6 @@ export function SignupPage()
       businessName: "",
       description: "",
       industry: "",
-      logoUrl: "",
       websiteUrl: "",
       registrationType: ""
     } satisfies SignupFormValues,
@@ -84,22 +83,7 @@ export function SignupPage()
           subtitle="Enter your details below to get started"
         />
 
-        <div className="grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-5 items-center mt-5">
-          <div className="flex justify-center sm:justify-start">
-            <form.Field
-              name="logoUrl"
-              children={(field) => (
-                <AuthLogoWidget
-                  id={field.name}
-                  value={field.state.value}
-                  onChange={(val) => field.handleChange(val)}
-                  errors={field.state.meta.errors}
-                  className="size-14"
-                />
-              )}
-            />
-          </div>
-
+        <div className="mt-5">
           <form.Field
             name="businessName"
             children={(field) => (
