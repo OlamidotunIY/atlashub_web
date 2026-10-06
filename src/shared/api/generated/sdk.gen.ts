@@ -9,58 +9,132 @@ import type {
 } from "./client"
 import { client } from "./client.gen"
 import type {
+  AcceptAgreementData,
+  AcceptAgreementResponses,
+  AcceptData,
+  AcceptResponses,
+  AssignRoleData,
+  AssignRoleResponses,
+  BalanceData,
+  BalanceResponses,
   ChangePasswordData,
   ChangePasswordResponses,
-  CreateProductData,
-  CreateProductResponses,
+  CloseData,
+  CloseOutletData,
+  CloseOutletResponses,
+  CloseResponses,
+  CreateData,
+  CreateOutletData,
+  CreateOutletResponses,
+  CreateResponses,
+  DeactivateData,
+  DeactivateResponses,
+  DeclineData,
+  DeclineResponses,
+  DeleteData,
+  DeleteResponses,
+  Details1Data,
+  Details1Responses,
+  DetailsData,
+  DetailsResponses,
   ForgotPasswordData,
   ForgotPasswordResponses,
-  GetDevicesData,
-  GetDevicesResponses,
+  FreezeData,
+  FreezeResponses,
   GetMeData,
   GetMeResponses,
   GetOrganizationData,
   GetOrganizationResponses,
-  GetProductDetailsData,
-  GetProductDetailsResponses,
-  GetSessionsData,
-  GetSessionsResponses,
+  GetOutletData,
+  GetOutletResponses,
   GetSignedUrlData,
   GetSignedUrlResponses,
+  HistoryData,
+  HistoryResponses,
+  InviteData,
+  InviteResponses,
+  IssueData,
+  IssueResponses,
+  JwksData,
+  JwksResponses,
+  List1Data,
+  List1Responses,
+  List2Data,
+  List2Responses,
+  List3Data,
+  List3Responses,
+  List4Data,
+  List4Responses,
+  List5Data,
+  List5Responses,
+  List6Data,
+  List6Responses,
   ListActivityData,
   ListActivityResponses,
-  ListProductsData,
-  ListProductsResponses,
+  ListData,
+  ListOutletsData,
+  ListOutletsResponses,
+  ListResponses,
   LoginData,
   LoginResponses,
   LogoutAllData,
   LogoutAllResponses,
   LogoutData,
   LogoutResponses,
+  PartyBalanceData,
+  PartyBalanceResponses,
+  PermissionsData,
+  PermissionsResponses,
   RefreshData,
   RefreshResponses,
   RegisterData,
   RegisterResponses,
+  ReplaceData,
+  ReplaceResponses,
   ReplayEventData,
   ReplayEventResponses,
   ResendVerificationData,
   ResendVerificationResponses,
   ResetPasswordData,
   ResetPasswordResponses,
-  RevokeDeviceData,
-  RevokeDeviceResponses,
-  SetPricingData,
-  SetPricingResponses,
+  Revoke1Data,
+  Revoke1Responses,
+  Revoke2Data,
+  Revoke2Responses,
+  RevokeData,
+  RevokeResponses,
+  RotateData,
+  RotateResponses,
+  SaveData,
+  SaveResponses,
+  SubmitData,
+  SubmitResponses,
+  SuspendOutletData,
+  SuspendOutletResponses,
+  SwitchEnvironmentData,
+  SwitchEnvironmentResponses,
   SwitchOrganizationData,
   SwitchOrganizationResponses,
+  UnfreezeData,
+  UnfreezeResponses,
+  UpdateBusinessProfileData,
+  UpdateBusinessProfileResponses,
+  UpdateContactInfoData,
+  UpdateContactInfoResponses,
+  UpdateData,
   UpdateOrganizationData,
   UpdateOrganizationResponses,
-  UpdateProductData,
-  UpdateProductResponses,
+  UpdateOutletData,
+  UpdateOutletResponses,
   UpdateProfileData,
   UpdateProfileResponses,
+  UpdateResponses,
+  VerifyData,
   VerifyEmailData,
   VerifyEmailResponses,
+  VerifyResponses,
+  WalletBalancesData,
+  WalletBalancesResponses,
 } from "./types.gen"
 
 export type Options<
@@ -81,34 +155,53 @@ export type Options<
   meta?: keyof ClientMeta extends never ? Record<string, unknown> : ClientMeta
 }
 
-export const getProductDetails = <ThrowOnError extends boolean = false>(
-  options: Options<GetProductDetailsData, ThrowOnError>
-): RequestResult<GetProductDetailsResponses, unknown, ThrowOnError> =>
-  (options.client ?? client).get<
-    GetProductDetailsResponses,
-    unknown,
-    ThrowOnError
-  >({ url: "/api/v1/platform/catalog/products/{productId}", ...options })
+/**
+ * Delete a custom role
+ */
+export const delete_ = <ThrowOnError extends boolean = false>(
+  options: Options<DeleteData, ThrowOnError>
+): RequestResult<DeleteResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).delete<DeleteResponses, unknown, ThrowOnError>({
+    url: "/api/v1/roles/{id}",
+    ...options,
+  })
 
-export const updateProduct = <ThrowOnError extends boolean = false>(
-  options: Options<UpdateProductData, ThrowOnError>
-): RequestResult<UpdateProductResponses, unknown, ThrowOnError> =>
-  (options.client ?? client).put<UpdateProductResponses, unknown, ThrowOnError>(
-    {
-      url: "/api/v1/platform/catalog/products/{productId}",
-      ...options,
-      headers: {
-        "Content-Type": "application/json",
-        ...options.headers,
-      },
-    }
-  )
+/**
+ * Update a custom role
+ */
+export const update = <ThrowOnError extends boolean = false>(
+  options: Options<UpdateData, ThrowOnError>
+): RequestResult<UpdateResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).put<UpdateResponses, unknown, ThrowOnError>({
+    url: "/api/v1/roles/{id}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
 
-export const setPricing = <ThrowOnError extends boolean = false>(
-  options: Options<SetPricingData, ThrowOnError>
-): RequestResult<SetPricingResponses, unknown, ThrowOnError> =>
-  (options.client ?? client).put<SetPricingResponses, unknown, ThrowOnError>({
-    url: "/api/v1/platform/catalog/products/{productId}/pricing",
+/**
+ * Get a single outlet by ID
+ */
+export const getOutlet = <ThrowOnError extends boolean = false>(
+  options: Options<GetOutletData, ThrowOnError>
+): RequestResult<GetOutletResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<GetOutletResponses, unknown, ThrowOnError>({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/outlets/{outletId}",
+    ...options,
+  })
+
+/**
+ * Update outlet details
+ */
+export const updateOutlet = <ThrowOnError extends boolean = false>(
+  options: Options<UpdateOutletData, ThrowOnError>
+): RequestResult<UpdateOutletResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).put<UpdateOutletResponses, unknown, ThrowOnError>({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/outlets/{outletId}",
     ...options,
     headers: {
       "Content-Type": "application/json",
@@ -120,9 +213,9 @@ export const setPricing = <ThrowOnError extends boolean = false>(
  * Get organization details
  */
 export const getOrganization = <ThrowOnError extends boolean = false>(
-  options: Options<GetOrganizationData, ThrowOnError>
+  options?: Options<GetOrganizationData, ThrowOnError>
 ): RequestResult<GetOrganizationResponses, unknown, ThrowOnError> =>
-  (options.client ?? client).get<
+  (options?.client ?? client).get<
     GetOrganizationResponses,
     unknown,
     ThrowOnError
@@ -183,6 +276,85 @@ export const updateProfile = <ThrowOnError extends boolean = false>(
   )
 
 /**
+ * Replace business officers
+ */
+export const replace = <ThrowOnError extends boolean = false>(
+  options: Options<ReplaceData, ThrowOnError>
+): RequestResult<ReplaceResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).put<ReplaceResponses, unknown, ThrowOnError>({
+    url: "/api/v1/compliance/officers",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Save compliance contact details
+ */
+export const updateContactInfo = <ThrowOnError extends boolean = false>(
+  options: Options<UpdateContactInfoData, ThrowOnError>
+): RequestResult<UpdateContactInfoResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).put<
+    UpdateContactInfoResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/api/v1/compliance/contact",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Save business compliance details
+ */
+export const updateBusinessProfile = <ThrowOnError extends boolean = false>(
+  options: Options<UpdateBusinessProfileData, ThrowOnError>
+): RequestResult<UpdateBusinessProfileResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).put<
+    UpdateBusinessProfileResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/api/v1/compliance/business",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * List custom roles
+ */
+export const list = <ThrowOnError extends boolean = false>(
+  options?: Options<ListData, ThrowOnError>
+): RequestResult<ListResponses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<ListResponses, unknown, ThrowOnError>({
+    url: "/api/v1/roles",
+    ...options,
+  })
+
+/**
+ * Create a custom role
+ */
+export const create = <ThrowOnError extends boolean = false>(
+  options: Options<CreateData, ThrowOnError>
+): RequestResult<CreateResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<CreateResponses, unknown, ThrowOnError>({
+    url: "/api/v1/roles",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
  * Register a new user and organization
  */
 export const register = <ThrowOnError extends boolean = false>(
@@ -212,31 +384,8 @@ export const refresh = <ThrowOnError extends boolean = false>(
     },
   })
 
-export const listProducts = <ThrowOnError extends boolean = false>(
-  options?: Options<ListProductsData, ThrowOnError>
-): RequestResult<ListProductsResponses, unknown, ThrowOnError> =>
-  (options?.client ?? client).get<ListProductsResponses, unknown, ThrowOnError>(
-    { url: "/api/v1/platform/catalog/products", ...options }
-  )
-
-export const createProduct = <ThrowOnError extends boolean = false>(
-  options: Options<CreateProductData, ThrowOnError>
-): RequestResult<CreateProductResponses, unknown, ThrowOnError> =>
-  (options.client ?? client).post<
-    CreateProductResponses,
-    unknown,
-    ThrowOnError
-  >({
-    url: "/api/v1/platform/catalog/products",
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...options.headers,
-    },
-  })
-
 /**
- * Reset password using OTP
+ * Reset password with verification code
  */
 export const resetPassword = <ThrowOnError extends boolean = false>(
   options: Options<ResetPasswordData, ThrowOnError>
@@ -255,7 +404,7 @@ export const resetPassword = <ThrowOnError extends boolean = false>(
   })
 
 /**
- * Initiate password reset
+ * Request password reset code
  */
 export const forgotPassword = <ThrowOnError extends boolean = false>(
   options: Options<ForgotPasswordData, ThrowOnError>
@@ -274,7 +423,7 @@ export const forgotPassword = <ThrowOnError extends boolean = false>(
   })
 
 /**
- * Change password
+ * Change current password
  */
 export const changePassword = <ThrowOnError extends boolean = false>(
   options: Options<ChangePasswordData, ThrowOnError>
@@ -291,6 +440,64 @@ export const changePassword = <ThrowOnError extends boolean = false>(
       "Content-Type": "application/json",
       ...options.headers,
     },
+  })
+
+/**
+ * List all outlets for an organization
+ */
+export const listOutlets = <ThrowOnError extends boolean = false>(
+  options?: Options<ListOutletsData, ThrowOnError>
+): RequestResult<ListOutletsResponses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<ListOutletsResponses, unknown, ThrowOnError>({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/outlets",
+    ...options,
+  })
+
+/**
+ * Create a new outlet / branch
+ */
+export const createOutlet = <ThrowOnError extends boolean = false>(
+  options: Options<CreateOutletData, ThrowOnError>
+): RequestResult<CreateOutletResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<CreateOutletResponses, unknown, ThrowOnError>(
+    {
+      security: [{ scheme: "bearer", type: "http" }],
+      url: "/api/v1/outlets",
+      ...options,
+      headers: {
+        "Content-Type": "application/json",
+        ...options.headers,
+      },
+    }
+  )
+
+/**
+ * Suspend an outlet
+ */
+export const suspendOutlet = <ThrowOnError extends boolean = false>(
+  options: Options<SuspendOutletData, ThrowOnError>
+): RequestResult<SuspendOutletResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    SuspendOutletResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/outlets/{outletId}/suspend",
+    ...options,
+  })
+
+/**
+ * Permanently close an outlet
+ */
+export const closeOutlet = <ThrowOnError extends boolean = false>(
+  options: Options<CloseOutletData, ThrowOnError>
+): RequestResult<CloseOutletResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<CloseOutletResponses, unknown, ThrowOnError>({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/outlets/{outletId}/close",
+    ...options,
   })
 
 /**
@@ -314,23 +521,19 @@ export const switchOrganization = <ThrowOnError extends boolean = false>(
   })
 
 /**
- * Logout current session
+ * Log out current session
  */
 export const logout = <ThrowOnError extends boolean = false>(
-  options: Options<LogoutData, ThrowOnError>
+  options?: Options<LogoutData, ThrowOnError>
 ): RequestResult<LogoutResponses, unknown, ThrowOnError> =>
-  (options.client ?? client).post<LogoutResponses, unknown, ThrowOnError>({
+  (options?.client ?? client).post<LogoutResponses, unknown, ThrowOnError>({
     security: [{ scheme: "bearer", type: "http" }],
     url: "/api/v1/logout",
     ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...options.headers,
-    },
   })
 
 /**
- * Logout from all devices
+ * Log out from all sessions
  */
 export const logoutAll = <ThrowOnError extends boolean = false>(
   options?: Options<LogoutAllData, ThrowOnError>
@@ -356,6 +559,65 @@ export const login = <ThrowOnError extends boolean = false>(
     },
   })
 
+/**
+ * List organization invitations
+ */
+export const list1 = <ThrowOnError extends boolean = false>(
+  options?: Options<List1Data, ThrowOnError>
+): RequestResult<List1Responses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<List1Responses, unknown, ThrowOnError>({
+    url: "/api/v1/invitations",
+    ...options,
+  })
+
+/**
+ * Invite an organization member
+ */
+export const invite = <ThrowOnError extends boolean = false>(
+  options: Options<InviteData, ThrowOnError>
+): RequestResult<InviteResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<InviteResponses, unknown, ThrowOnError>({
+    url: "/api/v1/invitations",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Decline an invitation
+ */
+export const decline = <ThrowOnError extends boolean = false>(
+  options: Options<DeclineData, ThrowOnError>
+): RequestResult<DeclineResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<DeclineResponses, unknown, ThrowOnError>({
+    url: "/api/v1/invitations/decline",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Accept an invitation
+ */
+export const accept = <ThrowOnError extends boolean = false>(
+  options: Options<AcceptData, ThrowOnError>
+): RequestResult<AcceptResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<AcceptResponses, unknown, ThrowOnError>({
+    url: "/api/v1/invitations/accept",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Replay a failed event
+ */
 export const replayEvent = <ThrowOnError extends boolean = false>(
   options: Options<ReplayEventData, ThrowOnError>
 ): RequestResult<ReplayEventResponses, unknown, ThrowOnError> =>
@@ -365,7 +627,27 @@ export const replayEvent = <ThrowOnError extends boolean = false>(
   })
 
 /**
- * Verify email address with OTP
+ * Switch API environment
+ */
+export const switchEnvironment = <ThrowOnError extends boolean = false>(
+  options: Options<SwitchEnvironmentData, ThrowOnError>
+): RequestResult<SwitchEnvironmentResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    SwitchEnvironmentResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/environments/switch",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Verify email address
  */
 export const verifyEmail = <ThrowOnError extends boolean = false>(
   options: Options<VerifyEmailData, ThrowOnError>
@@ -380,7 +662,7 @@ export const verifyEmail = <ThrowOnError extends boolean = false>(
   })
 
 /**
- * Resend email verification OTP
+ * Resend email verification code
  */
 export const resendVerification = <ThrowOnError extends boolean = false>(
   options: Options<ResendVerificationData, ThrowOnError>
@@ -391,6 +673,155 @@ export const resendVerification = <ThrowOnError extends boolean = false>(
     ThrowOnError
   >({
     url: "/api/v1/email/resend-verification",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Verify a trusted device
+ */
+export const verify = <ThrowOnError extends boolean = false>(
+  options: Options<VerifyData, ThrowOnError>
+): RequestResult<VerifyResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<VerifyResponses, unknown, ThrowOnError>({
+    url: "/api/v1/devices/verify",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Submit compliance for verification
+ */
+export const submit = <ThrowOnError extends boolean = false>(
+  options?: Options<SubmitData, ThrowOnError>
+): RequestResult<SubmitResponses, unknown, ThrowOnError> =>
+  (options?.client ?? client).post<SubmitResponses, unknown, ThrowOnError>({
+    url: "/api/v1/compliance/submit",
+    ...options,
+  })
+
+/**
+ * Save compliance document evidence
+ */
+export const save = <ThrowOnError extends boolean = false>(
+  options: Options<SaveData, ThrowOnError>
+): RequestResult<SaveResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<SaveResponses, unknown, ThrowOnError>({
+    url: "/api/v1/compliance/documents/{requirementId}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Accept the compliance service agreement
+ */
+export const acceptAgreement = <ThrowOnError extends boolean = false>(
+  options: Options<AcceptAgreementData, ThrowOnError>
+): RequestResult<AcceptAgreementResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    AcceptAgreementResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/api/v1/compliance/agreement",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * List API keys
+ */
+export const list2 = <ThrowOnError extends boolean = false>(
+  options?: Options<List2Data, ThrowOnError>
+): RequestResult<List2Responses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<List2Responses, unknown, ThrowOnError>({
+    url: "/api/v1/api-keys",
+    ...options,
+  })
+
+/**
+ * Create an API key
+ */
+export const issue = <ThrowOnError extends boolean = false>(
+  options: Options<IssueData, ThrowOnError>
+): RequestResult<IssueResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<IssueResponses, unknown, ThrowOnError>({
+    url: "/api/v1/api-keys",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Rotate an API key secret
+ */
+export const rotate = <ThrowOnError extends boolean = false>(
+  options: Options<RotateData, ThrowOnError>
+): RequestResult<RotateResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<RotateResponses, unknown, ThrowOnError>({
+    url: "/api/v1/api-keys/{id}/rotate",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Unfreeze a ledger account
+ */
+export const unfreeze = <ThrowOnError extends boolean = false>(
+  options: Options<UnfreezeData, ThrowOnError>
+): RequestResult<UnfreezeResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<UnfreezeResponses, unknown, ThrowOnError>({
+    url: "/api/v1/admin/ledger-accounts/{accountId}/unfreeze",
+    ...options,
+  })
+
+/**
+ * Freeze a ledger account
+ */
+export const freeze = <ThrowOnError extends boolean = false>(
+  options: Options<FreezeData, ThrowOnError>
+): RequestResult<FreezeResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<FreezeResponses, unknown, ThrowOnError>({
+    url: "/api/v1/admin/ledger-accounts/{accountId}/freeze",
+    ...options,
+  })
+
+/**
+ * Close a ledger account
+ */
+export const close = <ThrowOnError extends boolean = false>(
+  options: Options<CloseData, ThrowOnError>
+): RequestResult<CloseResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<CloseResponses, unknown, ThrowOnError>({
+    url: "/api/v1/admin/ledger-accounts/{accountId}/close",
+    ...options,
+  })
+
+/**
+ * Assign a member role
+ */
+export const assignRole = <ThrowOnError extends boolean = false>(
+  options: Options<AssignRoleData, ThrowOnError>
+): RequestResult<AssignRoleResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).patch<AssignRoleResponses, unknown, ThrowOnError>({
+    url: "/api/v1/members/{id}/role",
     ...options,
     headers: {
       "Content-Type": "application/json",
@@ -413,14 +844,35 @@ export const getSignedUrl = <ThrowOnError extends boolean = false>(
   })
 
 /**
- * Get all active sessions
+ * List active sessions
  */
-export const getSessions = <ThrowOnError extends boolean = false>(
-  options?: Options<GetSessionsData, ThrowOnError>
-): RequestResult<GetSessionsResponses, unknown, ThrowOnError> =>
-  (options?.client ?? client).get<GetSessionsResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
+export const list3 = <ThrowOnError extends boolean = false>(
+  options?: Options<List3Data, ThrowOnError>
+): RequestResult<List3Responses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<List3Responses, unknown, ThrowOnError>({
     url: "/api/v1/sessions",
+    ...options,
+  })
+
+/**
+ * Get role permissions
+ */
+export const permissions = <ThrowOnError extends boolean = false>(
+  options: Options<PermissionsData, ThrowOnError>
+): RequestResult<PermissionsResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<PermissionsResponses, unknown, ThrowOnError>({
+    url: "/api/v1/roles/{id}/permissions",
+    ...options,
+  })
+
+/**
+ * List available permissions
+ */
+export const list4 = <ThrowOnError extends boolean = false>(
+  options?: Options<List4Data, ThrowOnError>
+): RequestResult<List4Responses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<List4Responses, unknown, ThrowOnError>({
+    url: "/api/v1/permissions",
     ...options,
   })
 
@@ -436,29 +888,144 @@ export const listActivity = <ThrowOnError extends boolean = false>(
   })
 
 /**
- * Revoke a trusted device
+ * List organization members
  */
-export const revokeDevice = <ThrowOnError extends boolean = false>(
-  options: Options<RevokeDeviceData, ThrowOnError>
-): RequestResult<RevokeDeviceResponses, unknown, ThrowOnError> =>
-  (options.client ?? client).delete<
-    RevokeDeviceResponses,
+export const list5 = <ThrowOnError extends boolean = false>(
+  options?: Options<List5Data, ThrowOnError>
+): RequestResult<List5Responses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<List5Responses, unknown, ThrowOnError>({
+    url: "/api/v1/members",
+    ...options,
+  })
+
+/**
+ * Deactivate an organization member
+ */
+export const deactivate = <ThrowOnError extends boolean = false>(
+  options: Options<DeactivateData, ThrowOnError>
+): RequestResult<DeactivateResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).delete<DeactivateResponses, unknown, ThrowOnError>(
+    { url: "/api/v1/members/{id}", ...options }
+  )
+
+/**
+ * Get organization member
+ */
+export const details = <ThrowOnError extends boolean = false>(
+  options: Options<DetailsData, ThrowOnError>
+): RequestResult<DetailsResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<DetailsResponses, unknown, ThrowOnError>({
+    url: "/api/v1/members/{id}",
+    ...options,
+  })
+
+/**
+ * Get party ledger history
+ */
+export const history_ = <ThrowOnError extends boolean = false>(
+  options: Options<HistoryData, ThrowOnError>
+): RequestResult<HistoryResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<HistoryResponses, unknown, ThrowOnError>({
+    url: "/api/v1/ledger-entries",
+    ...options,
+  })
+
+/**
+ * Get party ledger balance
+ */
+export const partyBalance = <ThrowOnError extends boolean = false>(
+  options: Options<PartyBalanceData, ThrowOnError>
+): RequestResult<PartyBalanceResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<PartyBalanceResponses, unknown, ThrowOnError>({
+    url: "/api/v1/ledger-accounts/party-balance",
+    ...options,
+  })
+
+/**
+ * Get organization ledger balances
+ */
+export const walletBalances = <ThrowOnError extends boolean = false>(
+  options?: Options<WalletBalancesData, ThrowOnError>
+): RequestResult<WalletBalancesResponses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<
+    WalletBalancesResponses,
     unknown,
     ThrowOnError
-  >({
-    security: [{ scheme: "bearer", type: "http" }],
+  >({ url: "/api/v1/ledger-accounts/balances", ...options })
+
+/**
+ * Get ledger account balance
+ */
+export const balance = <ThrowOnError extends boolean = false>(
+  options: Options<BalanceData, ThrowOnError>
+): RequestResult<BalanceResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<BalanceResponses, unknown, ThrowOnError>({
+    url: "/api/v1/ledger-accounts/balance",
+    ...options,
+  })
+
+/**
+ * Remove a trusted device
+ */
+export const revoke = <ThrowOnError extends boolean = false>(
+  options: Options<RevokeData, ThrowOnError>
+): RequestResult<RevokeResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).delete<RevokeResponses, unknown, ThrowOnError>({
     url: "/api/v1/devices",
     ...options,
   })
 
 /**
- * Get trusted devices
+ * List trusted devices
  */
-export const getDevices = <ThrowOnError extends boolean = false>(
-  options?: Options<GetDevicesData, ThrowOnError>
-): RequestResult<GetDevicesResponses, unknown, ThrowOnError> =>
-  (options?.client ?? client).get<GetDevicesResponses, unknown, ThrowOnError>({
-    security: [{ scheme: "bearer", type: "http" }],
+export const list6 = <ThrowOnError extends boolean = false>(
+  options?: Options<List6Data, ThrowOnError>
+): RequestResult<List6Responses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<List6Responses, unknown, ThrowOnError>({
     url: "/api/v1/devices",
+    ...options,
+  })
+
+/**
+ * Get compliance status and requirements
+ */
+export const details1 = <ThrowOnError extends boolean = false>(
+  options?: Options<Details1Data, ThrowOnError>
+): RequestResult<Details1Responses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<Details1Responses, unknown, ThrowOnError>({
+    url: "/api/v1/compliance",
+    ...options,
+  })
+
+/**
+ * Get the JWT JSON Web Key Set
+ */
+export const jwks = <ThrowOnError extends boolean = false>(
+  options?: Options<JwksData, ThrowOnError>
+): RequestResult<JwksResponses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<JwksResponses, unknown, ThrowOnError>({
+    url: "/.well-known/jwks.json",
+    ...options,
+  })
+
+/**
+ * Cancel an invitation
+ */
+export const revoke1 = <ThrowOnError extends boolean = false>(
+  options: Options<Revoke1Data, ThrowOnError>
+): RequestResult<Revoke1Responses, unknown, ThrowOnError> =>
+  (options.client ?? client).delete<Revoke1Responses, unknown, ThrowOnError>({
+    url: "/api/v1/invitations/{id}",
+    ...options,
+  })
+
+/**
+ * Revoke an API key
+ */
+export const revoke2 = <ThrowOnError extends boolean = false>(
+  options: Options<Revoke2Data, ThrowOnError>
+): RequestResult<Revoke2Responses, unknown, ThrowOnError> =>
+  (options.client ?? client).delete<Revoke2Responses, unknown, ThrowOnError>({
+    url: "/api/v1/api-keys/{id}",
     ...options,
   })

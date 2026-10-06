@@ -22,5 +22,5 @@ export type CreateClientConfig<T extends ClientOptions = ClientOptions2> = (
 ) => Config<Required<ClientOptions> & T>
 
 export const client: Client = createClient(
-  createConfig<ClientOptions2>({ baseURL: "http://localhost:8080" })
+  createConfig<ClientOptions2>({ baseURL: "https://api.atlashub.name.ng" })
 )
