@@ -2,12 +2,11 @@ import { MERCHANT_ROUTES } from '@/constants';
 import { AuthButtonWidget, AuthFieldWidget, AuthFormHeader, LoginSchema, useLogin } from '@/features/authentication';
 import { Field, FieldDescription, FieldGroup } from '@/shared/ui';
 import { useForm } from '@tanstack/react-form';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export function LoginPage()
 {
   const location = useLocation();
-  const navigate = useNavigate();
   const state = location.state as { invitedEmail?: string; from?: string } | null;
   const login = useLogin()
   const { error, isPending } = login
@@ -26,10 +25,7 @@ export function LoginPage()
         email: value.identifier,
         password: value.password,
         deviceFingerprint: ""
-      }).then(() =>
-      {
-        navigate(MERCHANT_ROUTES.DASHBOARD)
-      })
+      });
     },
   });
 

@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, Navigate } from 'react-router-dom';
+import { useLocation, Navigate } from 'react-router-dom';
 import { useForm } from '@tanstack/react-form';
 import
 {
@@ -11,16 +11,17 @@ import
   InputOTPGroup,
   InputOTPSlot,
 } from '@/shared/ui';
-import { AuthFormHeader, useVerifyEmail } from '@/features/authentication';
+import { authFlowStore, AuthFormHeader, useVerifyEmail } from '@/features/authentication';
 import { MERCHANT_ROUTES } from '@/constants';
 import { toast } from '@/shared/hooks';
 
 export function VerifyEmailPage()
 {
   const location = useLocation();
-  const navigate = useNavigate();
   const state = location.state as { identifier?: string; } | null;
-  const identifier = state?.identifier;
+  const verificationEmail = authFlowStore((state) => state.verificationEmail);
+  const clearEmailVerification = authFlowStore((state) => state.clearEmailVerification);
+  const identifier = verificationEmail ?? state?.identifier;
   const { mutateAsync, error, isPending } = useVerifyEmail()
 
   const form = useForm({
@@ -44,7 +45,7 @@ export function VerifyEmailPage()
       const verificationPromise = mutateAsync({
         email: identifier,
         otp: value.code
-      })
+      }).then(() => clearEmailVerification())
 
       toast.promise(
         verificationPromise,
@@ -55,10 +56,6 @@ export function VerifyEmailPage()
         }
       );
 
-      setTimeout(() =>
-      {
-        navigate(MERCHANT_ROUTES.DASHBOARD, { replace: true });
-      }, 3500);
     },
   });
 

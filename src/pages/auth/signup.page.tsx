@@ -1,5 +1,5 @@
 import { MERCHANT_ROUTES } from '@/constants';
-import { AuthButtonWidget, AuthFieldWidget, AuthFormHeader, AuthSelectWidget, AuthTextareaWidget } from '@/features/authentication';
+import { authFlowStore, AuthButtonWidget, AuthFieldWidget, AuthFormHeader, AuthSelectWidget, AuthTextareaWidget } from '@/features/authentication';
 import { INDUSTRY_OPTIONS, REGISTRATION_TYPE_OPTIONS, SignupSchema, useCreateUser, type SignupFormValues } from '@/features/user';
 import { toast } from '@/shared/hooks';
 import
@@ -10,14 +10,13 @@ import
 } from '@/shared/ui';
 import { useForm } from '@tanstack/react-form';
 import { useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export function SignupPage()
 {
   const location = useLocation();
   const state = location.state as { invitedEmail?: string; invitationToken?: string } | null;
   const { error, isError, isPending, mutateAsync: createUser } = useCreateUser()
-  const navigate = useNavigate();
 
   useEffect(() =>
   {
@@ -58,10 +57,7 @@ export function SignupPage()
     onSubmit: async ({ value }) =>
     {
       await createUser(SignupSchema.parse(value));
-      navigate(MERCHANT_ROUTES.VERIFY_EMAIL, {
-        state: { identifier: value.email },
-        replace: true
-      });
+      authFlowStore.getState().beginEmailVerification(value.email);
     }
   },
   );
