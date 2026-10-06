@@ -37,19 +37,22 @@ export const INDUSTRY_OPTIONS = [
   { value: "WHOLESALE", label: "Wholesale" },
 ] as const satisfies ReadonlyArray<{ value: RegisterRequest["industry"]; label: string }>
 
-export const SignupSchema: z.ZodType<RegisterRequest, RegisterRequest> =
-  z.object({
-    firstName: z.string().min(1, "First name is required"),
-    lastName: z.string().min(1, "Last name is required"),
-    email: z.string().email("Please enter a valid email address"),
-    password: z.string().min(8, "Password must be at least 8 characters"),
-    country: z.string().min(1, "Country is required"),
-    businessName: z.string().min(1, "Business name is required"),
-    registrationType: z.enum(REGISTRATION_TYPES, "Select a registration type"),
-    industry: z.enum(INDUSTRIES, "Select an industry"),
-    description: z.string().optional(),
-    logoUrl: z.string().url("Please enter a valid URL").optional(),
-    websiteUrl: z.string().url("Please enter a valid URL").optional(),
-  })
+export const SignupSchema = z.object({
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  email: z.string().email("Please enter a valid email address"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+  country: z.string().min(1, "Country is required"),
+  businessName: z.string().min(1, "Business name is required"),
+  registrationType: z.enum(REGISTRATION_TYPES, "Select a registration type"),
+  industry: z.enum(INDUSTRIES, "Select an industry"),
+  description: z.string().optional(),
+  logoUrl: z.string().url("Please enter a valid URL").optional(),
+  websiteUrl: z.string().url("Please enter a valid URL").optional(),
+})
 
-export type SignupFormValues = z.infer<typeof SignupSchema>
+export type SignupFormValues = Omit<RegisterRequest, "registrationType" | "industry"> & {
+  registrationType: RegisterRequest["registrationType"] | ""
+  industry: RegisterRequest["industry"] | ""
+  inviteToken?: string
+}

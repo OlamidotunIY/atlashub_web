@@ -46,13 +46,13 @@ export function SignupPage()
       logoUrl: "",
       websiteUrl: "",
       registrationType: ""
-    } as SignupFormValues,
+    } satisfies SignupFormValues,
     validators: {
       onSubmit: SignupSchema,
     },
     onSubmit: async ({ value }) =>
     {
-      await createUser(value).then((data) =>
+      await createUser(SignupSchema.parse(value)).then((data) =>
       {
         if (data.status)
         {
@@ -108,7 +108,7 @@ export function SignupPage()
                 label="Business Name"
                 placeholder="Arcn."
                 value={field.state.value}
-                onChange={(val) => field.handleChange(val)}
+                onChange={(val) => field.handleChange(val as SignupFormValues['registrationType'])}
                 onBlur={field.handleBlur}
                 errors={field.state.meta.errors}
                 required
@@ -185,7 +185,7 @@ export function SignupPage()
                 errors={field.state.meta.errors}
                 required
                 className="w-full"
-                options={REGISTRATION_TYPE_OPTIONS}
+                options={[...REGISTRATION_TYPE_OPTIONS]}
               />
             )}
           />
@@ -200,7 +200,7 @@ export function SignupPage()
                 label="Country"
                 placeholder="Select Country"
                 value={field.state.value}
-                onChange={(val) => field.handleChange(val)}
+                onChange={(val) => field.handleChange(val as SignupFormValues['industry'])}
                 errors={field.state.meta.errors}
                 required
                 className="w-full"
@@ -221,7 +221,7 @@ export function SignupPage()
                 errors={field.state.meta.errors}
                 required
                 className="w-full"
-                options={INDUSTRY_OPTIONS}
+                options={[...INDUSTRY_OPTIONS]}
               />
             )}
           />
