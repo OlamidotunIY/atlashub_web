@@ -8,7 +8,7 @@ export const storageApi = {
   getSignedUrl: (req: SignedUrlRequest): Promise<SignedUrlResponse> =>
     getApi()
       .get<ApiResponse<SignedUrlResponse>>('/api/v1/storage/signed-url', {
-        params: { request: req },
+        params: req,
       })
       .then((r) => r.data.data),
 
