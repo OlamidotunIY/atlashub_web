@@ -7,4 +7,3 @@ export const WS_BASE_URL =
   'ws://localhost:3000/ws/';
 
 export const API_TIMEOUT_MS = 10000; // 10 seconds
-export const API_VERSION = 'v1';
