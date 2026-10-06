@@ -16,7 +16,7 @@ export function SignupPage()
 {
   const location = useLocation();
   const state = location.state as { invitedEmail?: string; invitationToken?: string } | null;
-  const { error, isError, mutateAsync: createUser } = useCreateUser()
+  const { error, isError, isPending, mutateAsync: createUser } = useCreateUser()
   const navigate = useNavigate();
 
   useEffect(() =>
@@ -33,39 +33,34 @@ export function SignupPage()
   }, [isError, error])
 
   const defaultValues: SignupFormValues = {
-      firstName: '',
-      lastName: '',
-      email: state?.invitedEmail || '',
-      country: '',
-      password: '',
-      inviteToken: state?.invitationToken,
-      businessName: "",
-      description: "",
-      industry: "",
-      websiteUrl: "",
-      registrationType: ""
-    };
+    firstName: '',
+    lastName: '',
+    email: state?.invitedEmail || '',
+    country: '',
+    password: '',
+    inviteToken: state?.invitationToken,
+    businessName: "",
+    description: "",
+    industry: "",
+    websiteUrl: "",
+    registrationType: ""
+  };
 
   const form = useForm({
     defaultValues,
     validators: {
-      onSubmit: ({ value }) => {
+      onSubmit: ({ value }) =>
+      {
         const result = SignupSchema.safeParse(value);
         return result.success ? undefined : result.error.issues[0]?.message;
       },
     },
     onSubmit: async ({ value }) =>
     {
-      await createUser(SignupSchema.parse(value)).then((data) =>
-      {
-        if (data.status)
-        {
-          navigate(MERCHANT_ROUTES.VERIFY_EMAIL, {
-            state: { identifier: value.email },
-            replace: true
-          });
-        }
-
+      await createUser(SignupSchema.parse(value));
+      navigate(MERCHANT_ROUTES.VERIFY_EMAIL, {
+        state: { identifier: value.email },
+        replace: true
       });
     }
   },
@@ -100,6 +95,7 @@ export function SignupPage()
                 onChange={(val) => field.handleChange(val)}
                 onBlur={field.handleBlur}
                 errors={field.state.meta.errors}
+                disabled={isPending}
                 required
                 className="w-full"
               />
@@ -119,6 +115,7 @@ export function SignupPage()
                 onChange={(val) => field.handleChange(val)}
                 onBlur={field.handleBlur}
                 errors={field.state.meta.errors}
+                disabled={isPending}
                 required
                 className="w-full"
               />
@@ -136,6 +133,7 @@ export function SignupPage()
                 onChange={(val) => field.handleChange(val)}
                 onBlur={field.handleBlur}
                 errors={field.state.meta.errors}
+                disabled={isPending}
                 required
                 className="w-full"
               />
@@ -155,7 +153,7 @@ export function SignupPage()
               onChange={(val) => field.handleChange(val)}
               onBlur={field.handleBlur}
               errors={field.state.meta.errors}
-              disabled={!!state?.invitedEmail}
+              disabled={!!state?.invitedEmail || isPending}
               required
             />
           )}
@@ -172,6 +170,7 @@ export function SignupPage()
                 value={field.state.value}
                 onChange={(val) => field.handleChange(val as SignupFormValues['registrationType'])}
                 errors={field.state.meta.errors}
+                disabled={isPending}
                 required
                 className="w-full"
                 options={[...REGISTRATION_TYPE_OPTIONS]}
@@ -191,6 +190,7 @@ export function SignupPage()
                 value={field.state.value}
                 onChange={(val) => field.handleChange(val)}
                 errors={field.state.meta.errors}
+                disabled={isPending}
                 required
                 className="w-full"
                 options={[{ value: 'NG', label: 'Nigeria (NG)' }]}
@@ -208,6 +208,7 @@ export function SignupPage()
                 value={field.state.value}
                 onChange={(val) => field.handleChange(val as SignupFormValues['industry'])}
                 errors={field.state.meta.errors}
+                disabled={isPending}
                 required
                 className="w-full"
                 options={[...INDUSTRY_OPTIONS]}
@@ -227,6 +228,7 @@ export function SignupPage()
               onChange={(val) => field.handleChange(val)}
               onBlur={field.handleBlur}
               errors={field.state.meta.errors}
+                disabled={isPending}
             />
           )}
         />
@@ -243,6 +245,7 @@ export function SignupPage()
               onChange={(val) => field.handleChange(val)}
               onBlur={field.handleBlur}
               errors={field.state.meta.errors}
+                disabled={isPending}
             />
           )}
         />
@@ -258,6 +261,7 @@ export function SignupPage()
               onChange={(val) => field.handleChange(val)}
               onBlur={field.handleBlur}
               errors={field.state.meta.errors}
+              disabled={isPending}
               required
             />
           )}
@@ -270,7 +274,7 @@ export function SignupPage()
               text="Create account"
               loadingText="Creating account..."
               isLoading={isSubmitting}
-              disabled={!canSubmit}
+              disabled={!canSubmit || isPending}
             />
           )}
         />

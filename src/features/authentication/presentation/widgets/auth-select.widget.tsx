@@ -15,6 +15,7 @@ export interface AuthSelectWidgetProps {
   onChange: (value: string) => void;
   options: AuthSelectOption[];
   errors?: unknown[];
+  disabled?: boolean;
   required?: boolean;
   className?: string;
 }
@@ -27,6 +28,7 @@ export function AuthSelectWidget({
   onChange,
   options,
   errors,
+  disabled,
   required,
   className,
 }: AuthSelectWidgetProps) {
@@ -39,7 +41,7 @@ export function AuthSelectWidget({
         {required && <span className="text-destructive"> *</span>}
       </FieldLabel>
       <Select value={value} onValueChange={onChange}>
-        <SelectTrigger id={id} className="w-full">
+        <SelectTrigger id={id} className="w-full" disabled={disabled}>
           {selectedOption ? (
             <span data-slot="select-value" className="flex flex-1 text-left items-center gap-2">
               {selectedOption.icon}
