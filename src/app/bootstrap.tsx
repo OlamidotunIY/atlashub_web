@@ -1,5 +1,6 @@
+import { WS_BASE_URL } from '@/constants';
 import { authRepository, authStore, sessionRevokedHandler } from '@/features/authentication';
-import { createApiClient, createEventRouter, setGlobalApiClient, wsConnection } from '@/shared/api';
+import { buildAuthenticatedWsUrl, createApiClient, createEventRouter, getGlobalApiClient, requestWsTicket, setGlobalApiClient, wsConnection } from '@/shared/api';
 
 
 /**
@@ -14,7 +15,9 @@ export function setupApiClient(): void
     {
       const { refreshToken } = authStore.getState();
       if (!refreshToken) throw new Error('No refresh token available');
-      const tokens = await authRepository.refreshToken(refreshToken);
+      const tokens = await authRepository.refreshToken({
+        refreshToken: refreshToken
+      });
       authStore.getState().setTokens(
         tokens.accessToken,
         tokens.refreshToken,
@@ -45,12 +48,6 @@ export function registerWsHandlers(): Array<() => void>
  */
 export async function connectWebSocket(): Promise<void>
 {
-  const { WS_BASE_URL } = await import('@/constants/api.constants.js');
-  const { requestWsTicket, buildAuthenticatedWsUrl } = await import(
-    '@/shared/api/websocket/ws-auth.js'
-  );
-  const { getGlobalApiClient } = await import('@/shared/api/http/index.js');
-
   const ticket = await requestWsTicket(getGlobalApiClient());
   const url = buildAuthenticatedWsUrl(WS_BASE_URL, ticket);
 

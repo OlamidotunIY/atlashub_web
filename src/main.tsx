@@ -8,6 +8,7 @@ import { ThemeProvider } from '@/app/providers/theme-provider.js';
 import { router } from '@/app/router/router.js';
 import { bootstrap } from '@/app/bootstrap.js';
 import { queryClient } from '@/shared/api/query/query-client.js';
+import { Toaster } from './shared/ui';
 
 // Run bootstrap synchronously (API client setup) then render.
 // hydrate() is async but we don't need to block rendering for it —
@@ -19,6 +20,7 @@ bootstrap().then(() =>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider>
           <RouterProvider router={router} />
+          <Toaster />
         </ThemeProvider>
       </QueryClientProvider>
     </StrictMode>,
