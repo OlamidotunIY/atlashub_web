@@ -46,7 +46,7 @@ export function SignupPage()
       registrationType: ""
     };
 
-  const form = useForm<SignupFormValues>({
+  const form = useForm({
     defaultValues,
     validators: {
       onSubmit: ({ value }) => {
@@ -97,7 +97,7 @@ export function SignupPage()
                 label="Business Name"
                 placeholder="Arcn."
                 value={field.state.value}
-                onChange={(val) => field.handleChange(val as SignupFormValues['registrationType'])}
+                onChange={(val) => field.handleChange(val)}
                 onBlur={field.handleBlur}
                 errors={field.state.meta.errors}
                 required
@@ -170,7 +170,7 @@ export function SignupPage()
                 label="Registration Type"
                 placeholder="Select registration type"
                 value={field.state.value}
-                onChange={(val) => field.handleChange(val)}
+                onChange={(val) => field.handleChange(val as SignupFormValues['registrationType'])}
                 errors={field.state.meta.errors}
                 required
                 className="w-full"
@@ -189,7 +189,7 @@ export function SignupPage()
                 label="Country"
                 placeholder="Select Country"
                 value={field.state.value}
-                onChange={(val) => field.handleChange(val as SignupFormValues['industry'])}
+                onChange={(val) => field.handleChange(val)}
                 errors={field.state.meta.errors}
                 required
                 className="w-full"
@@ -206,7 +206,7 @@ export function SignupPage()
                 label="Industry"
                 placeholder="Select industry"
                 value={field.state.value}
-                onChange={(val) => field.handleChange(val)}
+                onChange={(val) => field.handleChange(val as SignupFormValues['industry'])}
                 errors={field.state.meta.errors}
                 required
                 className="w-full"
