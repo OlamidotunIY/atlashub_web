@@ -39,7 +39,7 @@ export const router = createHashRouter([
   },
   {
     element: (
-      <AuthGuard fallback={MERCHANT_ROUTES.LOGIN} requireOnboarding={false}>
+      <AuthGuard fallback={MERCHANT_ROUTES.LOGIN}>
         <OnboardingLayout />
       </AuthGuard>
     ),
