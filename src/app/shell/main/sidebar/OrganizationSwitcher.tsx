@@ -5,6 +5,7 @@ import {
   AvatarImage,
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -49,23 +50,27 @@ export function OrganizationSwitcher() {
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="start" side={isMobile ? 'bottom' : 'right'} sideOffset={4}>
-            <DropdownMenuLabel>Your organizations</DropdownMenuLabel>
-            {organizations.map((organization) => (
-              <DropdownMenuItem
-                key={organization.id}
-                disabled={isPending}
-                onClick={() => selectOrganization(organization.id)}
-              >
-                <Avatar size="sm" className="rounded-md">
-                  <AvatarImage src={organization.logoUrl} alt={organization.businessName} />
-                  <AvatarFallback className="rounded-md"><BuildingsIcon /></AvatarFallback>
-                </Avatar>
-                <span className="flex-1 truncate">{organization.businessName}</span>
-                {organization.id === activeOrganization.id ? <CheckIcon /> : null}
-              </DropdownMenuItem>
-            ))}
+            <DropdownMenuGroup>
+              <DropdownMenuLabel>Your organizations</DropdownMenuLabel>
+              {organizations.map((organization) => (
+                <DropdownMenuItem
+                  key={organization.id}
+                  disabled={isPending}
+                  onClick={() => selectOrganization(organization.id)}
+                >
+                  <Avatar size="sm" className="rounded-md">
+                    <AvatarImage src={organization.logoUrl} alt={organization.businessName} />
+                    <AvatarFallback className="rounded-md"><BuildingsIcon /></AvatarFallback>
+                  </Avatar>
+                  <span className="flex-1 truncate">{organization.businessName}</span>
+                  {organization.id === activeOrganization.id ? <CheckIcon /> : null}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem disabled>Add organization coming soon</DropdownMenuItem>
+            <DropdownMenuGroup>
+              <DropdownMenuItem disabled>Add organization coming soon</DropdownMenuItem>
+            </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>

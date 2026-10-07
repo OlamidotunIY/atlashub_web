@@ -5,6 +5,7 @@ import {
   AvatarImage,
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -60,17 +61,23 @@ export function UserMenu() {
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="end" side={isMobile ? 'bottom' : 'right'} sideOffset={4}>
-            <DropdownMenuLabel>{user?.email}</DropdownMenuLabel>
+            <DropdownMenuGroup>
+              <DropdownMenuLabel>{user?.email}</DropdownMenuLabel>
+            </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => navigate(MERCHANT_ROUTES.SETTINGS)}>
-              <GearIcon />
-              Account settings
-            </DropdownMenuItem>
+            <DropdownMenuGroup>
+              <DropdownMenuItem onClick={() => navigate(MERCHANT_ROUTES.SETTINGS)}>
+                <GearIcon />
+                Account settings
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem variant="destructive" disabled={isLoggingOut} onClick={logout}>
-              <SignOutIcon />
-              Sign out
-            </DropdownMenuItem>
+            <DropdownMenuGroup>
+              <DropdownMenuItem variant="destructive" disabled={isLoggingOut} onClick={logout}>
+                <SignOutIcon />
+                Sign out
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
