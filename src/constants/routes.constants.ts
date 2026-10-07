@@ -10,6 +10,8 @@ export const MERCHANT_ROUTES = {
     ONBOARDING_COMPLETE: '/onboarding/complete',
     DASHBOARD: '/dashboard',
     SETTINGS: '/settings',
+    AUDIT_LOGS: '/audit-logs',
+    DEVELOPERS: '/developers',
     ATLAS_PAY: '/atlas-pay',
     ATLAS_PAY_TRANSACTIONS: '/atlas-pay/transactions',
     ATLAS_PAY_ACCOUNTS: '/atlas-pay/accounts',

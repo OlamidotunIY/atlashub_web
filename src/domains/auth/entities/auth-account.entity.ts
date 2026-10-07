@@ -14,6 +14,8 @@ export interface AuthAccountProps {
   onboardingStatus?: string;
   activeEnvironment?: 'TEST' | 'LIVE';
   complianceApproved?: boolean;
+  activeOrganization?: OrganizationSummaryProps;
+  activeOrganizationRole?: string;
   activeOrganizationId?: number;
   organizations?: OrganizationSummaryProps[];
 }
@@ -44,6 +46,8 @@ export class AuthAccount {
     public readonly onboardingStatus: string,
     public readonly activeEnvironment: 'TEST' | 'LIVE' = 'TEST',
     public readonly complianceApproved: boolean = false,
+    public readonly activeOrganization?: OrganizationSummary,
+    public readonly activeOrganizationRole?: string,
     public readonly imageUrl?: string,
     public readonly firstName?: string,
     public readonly lastName?: string,
@@ -90,6 +94,14 @@ export class AuthAccount {
       data.onboardingStatus || 'NO_ORG',
       data.activeEnvironment ?? 'TEST',
       data.complianceApproved ?? false,
+      data.activeOrganization?.id == null ? undefined : {
+        id: data.activeOrganization.id,
+        businessName: data.activeOrganization.businessName ?? 'Unnamed organization',
+        country: data.activeOrganization.country,
+        baseCurrency: data.activeOrganization.baseCurrency,
+        logoUrl: data.activeOrganization.logoUrl,
+      },
+      data.activeOrganizationRole,
       data.imageUrl,
       data.firstName,
       data.lastName,

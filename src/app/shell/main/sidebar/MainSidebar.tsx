@@ -1,6 +1,7 @@
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from '@/shared/ui';
 import { OrganizationSwitcher } from './OrganizationSwitcher';
-import { SidebarNavigation } from './SidebarNavigation';
+import { SidebarNavigation, SidebarProductNavigation } from './SidebarNavigation';
+import { SidebarUtilityNavigation } from './SidebarUtilityNavigation';
 import { UserMenu } from './UserMenu';
 
 export function MainSidebar() {
@@ -12,9 +13,11 @@ export function MainSidebar() {
 
       <SidebarContent>
         <SidebarNavigation />
+        <SidebarProductNavigation />
       </SidebarContent>
 
       <SidebarFooter>
+        <SidebarUtilityNavigation />
         <UserMenu />
       </SidebarFooter>
     </Sidebar>

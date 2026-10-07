@@ -15,15 +15,14 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/shared/ui';
-import { BuildingsIcon, CaretUpDownIcon, CheckIcon } from '@phosphor-icons/react';
+import { CaretRightIcon, CheckIcon } from '@phosphor-icons/react';
 
 export function OrganizationSwitcher() {
   const { data: user } = useMe();
   const { mutate: switchOrganization, isPending } = useSwitchOrganization();
   const { isMobile } = useSidebar();
   const organizations = user?.organizations ?? [];
-  const activeOrganization = organizations.find((organization) => organization.id === user?.activeOrganizationId)
-    ?? organizations[0];
+  const activeOrganization = user?.activeOrganization ?? organizations[0];
 
   if (!activeOrganization) return null;
 
@@ -40,13 +39,15 @@ export function OrganizationSwitcher() {
           <DropdownMenuTrigger render={<SidebarMenuButton size="lg" disabled={isPending} />}>
             <Avatar className="rounded-lg">
               <AvatarImage src={activeOrganization.logoUrl} alt={activeOrganization.businessName} />
-              <AvatarFallback className="rounded-lg"><BuildingsIcon /></AvatarFallback>
+              <AvatarFallback className="rounded-lg bg-white font-semibold text-slate-950">
+                {activeOrganization.businessName.charAt(0).toUpperCase()}
+              </AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
               <span className="truncate font-medium">{activeOrganization.businessName}</span>
-              <span className="truncate text-xs">{activeOrganization.baseCurrency ?? 'Workspace'}</span>
+              <span className="truncate text-xs">{user?.activeOrganizationRole ?? 'Member'}</span>
             </div>
-            <CaretUpDownIcon className="ml-auto" />
+            <CaretRightIcon className="ml-auto" />
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="start" side={isMobile ? 'bottom' : 'right'} sideOffset={4}>
@@ -60,7 +61,9 @@ export function OrganizationSwitcher() {
                 >
                   <Avatar size="sm" className="rounded-md">
                     <AvatarImage src={organization.logoUrl} alt={organization.businessName} />
-                    <AvatarFallback className="rounded-md"><BuildingsIcon /></AvatarFallback>
+                    <AvatarFallback className="rounded-md bg-white font-semibold text-slate-950">
+                      {organization.businessName.charAt(0).toUpperCase()}
+                    </AvatarFallback>
                   </Avatar>
                   <span className="flex-1 truncate">{organization.businessName}</span>
                   {organization.id === activeOrganization.id ? <CheckIcon /> : null}

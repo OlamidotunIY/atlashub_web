@@ -2,10 +2,8 @@
 import { MERCHANT_ROUTES } from '@/constants';
 import {
   BuildingsIcon,
-  GearIcon,
   HouseIcon,
   TruckIcon,
-  UsersThreeIcon,
   WalletIcon,
 } from '@phosphor-icons/react';
 import {
@@ -16,8 +14,11 @@ import {
 } from '@/shared/ui';
 import { SidebarNavigationItem, type SidebarNavigationItemDefinition } from './SidebarNavigationItem';
 
-const navigationItems: SidebarNavigationItemDefinition[] = [
+const workspaceNavigationItems: SidebarNavigationItemDefinition[] = [
   { label: 'Overview', to: MERCHANT_ROUTES.DASHBOARD, icon: HouseIcon },
+];
+
+const productNavigationItems: SidebarNavigationItemDefinition[] = [
   {
     label: 'AtlasPay',
     to: MERCHANT_ROUTES.ATLAS_PAY,
@@ -49,8 +50,6 @@ const navigationItems: SidebarNavigationItemDefinition[] = [
       { label: 'Fleet', to: MERCHANT_ROUTES.LOGISTICS_FLEET },
     ],
   },
-  { label: 'Team', to: MERCHANT_ROUTES.TEAM, icon: UsersThreeIcon },
-  { label: 'Settings', to: MERCHANT_ROUTES.SETTINGS, icon: GearIcon },
 ];
 
 export function SidebarNavigation() {
@@ -59,7 +58,20 @@ export function SidebarNavigation() {
       <SidebarGroupLabel>Workspace</SidebarGroupLabel>
       <SidebarGroupContent>
         <SidebarMenu>
-          {navigationItems.map((item) => <SidebarNavigationItem key={item.to} item={item} />)}
+          {workspaceNavigationItems.map((item) => <SidebarNavigationItem key={item.to} item={item} />)}
+        </SidebarMenu>
+      </SidebarGroupContent>
+    </SidebarGroup>
+  );
+}
+
+export function SidebarProductNavigation() {
+  return (
+    <SidebarGroup>
+      <SidebarGroupLabel>Products</SidebarGroupLabel>
+      <SidebarGroupContent>
+        <SidebarMenu>
+          {productNavigationItems.map((item) => <SidebarNavigationItem key={item.to} item={item} />)}
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
