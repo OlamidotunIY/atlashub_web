@@ -21,7 +21,8 @@ const PAGE_TITLES: Record<string, string> = {
   [MERCHANT_ROUTES.MARKETPLACE]: 'Marketplace',
 };
 
-export function MainHeader() {
+export function MainHeader()
+{
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const { data: user } = useMe();
@@ -30,7 +31,8 @@ export function MainHeader() {
   const isTestMode = user?.activeEnvironment !== 'LIVE';
   const canSwitchEnvironment = user?.complianceApproved === true;
 
-  const toggleEnvironment = () => {
+  const toggleEnvironment = () =>
+  {
     switchEnvironment({ environment: isTestMode ? 'LIVE' : 'TEST' });
   };
 
@@ -42,15 +44,14 @@ export function MainHeader() {
         <h1 className="truncate text-sm font-medium">{title}</h1>
       </div>
 
-      <div className="absolute left-1/2 hidden -translate-x-1/2 lg:block">
-        {isTestMode ? (
-          <Badge className="h-7 rounded-md border-0 bg-orange-600 px-3 text-xs text-white hover:bg-orange-600">
-            You&apos;re in test mode. No real transactions will be processed. <span className="underline">Learn more ↗</span>
-          </Badge>
-        ) : (
-          <Badge className="h-7 rounded-md border-0 bg-emerald-600 px-3 text-xs text-white hover:bg-emerald-600">
-            You&apos;re in live mode. Real transactions may be processed.
-          </Badge>
+      <div className="absolute top-0 w-full left-0">
+        {isTestMode && (
+          <div className='flex flex-col align-center justify-center items-center'>
+            <div className='h-2 w-full rounded-sm bg-linear-to-r from-orange-600/0 via-orange-600 to-orange-600/0' />
+            <Badge className="h-7 rounded-none rounded-b-md border-0 bg-orange-600 px-3 text-xs text-white">
+              You&apos;re in test mode. No real transactions will be processed. <span className="underline">Learn more ↗</span>
+            </Badge>
+          </div>
         )}
       </div>
 
