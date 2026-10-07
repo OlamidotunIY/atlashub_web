@@ -1,4 +1,5 @@
 import { WS_BASE_URL } from '@/constants';
+import { getDeviceFingerprint } from '@/shared/lib';
 import { authRepository, authStore, sessionRevokedHandler } from '@/features/authentication';
 import { buildAuthenticatedWsUrl, createApiClient, createEventRouter, getGlobalApiClient, requestWsTicket, setGlobalApiClient, wsConnection } from '@/shared/api';
 
@@ -17,7 +18,10 @@ export function setupApiClient(): void
       {
         const { refreshToken } = authStore.getState();
         if (!refreshToken) throw new Error('No refresh token available');
-        const tokens = await authRepository.refreshToken({ refreshToken });
+        const tokens = await authRepository.refreshToken({
+          refreshToken,
+          deviceFingerprint: getDeviceFingerprint(),
+        });
         authStore.getState().setTokens(
           tokens.accessToken,
           tokens.refreshToken,
@@ -73,7 +77,5 @@ export async function bootstrap(): Promise<void>
   // 2. Register WS handlers (they'll start listening on the event bus)
   registerWsHandlers();
 
-  // 3. Rehydrate auth state from persisted storage
-  await authStore.getState().hydrate();
 }
 

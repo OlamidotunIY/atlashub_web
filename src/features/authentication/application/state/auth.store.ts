@@ -1,92 +1,60 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import { jwtDecode } from 'jwt-decode';
-
-export interface TokenStorage {
-  setTokens(accessToken: string, refreshToken: string): Promise<void> | void;
-  clearTokens(): Promise<void> | void;
-  getTokens(): { accessToken: string | null; refreshToken: string | null } | Promise<{ accessToken: string | null; refreshToken: string | null }>;
-}
-
-let globalStorageAdapter: TokenStorage | null = null;
-
-/**
- * Inject a platform-specific storage adapter (e.g. localStorage, SecureStore).
- * Call this once during app bootstrap before any auth operations.
- */
-export const setAuthStorageAdapter = (adapter: TokenStorage) => {
-  globalStorageAdapter = adapter;
-};
 
 export interface AuthState {
   accessToken: string | null;
   refreshToken: string | null;
-  expiresAt: string | null;
+  expiresAt: number | null;
   jti: string | null;
   isHydrated: boolean;
-  setTokens: (accessToken: string, refreshToken: string, expiresAt?: string) => void;
+  markHydrated: () => void;
+  setTokens: (accessToken: string, refreshToken: string, expiresAt?: number) => void;
   clear: () => void;
   isAuthenticated: () => boolean;
-  /** Returns true if the access token exists but has passed its expiry timestamp */
   isExpired: () => boolean;
-  hydrate: () => Promise<void>;
 }
 
-/**
- * Core auth token store. Pure Zustand — no React imports.
- * Access from non-React code via authStore.getState().
- * Access from React components via the useAuthStore hook in presentation/hooks/.
- */
-export const authStore = create<AuthState>()((set, get) => ({
-  accessToken: null,
-  refreshToken: null,
-  expiresAt: null,
-  jti: null,
-  isHydrated: false,
+/** Browser authentication state persisted by Zustand's localStorage middleware. */
+export const authStore = create<AuthState>()(
+  persist(
+    (set, get) => ({
+      accessToken: null,
+      refreshToken: null,
+      expiresAt: null,
+      jti: null,
+      isHydrated: false,
 
-  setTokens: (accessToken: string, refreshToken: string, expiresAt?: string) => {
-    try {
-      const decoded = jwtDecode<{ jti?: string }>(accessToken);
-      set({ accessToken, refreshToken, expiresAt: expiresAt ?? null, jti: decoded.jti ?? null });
-    } catch {
-      set({ accessToken, refreshToken, expiresAt: expiresAt ?? null, jti: null });
-    }
-    globalStorageAdapter?.setTokens(accessToken, refreshToken);
-  },
+      markHydrated: () => set({ isHydrated: true }),
 
-  clear: () => {
-    set({ accessToken: null, refreshToken: null, expiresAt: null, jti: null });
-    globalStorageAdapter?.clearTokens();
-  },
-
-  isAuthenticated: () => !!get().accessToken,
-
-  isExpired: () => {
-    const { accessToken, expiresAt } = get();
-    if (!accessToken) return false;
-    if (!expiresAt) return false;
-    return Date.now() >= new Date(expiresAt).getTime();
-  },
-
-  hydrate: async () => {
-    if (globalStorageAdapter) {
-      const tokens = await globalStorageAdapter.getTokens();
-      if (tokens.accessToken) {
+      setTokens: (accessToken, refreshToken, expiresAt) => {
+        let jti: string | null = null;
         try {
-          const decoded = jwtDecode<{ jti?: string }>(tokens.accessToken);
-          set({
-            accessToken: tokens.accessToken,
-            refreshToken: tokens.refreshToken,
-            jti: decoded.jti ?? null,
-            isHydrated: true,
-          });
-          return;
+          jti = jwtDecode<{ jti?: string }>(accessToken).jti ?? null;
         } catch {
-          set({ accessToken: tokens.accessToken, refreshToken: tokens.refreshToken, isHydrated: true });
-          return;
+          jti = null;
         }
-      }
-    }
-    set({ isHydrated: true });
-  },
-}));
+        set({ accessToken, refreshToken, expiresAt: expiresAt ?? null, jti });
+      },
 
+      clear: () => set({ accessToken: null, refreshToken: null, expiresAt: null, jti: null }),
+
+      isAuthenticated: () => Boolean(get().accessToken),
+
+      isExpired: () => {
+        const { accessToken, expiresAt } = get();
+        return Boolean(accessToken && expiresAt && Date.now() >= expiresAt * 1000);
+      },
+    }),
+    {
+      name: 'atlashub-auth-session',
+      partialize: (state) => ({
+        accessToken: state.accessToken,
+        refreshToken: state.refreshToken,
+        expiresAt: state.expiresAt,
+        jti: state.jti,
+      }),
+      onRehydrateStorage: () => (state) => state?.markHydrated(),
+    },
+  ),
+);
