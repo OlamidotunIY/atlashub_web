@@ -5,6 +5,7 @@ import type {
   LoginWebResponse,
   RefreshTokenRequest,
   RefreshTokenWebResponse,
+  SwitchEnvironmentRequest,
   SwitchOrganizationRequest,
   UserProfileResponse,
   VerifyEmailRequest,
@@ -36,6 +37,11 @@ export const authApi = {
   switchOrganization: (req: SwitchOrganizationRequest): Promise<RefreshTokenWebResponse> =>
     getApi()
       .post<ApiResponse<RefreshTokenWebResponse>>('/api/v1/organizations/switch', req)
+      .then((r) => r.data.data),
+
+  switchEnvironment: (req: SwitchEnvironmentRequest): Promise<RefreshTokenWebResponse> =>
+    getApi()
+      .post<ApiResponse<RefreshTokenWebResponse>>('/api/v1/environments/switch', req)
       .then((r) => r.data.data),
 
   logout: (): Promise<void> =>

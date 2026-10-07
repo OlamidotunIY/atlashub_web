@@ -12,6 +12,8 @@ export interface AuthAccountProps {
   status?: string;
   scope?: string;
   onboardingStatus?: string;
+  activeEnvironment?: 'TEST' | 'LIVE';
+  complianceApproved?: boolean;
   activeOrganizationId?: number;
   organizations?: OrganizationSummaryProps[];
 }
@@ -40,6 +42,8 @@ export class AuthAccount {
     public readonly scope: string,
     public readonly twoFactorEnabled: boolean,
     public readonly onboardingStatus: string,
+    public readonly activeEnvironment: 'TEST' | 'LIVE' = 'TEST',
+    public readonly complianceApproved: boolean = false,
     public readonly imageUrl?: string,
     public readonly firstName?: string,
     public readonly lastName?: string,
@@ -84,6 +88,8 @@ export class AuthAccount {
       data.scope || '',
       data.totpEnabled || false,
       data.onboardingStatus || 'NO_ORG',
+      data.activeEnvironment ?? 'TEST',
+      data.complianceApproved ?? false,
       data.imageUrl,
       data.firstName,
       data.lastName,
