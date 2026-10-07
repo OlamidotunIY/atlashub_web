@@ -1,5 +1,5 @@
-import { MainHeader } from '@/app/shell/header';
-import { MainSidebar } from '@/app/shell/sidebar';
+import { MainHeader } from './header';
+import { MainSidebar } from './sidebar';
 import { SidebarInset, SidebarProvider } from '@/shared/ui';
 import { Outlet } from 'react-router-dom';
 
