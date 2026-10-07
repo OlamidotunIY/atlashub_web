@@ -26,8 +26,7 @@ export function LoginPage()
       await login.mutateAsync({
         email: value.identifier,
         password: value.password,
-        deviceFingerprint: getDeviceFingerprint(),
-        environment: "TEST"
+        deviceFingerprint: getDeviceFingerprint()
       });
     },
   });

@@ -48,7 +48,7 @@ export function MainHeader()
         {isTestMode && (
           <div className='flex flex-col align-center justify-center items-center'>
             <div className='h-2 w-full rounded-sm bg-[linear-gradient(90deg,transparent_0%,#ea580c_38%,#ea580c_62%,transparent_100%)]' />
-            <Badge className="h-7 rounded-none rounded-b-md border-0 bg-orange-600 px-3 text-xs text-white">
+            <Badge className="h-7 rounded-none rounded-b-md border-0 bg-[#ea580c] px-3 text-xs text-white">
               You&apos;re in test mode. No real transactions will be processed. <span className="underline">Learn more ↗</span>
             </Badge>
           </div>

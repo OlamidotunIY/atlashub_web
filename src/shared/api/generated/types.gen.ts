@@ -186,7 +186,6 @@ export type SwitchOrganizationRequest = {
 export type LoginRequest = {
   email: string
   password: string
-  environment: "TEST" | "LIVE"
   deviceFingerprint: string
 }
 
