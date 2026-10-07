@@ -16,7 +16,12 @@ export const MERCHANT_ROUTES = {
     TEAM: '/team',
     MARKETPLACE: '/marketplace',
     COMMERCE: '/commerce',
+    COMMERCE_PRODUCTS: '/commerce/products',
+    COMMERCE_ORDERS: '/commerce/orders',
+    COMMERCE_INVENTORY: '/commerce/inventory',
     LOGISTICS: '/logistics',
+    LOGISTICS_SHIPMENTS: '/logistics/shipments',
+    LOGISTICS_FLEET: '/logistics/fleet',
 }
 
 export const ADMIN_ROUTES = {
