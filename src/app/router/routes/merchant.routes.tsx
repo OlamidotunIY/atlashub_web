@@ -1,14 +1,15 @@
 import { AuthGuard } from '@/app/guard';
+import { MainLayout } from '@/app/shell';
 import { MERCHANT_ROUTES } from '@/constants';
 import { OverviewPage } from '@/pages/main';
 import { PlaceholderPage } from '@/pages/placeholder';
-import { Outlet, type RouteObject } from 'react-router-dom';
+import type { RouteObject } from 'react-router-dom';
 
 export const merchantRoutes: RouteObject[] = [
   {
     element: (
       <AuthGuard fallback={MERCHANT_ROUTES.LOGIN}>
-        <Outlet />
+        <MainLayout />
       </AuthGuard>
     ),
     children: [
