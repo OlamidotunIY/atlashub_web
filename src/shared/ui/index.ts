@@ -15,6 +15,7 @@ export * from './sheet';
 export * from './sidebar';
 export * from './skeleton';
 export * from './spinner';
+export * from './switch';
 export * from './toast';
 export * from './tooltip';
 export * from './logo';
