@@ -10,6 +10,7 @@ import
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
+  InputOTPSeparator,
 } from '@/shared/ui';
 import { authFlowStore, AuthFormHeader, useVerifyEmail } from '@/features/authentication';
 import { MERCHANT_ROUTES } from '@/constants';
@@ -89,26 +90,34 @@ export function VerifyEmailPage()
         <form.Field
           name="code"
           children={(field) => (
-            <Field className="items-center">
+            <Field className="items-center w-full">
               <FieldLabel htmlFor={field.name} className="sr-only">Verification Code</FieldLabel>
-              <InputOTP
-                maxLength={6}
-                value={field.state.value}
-                onChange={(val: string) => field.handleChange(val)}
-                disabled={isPending}
-              >
-                <InputOTPGroup>
-                  <InputOTPSlot index={0} />
-                  <InputOTPSlot index={1} />
-                  <InputOTPSlot index={2} />
-                  <InputOTPSlot index={3} />
-                  <InputOTPSlot index={4} />
-                  <InputOTPSlot index={5} />
-                </InputOTPGroup>
-              </InputOTP>
+              <div className="flex w-full justify-center">
+                <InputOTP
+                  maxLength={6}
+                  value={field.state.value}
+                  onChange={(val: string) => field.handleChange(val)}
+                  disabled={isPending}
+                >
+                  <InputOTPGroup className='*:data-[slot=input-otp-slot]:h-12 *:data-[slot=input-otp-slot]:w-11 *:data-[slot=input-otp-slot]:text-xl'>
+                    <InputOTPSlot index={0} />
+                    <InputOTPSlot index={1} />
+                  </InputOTPGroup>
+                  <InputOTPSeparator className="mx-2" />
+                  <InputOTPGroup className='*:data-[slot=input-otp-slot]:h-12 *:data-[slot=input-otp-slot]:w-11 *:data-[slot=input-otp-slot]:text-xl'>
+                    <InputOTPSlot index={2} />
+                    <InputOTPSlot index={3} />
+                  </InputOTPGroup>
+                  <InputOTPSeparator className="mx-2" />
+                  <InputOTPGroup className='*:data-[slot=input-otp-slot]:h-12 *:data-[slot=input-otp-slot]:w-11 *:data-[slot=input-otp-slot]:text-xl'>
+                    <InputOTPSlot index={4} />
+                    <InputOTPSlot index={5} />
+                  </InputOTPGroup>
+                </InputOTP>
+              </div>
               {field.state.meta.errors ? (
                 <p className="text-[0.8rem] font-medium text-destructive mt-2 text-center">
-                  {field.state.meta.errors.map((err) => typeof err === 'string' ? err : err?.message || JSON.stringify(err)).join(', ')}
+                  {field.state.meta.errors.join(', ')}
                 </p>
               ) : null}
             </Field>

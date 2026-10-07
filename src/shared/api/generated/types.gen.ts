@@ -39,7 +39,17 @@ export type UpdateOrganizationRequest = {
   businessName: string
   description?: string
   logoUrl?: string
-  industry?: string
+  industry?:
+    | "PHYSICAL_GOODS"
+    | "DIGITAL_SERVICES"
+    | "PHYSICAL_SERVICES"
+    | "PROFESSIONAL_SERVICES"
+    | "HOTELS"
+    | "RESTAURANTS"
+    | "COURIER_SERVICES"
+    | "FREIGHT_SERVICES"
+    | "RETAIL"
+    | "WHOLESALE"
   websiteUrl?: string
 }
 
@@ -61,7 +71,7 @@ export type AddressRequest = {
 }
 
 export type BusinessOfficerRequest = {
-  role: string
+  role: "OWNER" | "DIRECTOR"
   firstName: string
   middleName?: string
   lastName: string
@@ -103,8 +113,18 @@ export type RegisterRequest = {
   password: string
   country: string
   businessName: string
-  registrationType: string
-  industry: string
+  registrationType: "SOLE_PROPRIETORSHIP" | "PRIVATE_LIMITED_COMPANY"
+  industry:
+    | "PHYSICAL_GOODS"
+    | "DIGITAL_SERVICES"
+    | "PHYSICAL_SERVICES"
+    | "PROFESSIONAL_SERVICES"
+    | "HOTELS"
+    | "RESTAURANTS"
+    | "COURIER_SERVICES"
+    | "FREIGHT_SERVICES"
+    | "RETAIL"
+    | "WHOLESALE"
   description?: string
   logoUrl?: string
   websiteUrl?: string
@@ -166,7 +186,7 @@ export type SwitchOrganizationRequest = {
 export type LoginRequest = {
   email: string
   password: string
-  environment: string
+  environment: "TEST" | "LIVE"
   deviceFingerprint: string
 }
 
@@ -178,7 +198,7 @@ export type ApiResponseLoginWebResponse = {
 }
 
 export type LoginWebResponse = {
-  status?: string
+  status?: "SUCCESS" | "OTP_REQUIRED"
   accessToken?: string
   accessTokenExpiresAt?: string
   refreshToken?: string
@@ -196,7 +216,7 @@ export type InvitationTokenRequest = {
 }
 
 export type SwitchEnvironmentRequest = {
-  environment: string
+  environment: "TEST" | "LIVE"
 }
 
 export type VerifyEmailRequest = {
@@ -221,7 +241,7 @@ export type ServiceAgreementRequest = {
 
 export type IssueApiKeyRequest = {
   name: string
-  environment: string
+  environment: "TEST" | "LIVE"
   boundRoleId: number
 }
 
@@ -274,7 +294,7 @@ export type ApiResponseListSessionWebResponse = {
 export type SessionWebResponse = {
   id?: number
   organizationId?: number
-  environment?: string
+  environment?: "TEST" | "LIVE"
   expiresAt?: string
   ipAddress?: string
   userAgent?: string
@@ -356,7 +376,7 @@ export type OutletResponse = {
   country?: string
   currency?: string
   managerId?: number
-  status?: string
+  status?: "ACTIVE" | "SUSPENDED" | "CLOSED"
   createdAt?: string
   updatedAt?: string
 }
@@ -378,8 +398,18 @@ export type ApiResponseOrganizationDetailsResponse = {
 export type OrganizationDetailsResponse = {
   id?: number
   businessName?: string
-  registrationType?: string
-  industry?: string
+  registrationType?: "SOLE_PROPRIETORSHIP" | "PRIVATE_LIMITED_COMPANY"
+  industry?:
+    | "PHYSICAL_GOODS"
+    | "DIGITAL_SERVICES"
+    | "PHYSICAL_SERVICES"
+    | "PROFESSIONAL_SERVICES"
+    | "HOTELS"
+    | "RESTAURANTS"
+    | "COURIER_SERVICES"
+    | "FREIGHT_SERVICES"
+    | "RETAIL"
+    | "WHOLESALE"
   registrationDate?: string
   description?: string
   logoUrl?: string
@@ -501,14 +531,30 @@ export type ApiResponsePageResultLedgerTransactionResponse = {
 
 export type LedgerEntryResponse = {
   accountId?: number
-  entryType?: string
+  entryType?: "DEBIT" | "CREDIT"
   amount?: number
 }
 
 export type LedgerTransactionResponse = {
   transactionId?: number
   reference?: string
-  sourceSystem?: string
+  sourceSystem?:
+    | "COMMERCE_CHECKOUT"
+    | "COMMERCE_REFUND"
+    | "PLATFORM_BILLING"
+    | "PAYROLL"
+    | "LOAN_DISBURSEMENT"
+    | "INTER_OUTLET_TRANSFER"
+    | "CASH_BANKING"
+    | "EXTERNAL_COLLECTION"
+    | "CARD_CHARGE"
+    | "PAYOUT"
+    | "SETTLEMENT"
+    | "SPLIT"
+    | "ESCROW_RELEASE"
+    | "ESCROW_REFUND"
+    | "MANUAL"
+    | "SYSTEM"
   sourceReferenceId?: string
   description?: string
   currency?: string
@@ -526,7 +572,17 @@ export type PageResultLedgerTransactionResponse = {
 
 export type AccountBalanceResponse = {
   accountId?: number
-  accountType?: string
+  accountType?:
+    | "OPERATING"
+    | "PAYROLL_RESERVE"
+    | "TAX_HOLDING"
+    | "ESCROW"
+    | "SUSPENSE"
+    | "PROVIDER_CLEARING"
+    | "TILL"
+    | "SPLIT_HOLDING"
+    | "CUSTOMER_FUNDS"
+    | "VENDOR_PAYABLE"
   balance?: number
   currency?: string
   asOf?: string
@@ -714,7 +770,7 @@ export type ApiKeyResult = {
   organizationId?: number
   publicKey?: string
   name?: string
-  environment?: string
+  environment?: "TEST" | "LIVE"
   isRevoked?: boolean
   boundRoleId?: number
   lastUsedAt?: string
@@ -1377,7 +1433,7 @@ export type List2Data = {
   body?: never
   path?: never
   query?: {
-    environment?: string
+    environment?: "TEST" | "LIVE"
   }
   url: "/api/v1/api-keys"
 }

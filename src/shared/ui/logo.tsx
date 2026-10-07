@@ -23,7 +23,7 @@ const Logo = ({ size = "md", textColor, className, ...props }: LogoProps) => {
     return (
         <div className={cn("flex items-center gap-2 font-medium", className)} {...props}>
             <div className={cn("flex items-center justify-center rounded-sm overflow-hidden bg-primary shrink-0", iconSizes[size])}>
-                <img src="/src/assets/icon.png" alt="Atlaspay Logo" className="w-full h-full object-cover" />
+                <img src="https://res.cloudinary.com/dtvshonld/image/upload/v1791359769/Atlashub/icon_mufoxm.png" alt="Atlaspay Logo" className="w-full h-full object-cover" />
             </div>
             <p className={cn(textSizes[size], textColor)}>AtlasHub</p>
         </div>

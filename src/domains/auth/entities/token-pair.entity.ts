@@ -1,16 +1,16 @@
 export interface TokenPairProps {
   accessToken: string ;
   refreshToken: string;
-  accessExpiresAt: string;
-  refreshExpiresAt: string;
+  accessExpiresAt: number;
+  refreshExpiresAt: number;
 }
 
 export class TokenPair {
   constructor(
     public readonly accessToken: string,
     public readonly refreshToken: string,
-    public readonly accessExpiresAt: string,
-    public readonly refreshExpiresAt: string
+    public readonly accessExpiresAt: number,
+    public readonly refreshExpiresAt: number
   ) {}
 
   /**
@@ -18,15 +18,15 @@ export class TokenPair {
    */
 
   isAccessTokenExpired(): boolean {
-    return new Date() >= new Date(this.accessExpiresAt);
+    return new Date() >= new Date(this.accessExpiresAt * 1000);
   }
 
   isRefreshTokenExpired(): boolean {
-    return new Date() >= new Date(this.refreshExpiresAt);
+    return new Date() >= new Date(this.refreshExpiresAt * 1000);
   }
 
   getMsUntilAccessExpiry(): number {
-    return new Date(this.accessExpiresAt).getTime() - Date.now();
+    return this.accessExpiresAt * 1000 - Date.now();
   }
 
   /**

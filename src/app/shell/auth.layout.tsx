@@ -19,7 +19,7 @@ export function AuthLayout()
       </div>
       <div className="relative hidden bg-muted lg:block h-full">
         <img
-          src={'/src/assets/auth-image.png'}
+          src="https://res.cloudinary.com/dtvshonld/image/upload/v1791359771/Atlashub/auth-image_ezbooc.png"
           alt="Authentication Background"
           className="absolute h-full w-full object-cover"
         />

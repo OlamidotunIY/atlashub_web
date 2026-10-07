@@ -3,11 +3,9 @@ import {
   type IAuthRepository,
   TokenPair,
   type AuthAccountProps,
-  type TokenPairProps,
 } from "@/domains/auth"
 import type {
   LoginRequest,
-  LogoutRequest,
   RefreshTokenRequest,
   VerifyEmailRequest,
 } from "@/shared/api/generated"
@@ -17,10 +15,10 @@ export class AuthRepository implements IAuthRepository {
   async login(credentials: LoginRequest): Promise<TokenPair> {
     const response = await authApi.login(credentials)
     return TokenPair.fromJson({
-      accessToken: response.data?.accessToken as string,
-      accessExpiresAt: response.data?.accessTokenExpiresAt as string,
-      refreshExpiresAt: response.data?.refreshTokenExpiresAt as string,
-      refreshToken: response.data?.refreshToken as string,
+      accessToken: response.accessToken as string,
+      refreshToken: response.refreshToken as string,
+      accessExpiresAt: Number(response.accessTokenExpiresAt),
+      refreshExpiresAt: Number(response.refreshTokenExpiresAt),
     })
   }
 
@@ -34,11 +32,16 @@ export class AuthRepository implements IAuthRepository {
 
   async refreshToken(req: RefreshTokenRequest): Promise<TokenPair> {
     const dto = await authApi.refreshToken(req)
-    return TokenPair.fromJson(dto as TokenPairProps)
+    return TokenPair.fromJson({
+      accessToken: dto.accessToken as string,
+      refreshToken: dto.refreshToken as string,
+      accessExpiresAt: Number(dto.accessTokenExpiresAt),
+      refreshExpiresAt: Number(dto.refreshTokenExpiresAt),
+    })
   }
 
-  async logout(req: LogoutRequest): Promise<void> {
-    await authApi.logout(req)
+  async logout(): Promise<void> {
+    await authApi.logout()
   }
 
   async logoutAll(): Promise<void> {

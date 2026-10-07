@@ -1,7 +1,9 @@
 import { MERCHANT_ROUTES } from '@/constants';
-import { AuthButtonWidget, AuthFieldWidget, AuthFormHeader, LoginSchema, useLogin } from '@/features/authentication';
+import { AuthButtonWidget, AuthFieldWidget, authFlowStore, AuthFormHeader, LoginSchema, useLogin } from '@/features/authentication';
+import { getDeviceFingerprint } from '@/shared/lib';
 import { Field, FieldDescription, FieldGroup } from '@/shared/ui';
 import { useForm } from '@tanstack/react-form';
+import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 export function LoginPage()
@@ -17,17 +19,29 @@ export function LoginPage()
       password: '',
     },
     validators: {
-      onChange: LoginSchema,
+      onSubmit: LoginSchema,
     },
     onSubmit: async ({ value }) =>
     {
       await login.mutateAsync({
         email: value.identifier,
         password: value.password,
-        deviceFingerprint: ""
+        deviceFingerprint: getDeviceFingerprint(),
+        environment: "TEST"
       });
     },
   });
+
+  useEffect(() =>
+  {
+    if (error)
+    {
+      if (error.message === "Email verification is required to login")
+      {
+        authFlowStore.getState().beginEmailVerification(form.getFieldValue("identifier"));
+      }
+    }
+  }, [error, form]);
 
   return (
     <form

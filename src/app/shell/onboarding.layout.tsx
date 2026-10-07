@@ -44,7 +44,7 @@ export function OnboardingLayout()
     {
       await logout({
         refreshToken: refreshToken as string,
-        accessTokenExpiresAt: expiresAt as string,
+        accessTokenExpiresAt: String(expiresAt),
         accessTokenJti: jti
       }).catch(() => { });
     }

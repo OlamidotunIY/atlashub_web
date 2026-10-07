@@ -2,20 +2,19 @@ import type { ApiResponse } from "@/shared"
 import { getGlobalApiClient } from "@/shared/api"
 import type {
   LoginRequest,
-  LoginResponse,
-  LogoutRequest,
+  LoginWebResponse,
   RefreshTokenRequest,
-  RefreshTokenResponse,
-  UserProfileResult,
+  RefreshTokenWebResponse,
+  UserProfileResponse,
   VerifyEmailRequest,
 } from "@/shared/api/generated"
 
 const getApi = () => getGlobalApiClient()
 
 export const authApi = {
-  login: (req: LoginRequest): Promise<LoginResponse> =>
+  login: (req: LoginRequest): Promise<LoginWebResponse> =>
     getApi()
-      .post<ApiResponse<LoginResponse>>("/api/v1/login", req)
+      .post<ApiResponse<LoginWebResponse>>("/api/v1/login", req)
       .then((r) => r.data.data),
 
   verifyEmail: (req: VerifyEmailRequest): Promise<void> =>
@@ -28,14 +27,14 @@ export const authApi = {
       .post<ApiResponse<void>>("/api/v1/email/resend-verification", req)
       .then(() => undefined),
 
-  refreshToken: (req: RefreshTokenRequest): Promise<RefreshTokenResponse> =>
+  refreshToken: (req: RefreshTokenRequest): Promise<RefreshTokenWebResponse> =>
     getApi()
-      .post<ApiResponse<RefreshTokenResponse>>("/api/v1/refresh", req)
+      .post<ApiResponse<RefreshTokenWebResponse>>("/api/v1/refresh", req)
       .then((r) => r.data.data),
 
-  logout: (req: LogoutRequest): Promise<void> =>
+  logout: (): Promise<void> =>
     getApi()
-      .post<ApiResponse<void>>("/api/v1/logout", req)
+      .post<ApiResponse<void>>("/api/v1/logout")
       .then(() => undefined),
 
   logoutAll: (): Promise<void> =>
@@ -43,8 +42,8 @@ export const authApi = {
       .post<ApiResponse<void>>("/api/v1/logout-all")
       .then(() => undefined),
 
-  getMe: (): Promise<UserProfileResult> =>
+  getMe: (): Promise<UserProfileResponse> =>
     getApi()
-      .get<ApiResponse<UserProfileResult>>("/api/v1/me")
+      .get<ApiResponse<UserProfileResponse>>("/api/v1/me")
       .then((r) => r.data.data),
 }
