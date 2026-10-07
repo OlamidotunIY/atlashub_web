@@ -48,7 +48,7 @@ export function UserMenu() {
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
-          <DropdownMenuTrigger render={<SidebarMenuButton size="lg" disabled={isLoggingOut} />}>
+          <DropdownMenuTrigger render={<SidebarMenuButton size="lg" className="group-data-[collapsible=icon]:p-1!" disabled={isLoggingOut} />}>
             <Avatar className="rounded-lg">
               <AvatarImage src={user?.imageUrl} alt={name} />
               <AvatarFallback className="rounded-lg bg-primary text-primary-foreground">{initials}</AvatarFallback>
