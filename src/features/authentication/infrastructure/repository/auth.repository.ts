@@ -7,6 +7,7 @@ import {
 import type {
   LoginRequest,
   RefreshTokenRequest,
+  SwitchOrganizationRequest,
   VerifyEmailRequest,
 } from "@/shared/api/generated"
 import { authApi } from "../rest/auth.api"
@@ -37,6 +38,16 @@ export class AuthRepository implements IAuthRepository {
       refreshToken: dto.refreshToken as string,
       accessExpiresAt: Number(dto.accessTokenExpiresAt),
       refreshExpiresAt: Number(dto.refreshTokenExpiresAt),
+    })
+  }
+
+  async switchOrganization(req: SwitchOrganizationRequest): Promise<TokenPair> {
+    const response = await authApi.switchOrganization(req)
+    return TokenPair.fromJson({
+      accessToken: response.accessToken as string,
+      refreshToken: response.refreshToken as string,
+      accessExpiresAt: Number(response.accessTokenExpiresAt),
+      refreshExpiresAt: Number(response.refreshTokenExpiresAt),
     })
   }
 

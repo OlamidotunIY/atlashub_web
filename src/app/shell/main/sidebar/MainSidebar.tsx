@@ -1,18 +1,13 @@
-import { Logo, Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/shared/ui';
-import { Link } from 'react-router-dom';
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from '@/shared/ui';
+import { OrganizationSwitcher } from './OrganizationSwitcher';
 import { SidebarNavigation } from './SidebarNavigation';
+import { UserMenu } from './UserMenu';
 
 export function MainSidebar() {
   return (
     <Sidebar variant="inset" collapsible="icon">
       <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton render={<Link to="/dashboard" />} size="lg" tooltip="AtlasHub">
-              <Logo size="sm" />
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+        <OrganizationSwitcher />
       </SidebarHeader>
 
       <SidebarContent>
@@ -20,13 +15,7 @@ export function MainSidebar() {
       </SidebarContent>
 
       <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton size="sm" tooltip="More workspace options">
-              <span>More coming soon</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+        <UserMenu />
       </SidebarFooter>
     </Sidebar>
   );

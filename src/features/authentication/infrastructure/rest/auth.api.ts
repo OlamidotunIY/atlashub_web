@@ -5,6 +5,7 @@ import type {
   LoginWebResponse,
   RefreshTokenRequest,
   RefreshTokenWebResponse,
+  SwitchOrganizationRequest,
   UserProfileResponse,
   VerifyEmailRequest,
 } from "@/shared/api/generated"
@@ -30,6 +31,11 @@ export const authApi = {
   refreshToken: (req: RefreshTokenRequest): Promise<RefreshTokenWebResponse> =>
     getApi()
       .post<ApiResponse<RefreshTokenWebResponse>>("/api/v1/refresh", req)
+      .then((r) => r.data.data),
+
+  switchOrganization: (req: SwitchOrganizationRequest): Promise<RefreshTokenWebResponse> =>
+    getApi()
+      .post<ApiResponse<RefreshTokenWebResponse>>('/api/v1/organizations/switch', req)
       .then((r) => r.data.data),
 
   logout: (): Promise<void> =>

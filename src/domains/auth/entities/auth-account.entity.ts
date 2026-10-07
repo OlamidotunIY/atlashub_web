@@ -12,6 +12,24 @@ export interface AuthAccountProps {
   status?: string;
   scope?: string;
   onboardingStatus?: string;
+  activeOrganizationId?: number;
+  organizations?: OrganizationSummaryProps[];
+}
+
+export interface OrganizationSummaryProps {
+  id?: number;
+  businessName?: string;
+  country?: string;
+  baseCurrency?: string;
+  logoUrl?: string;
+}
+
+export interface OrganizationSummary {
+  id: number;
+  businessName: string;
+  country?: string;
+  baseCurrency?: string;
+  logoUrl?: string;
 }
 
 export class AuthAccount {
@@ -26,7 +44,9 @@ export class AuthAccount {
     public readonly firstName?: string,
     public readonly lastName?: string,
     public readonly phone?: string,
-    public readonly country?: string
+    public readonly country?: string,
+    public readonly activeOrganizationId?: number,
+    public readonly organizations: OrganizationSummary[] = [],
   ) {}
 
   /**
@@ -68,7 +88,17 @@ export class AuthAccount {
       data.firstName,
       data.lastName,
       data.phone,
-      data.country
+      data.country,
+      data.activeOrganizationId,
+      (data.organizations ?? [])
+        .filter((organization): organization is OrganizationSummaryProps & { id: number } => organization.id != null)
+        .map((organization) => ({
+          id: organization.id,
+          businessName: organization.businessName ?? 'Unnamed organization',
+          country: organization.country,
+          baseCurrency: organization.baseCurrency,
+          logoUrl: organization.logoUrl,
+        })),
     );
   }
 }
