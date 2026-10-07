@@ -28,12 +28,7 @@ export const authStore = create<AuthState>()(
       markHydrated: () => set({ isHydrated: true }),
 
       setTokens: (accessToken, refreshToken, expiresAt) => {
-        let jti: string | null = null;
-        try {
-          jti = jwtDecode<{ jti?: string }>(accessToken).jti ?? null;
-        } catch {
-          jti = null;
-        }
+        const jti = readTokenId(accessToken);
         set({ accessToken, refreshToken, expiresAt: expiresAt ?? null, jti });
       },
 
@@ -58,3 +53,11 @@ export const authStore = create<AuthState>()(
     },
   ),
 );
+
+function readTokenId(accessToken: string): string | null {
+  try {
+    return jwtDecode<{ jti?: string }>(accessToken).jti ?? null;
+  } catch {
+    return null;
+  }
+}
