@@ -5,7 +5,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 
 import './index.css';
 import { ThemeProvider } from '@/app/providers/theme-provider.js';
-import { router } from '@/app/router/router.js';
+import { router } from '@/app/router/route.js';
 import { bootstrap } from '@/app/bootstrap.js';
 import { queryClient } from '@/shared/api/query/query-client.js';
 import { Toaster } from './shared/ui';
