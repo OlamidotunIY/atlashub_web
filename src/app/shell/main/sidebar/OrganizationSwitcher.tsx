@@ -36,10 +36,10 @@ export function OrganizationSwitcher() {
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
-          <DropdownMenuTrigger render={<SidebarMenuButton size="lg" disabled={isPending} />}>
-            <Avatar className="rounded-lg">
+          <DropdownMenuTrigger render={<SidebarMenuButton size="lg" className="hover:!bg-transparent hover:!text-sidebar-foreground active:!bg-transparent active:!text-sidebar-foreground data-open:hover:!bg-transparent data-popup-open:!bg-transparent" disabled={isPending} />}>
+            <Avatar className="rounded-sm">
               <AvatarImage src={activeOrganization.logoUrl} alt={activeOrganization.businessName} />
-              <AvatarFallback className="rounded-lg bg-foreground font-semibold text-background">
+              <AvatarFallback className="rounded-sm bg-foreground font-semibold text-background">
                 {activeOrganization.businessName.charAt(0).toUpperCase()}
               </AvatarFallback>
             </Avatar>

@@ -1,5 +1,7 @@
 import { authRepository, authStore, meQueryKeys, useMe } from '@/features/authentication';
-import {
+import { useTheme } from '@/app/providers/theme-provider';
+import
+{
   Avatar,
   AvatarFallback,
   AvatarImage,
@@ -8,7 +10,12 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
   SidebarMenu,
   SidebarMenuButton,
@@ -17,12 +24,14 @@ import {
 } from '@/shared/ui';
 import { queryClient } from '@/shared/api';
 import { MERCHANT_ROUTES } from '@/constants';
-import { CaretRightIcon, GearSixIcon, SignOutIcon, UsersThreeIcon } from '@phosphor-icons/react';
+import { CaretRightIcon, DesktopIcon, GearSixIcon, MoonIcon, PaletteIcon, SignOutIcon, SunIcon, UsersThreeIcon } from '@phosphor-icons/react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export function UserMenu() {
+export function UserMenu()
+{
   const { data: user } = useMe();
+  const { theme, setTheme } = useTheme();
   const { isMobile } = useSidebar();
   const navigate = useNavigate();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -32,11 +41,14 @@ export function UserMenu() {
     .map((value) => value?.charAt(0).toUpperCase())
     .join('') || 'AH';
 
-  const logout = async () => {
+  const logout = async () =>
+  {
     setIsLoggingOut(true);
-    try {
+    try
+    {
       await authRepository.logout();
-    } finally {
+    } finally
+    {
       authStore.getState().clear();
       queryClient.removeQueries({ queryKey: meQueryKeys.details() });
       navigate(MERCHANT_ROUTES.LOGIN, { replace: true });
@@ -48,12 +60,12 @@ export function UserMenu() {
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
-          <DropdownMenuTrigger render={<SidebarMenuButton size="lg" className="group-data-[collapsible=icon]:p-1!" disabled={isLoggingOut} />}>
-            <Avatar className="rounded-lg">
-              <AvatarImage src={user?.imageUrl} alt={name} />
-              <AvatarFallback className="rounded-lg bg-primary text-primary-foreground">{initials}</AvatarFallback>
+          <DropdownMenuTrigger render={<SidebarMenuButton size="sm" className="group-data-[collapsible=icon]:p-1! hover:!bg-transparent hover:!text-sidebar-foreground active:!bg-transparent active:!text-sidebar-foreground data-open:hover:!bg-transparent data-popup-open:!bg-transparent" disabled={isLoggingOut} />}>
+            <Avatar className="size-6">
+              <AvatarImage className="rounded-sm size-6" src={user?.imageUrl} alt={name} />
+              <AvatarFallback className="rounded-sm size-6 bg-primary text-primary-foreground">{initials}</AvatarFallback>
             </Avatar>
-            <div className="grid flex-1 text-left text-sm leading-tight">
+            <div className="flex min-w-0 flex-1 items-center text-left text-sm leading-tight">
               <span className="truncate font-medium">{name}</span>
             </div>
             <CaretRightIcon className="ml-auto" />
@@ -76,6 +88,28 @@ export function UserMenu() {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <PaletteIcon />
+                  Theme
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent side="right">
+                  <DropdownMenuRadioGroup value={theme} onValueChange={(value) => setTheme(value as 'dark' | 'light' | 'system')}>
+                    <DropdownMenuRadioItem value="system">
+                      <DesktopIcon />
+                      System
+                    </DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="light">
+                      <SunIcon />
+                      Light
+                    </DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="dark">
+                      <MoonIcon />
+                      Dark
+                    </DropdownMenuRadioItem>
+                  </DropdownMenuRadioGroup>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
               <DropdownMenuItem onClick={() => navigate(MERCHANT_ROUTES.SETTINGS)}>
                 <GearSixIcon />
                 Settings
