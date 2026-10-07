@@ -51,7 +51,7 @@ export function UserMenu() {
           <DropdownMenuTrigger render={<SidebarMenuButton size="lg" disabled={isLoggingOut} />}>
             <Avatar className="rounded-lg">
               <AvatarImage src={user?.imageUrl} alt={name} />
-              <AvatarFallback className="rounded-lg">{initials}</AvatarFallback>
+              <AvatarFallback className="rounded-lg bg-primary text-primary-foreground">{initials}</AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
               <span className="truncate font-medium">{name}</span>
@@ -65,7 +65,7 @@ export function UserMenu() {
                 <div className="flex items-center gap-2 px-2 py-1.5">
                   <Avatar className="rounded-lg">
                     <AvatarImage src={user?.imageUrl} alt={name} />
-                    <AvatarFallback className="rounded-lg">{initials}</AvatarFallback>
+                    <AvatarFallback className="rounded-lg bg-primary text-primary-foreground">{initials}</AvatarFallback>
                   </Avatar>
                   <div className="grid min-w-0 text-left text-sm leading-tight">
                     <span className="truncate font-medium">{name}</span>

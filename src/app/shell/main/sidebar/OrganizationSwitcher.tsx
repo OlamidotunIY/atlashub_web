@@ -39,7 +39,7 @@ export function OrganizationSwitcher() {
           <DropdownMenuTrigger render={<SidebarMenuButton size="lg" disabled={isPending} />}>
             <Avatar className="rounded-lg">
               <AvatarImage src={activeOrganization.logoUrl} alt={activeOrganization.businessName} />
-              <AvatarFallback className="rounded-lg bg-white font-semibold text-slate-950">
+              <AvatarFallback className="rounded-lg bg-foreground font-semibold text-background">
                 {activeOrganization.businessName.charAt(0).toUpperCase()}
               </AvatarFallback>
             </Avatar>
@@ -61,7 +61,7 @@ export function OrganizationSwitcher() {
                 >
                   <Avatar size="sm" className="rounded-md">
                     <AvatarImage src={organization.logoUrl} alt={organization.businessName} />
-                    <AvatarFallback className="rounded-md bg-white font-semibold text-slate-950">
+                    <AvatarFallback className="rounded-md bg-foreground font-semibold text-background">
                       {organization.businessName.charAt(0).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
