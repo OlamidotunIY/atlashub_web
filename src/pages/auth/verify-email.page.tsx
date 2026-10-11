@@ -1,7 +1,7 @@
-import { useLocation, Navigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { useForm } from '@tanstack/react-form';
-import
-{
+import {
   Button,
   FieldGroup,
   Field,
@@ -12,63 +12,107 @@ import
   InputOTPSlot,
   InputOTPSeparator,
 } from '@/shared/ui';
-import { authFlowStore, AuthFormHeader, useVerifyEmail } from '@/features/authentication';
+import {
+  authFlowStore,
+  AuthFormHeader,
+  AuthErrorBanner,
+  useVerifyEmail,
+  useResendVerification,
+} from '@/features/authentication';
 import { MERCHANT_ROUTES } from '@/constants';
 import { toast } from '@/shared/hooks';
 
-export function VerifyEmailPage()
-{
+export function VerifyEmailPage() {
+  const navigate = useNavigate();
   const location = useLocation();
-  const state = location.state as { identifier?: string; } | null;
+  const state = location.state as { identifier?: string } | null;
   const verificationEmail = authFlowStore((state) => state.verificationEmail);
   const clearEmailVerification = authFlowStore((state) => state.clearEmailVerification);
   const identifier = verificationEmail ?? state?.identifier;
-  const { mutateAsync, error, isPending } = useVerifyEmail()
+
+  const { mutateAsync: verifyEmail, error: verifyError, isPending: isVerifying } = useVerifyEmail();
+  const { mutateAsync: resendCode, error: resendError, isPending: isResending } = useResendVerification();
+
+  const [countdown, setCountdown] = useState(0);
+
+  useEffect(() => {
+    if (countdown <= 0) return;
+    const timer = setInterval(() => {
+      setCountdown((prev) => prev - 1);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [countdown]);
+
+  const handleResend = async () => {
+    if (!identifier || isResending || countdown > 0) return;
+    try {
+      await resendCode(identifier);
+      setCountdown(60);
+      toast.add({
+        title: 'Verification code resent',
+        description: `We've sent a new 6-digit verification code to ${identifier}.`,
+        type: 'success',
+      });
+    } catch (err: any) {
+      toast.add({
+        title: 'Failed to resend code',
+        description: err?.message || 'Could not resend verification code. Please try again.',
+        type: 'error',
+        priority: 'high',
+      });
+    }
+  };
+
+  const handleBackToLogin = () => {
+    clearEmailVerification();
+    navigate(MERCHANT_ROUTES.LOGIN);
+  };
 
   const form = useForm({
     defaultValues: {
       code: '',
     },
     validators: {
-      onChange: ({ value }) =>
-      {
-        if (!value.code || value.code.length < 6)
-        {
+      onChange: ({ value }) => {
+        if (!value.code || value.code.length < 6) {
           return 'Please enter a valid 6-digit code';
         }
         return undefined;
       },
     },
-    onSubmit: async ({ value }) =>
-    {
+    onSubmit: async ({ value }) => {
       if (!identifier) return;
 
-      const verificationPromise = mutateAsync({
-        email: identifier,
-        otp: value.code
-      }).then(() => clearEmailVerification())
-
-      toast.promise(
-        verificationPromise,
-        {
-          loading: 'Verifying your email...',
-          success: 'Email verified! A setup link has been sent to your email to configure your account.',
-          error: 'Failed to verify email. Please check the code and try again.'
-        }
-      );
-
+      try {
+        await verifyEmail({
+          email: identifier,
+          otp: value.code,
+        });
+        clearEmailVerification();
+        toast.add({
+          title: 'Email verified successfully',
+          description: 'Your account has been verified. You can now log in.',
+          type: 'success',
+        });
+        navigate(MERCHANT_ROUTES.LOGIN);
+      } catch (err: any) {
+        toast.add({
+          title: 'Verification failed',
+          description: err?.message || 'Failed to verify email. Please check the code and try again.',
+          type: 'error',
+          priority: 'high',
+        });
+      }
     },
   });
 
-  if (!identifier)
-  {
+  if (!identifier) {
     return <Navigate to={MERCHANT_ROUTES.LOGIN} replace />;
   }
 
   return (
     <form
-      onSubmit={(e) =>
-      {
+      onSubmit={(e) => {
         e.preventDefault();
         e.stopPropagation();
         form.handleSubmit();
@@ -81,35 +125,33 @@ export function VerifyEmailPage()
           subtitle={`We sent a 6-digit code to ${identifier}`}
         />
 
-        {error && (
-          <div className="bg-destructive/15 text-destructive text-sm p-3 rounded-md">
-            {error.message || 'Verification failed. Please try again.'}
-          </div>
-        )}
+        <AuthErrorBanner error={verifyError || resendError} />
 
         <form.Field
           name="code"
           children={(field) => (
             <Field className="items-center w-full">
-              <FieldLabel htmlFor={field.name} className="sr-only">Verification Code</FieldLabel>
+              <FieldLabel htmlFor={field.name} className="sr-only">
+                Verification Code
+              </FieldLabel>
               <div className="flex w-full justify-center">
                 <InputOTP
                   maxLength={6}
                   value={field.state.value}
                   onChange={(val: string) => field.handleChange(val)}
-                  disabled={isPending}
+                  disabled={isVerifying}
                 >
-                  <InputOTPGroup className='*:data-[slot=input-otp-slot]:h-12 *:data-[slot=input-otp-slot]:w-11 *:data-[slot=input-otp-slot]:text-xl'>
+                  <InputOTPGroup className="*:data-[slot=input-otp-slot]:h-12 *:data-[slot=input-otp-slot]:w-11 *:data-[slot=input-otp-slot]:text-xl">
                     <InputOTPSlot index={0} />
                     <InputOTPSlot index={1} />
                   </InputOTPGroup>
                   <InputOTPSeparator className="mx-2" />
-                  <InputOTPGroup className='*:data-[slot=input-otp-slot]:h-12 *:data-[slot=input-otp-slot]:w-11 *:data-[slot=input-otp-slot]:text-xl'>
+                  <InputOTPGroup className="*:data-[slot=input-otp-slot]:h-12 *:data-[slot=input-otp-slot]:w-11 *:data-[slot=input-otp-slot]:text-xl">
                     <InputOTPSlot index={2} />
                     <InputOTPSlot index={3} />
                   </InputOTPGroup>
                   <InputOTPSeparator className="mx-2" />
-                  <InputOTPGroup className='*:data-[slot=input-otp-slot]:h-12 *:data-[slot=input-otp-slot]:w-11 *:data-[slot=input-otp-slot]:text-xl'>
+                  <InputOTPGroup className="*:data-[slot=input-otp-slot]:h-12 *:data-[slot=input-otp-slot]:w-11 *:data-[slot=input-otp-slot]:text-xl">
                     <InputOTPSlot index={4} />
                     <InputOTPSlot index={5} />
                   </InputOTPGroup>
@@ -126,10 +168,10 @@ export function VerifyEmailPage()
 
         <form.Subscribe
           selector={(state) => [state.canSubmit, state.isSubmitting]}
-          children={([canSubmit]) => (
+          children={([canSubmit, isSubmitting]) => (
             <Field>
-              <Button type="submit" disabled={!canSubmit || isPending}>
-                {isPending ? 'Verifying...' : 'Verify Email'}
+              <Button type="submit" disabled={!canSubmit || isVerifying || isSubmitting}>
+                {isVerifying || isSubmitting ? 'Verifying...' : 'Verify Email'}
               </Button>
             </Field>
           )}
@@ -137,16 +179,23 @@ export function VerifyEmailPage()
 
         <Field>
           <FieldDescription className="text-center mt-2">
-            Didn't receive a code?{" "}
+            Didn't receive a code?{' '}
             <button
               type="button"
-              className="underline underline-offset-4 hover:text-primary"
-              onClick={() =>
-              {
-                // You can wire up resend functionality here if needed
-              }}
+              disabled={isResending || countdown > 0}
+              className="underline underline-offset-4 hover:text-primary font-medium text-foreground disabled:opacity-50 disabled:cursor-not-allowed disabled:no-underline"
+              onClick={handleResend}
             >
-              Resend
+              {isResending ? 'Sending...' : countdown > 0 ? `Resend in ${countdown}s` : 'Resend'}
+            </button>
+          </FieldDescription>
+          <FieldDescription className="text-center mt-1">
+            <button
+              type="button"
+              className="underline underline-offset-4 hover:text-primary text-xs"
+              onClick={handleBackToLogin}
+            >
+              Back to login
             </button>
           </FieldDescription>
         </Field>

@@ -1,24 +1,9 @@
-import { type Country, type IUserRepository, User } from "@/domains/user"
-import type { UserDto } from "@/shared/api/generated"
+import { type IUserRepository, User } from "@/domains/user"
 import { userApi } from "../rest/user.api"
 
 export class UserRepository implements IUserRepository {
-  private mapDtoToUser(dto: UserDto): User {
-    return new User(
-      String(dto.id),
-      dto.email ?? "",
-      dto.firstName ?? "",
-      dto.lastName ?? "",
-      dto.phone ?? "",
-      dto.country as Country,
-      dto.createdAt ?? "",
-      dto.createdAt ?? ""
-    )
-  }
-
-  async getUserById(id: string): Promise<User | null> {
-    const dto = await userApi.getUserById(id)
-    return this.mapDtoToUser(dto)
+  async getUserById(_id: string): Promise<User | null> {
+    return null;
   }
 
   async createUser(user: User): Promise<User> {
@@ -26,10 +11,12 @@ export class UserRepository implements IUserRepository {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
-      phone: user.phoneNumber,
+      password: '',
       country: user.country,
+      businessName: '',
+      registrationType: 'SOLE_PROPRIETORSHIP',
+      industry: 'PHYSICAL_GOODS',
     })
-    // Re-fetch the created user — API only returns the ID
     return user
   }
 }

@@ -44,11 +44,16 @@ export const SignupSchema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters"),
   country: z.string().min(1, "Country is required"),
   businessName: z.string().min(1, "Business name is required"),
-  registrationType: z.enum(REGISTRATION_TYPES, "Select a registration type"),
-  industry: z.enum(INDUSTRIES, "Select an industry"),
+  registrationType: z.enum(REGISTRATION_TYPES, {
+    message: "Select a registration type",
+  }),
+  industry: z.enum(INDUSTRIES, {
+    message: "Select an industry",
+  }),
   description: z.string().optional(),
-  logoUrl: z.string().url("Please enter a valid URL").optional(),
-  websiteUrl: z.string().url("Please enter a valid URL").optional(),
+  logoUrl: z.union([z.string().url("Please enter a valid URL"), z.literal("")]).optional(),
+  websiteUrl: z.union([z.string().url("Please enter a valid URL"), z.literal("")]).optional(),
+  inviteToken: z.string().optional(),
 })
 
 export type SignupFormValues = Omit<RegisterRequest, "registrationType" | "industry"> & {
