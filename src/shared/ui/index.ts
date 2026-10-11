@@ -19,3 +19,5 @@ export * from './switch';
 export * from './toast';
 export * from './tooltip';
 export * from './logo';
+export * from './breadcrumb';
+export * from './table';
