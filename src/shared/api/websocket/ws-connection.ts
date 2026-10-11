@@ -1,4 +1,4 @@
-import { Client, IFrame, IMessage } from '@stomp/stompjs';
+import { Client, type IFrame, type IMessage } from '@stomp/stompjs';
 
 class WsConnection {
   private client: Client | null = null;
