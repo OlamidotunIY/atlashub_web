@@ -106,6 +106,179 @@ export type BusinessProfileRequest = {
   website?: string
 }
 
+export type CreateVendorRequest = {
+  userId: number
+  businessName: string
+  email?: string
+  phone?: string
+  settlementBankCode?: string
+  settlementAccountNumber?: string
+  settlementAccountName?: string
+  commissionRate?: number
+  disbursementSchedule?: "DAILY" | "WEEKLY" | "ON_DEMAND"
+}
+
+export type ApiResponseCreateVendorResponse = {
+  status?: boolean
+  message?: string
+  data?: CreateVendorResponse
+  meta?: Meta
+}
+
+export type CreateVendorResponse = {
+  vendorId?: number
+}
+
+export type SuspendVendorRequest = {
+  reason: string
+}
+
+export type OpenTillRequest = {
+  outletId: number
+  name: string
+  openingFloat: number
+  currency: "NGN"
+}
+
+export type ApiResponseOpenTillResponse = {
+  status?: boolean
+  message?: string
+  data?: OpenTillResponse
+  meta?: Meta
+}
+
+export type OpenTillResponse = {
+  tillId?: number
+}
+
+export type CloseTillRequest = {
+  actualClosingBalance: number
+  currency: "NGN"
+}
+
+export type OccupyTableRequest = {
+  salesOrderId: number
+  covers?: number
+}
+
+export type CreateSupplierRequest = {
+  name: string
+  email?: string
+  phone?: string
+  address?: string
+}
+
+export type ApiResponseCreateSupplierResponse = {
+  status?: boolean
+  message?: string
+  data?: CreateSupplierResponse
+  meta?: Meta
+}
+
+export type CreateSupplierResponse = {
+  supplierId?: number
+}
+
+export type RequestStockTransferRequest = {
+  sourceOutletId: number
+  destinationOutletId: number
+  items: Array<TransferItemRequest>
+}
+
+export type TransferItemRequest = {
+  productId: number
+  quantity?: number
+}
+
+export type ApiResponseRequestStockTransferResponse = {
+  status?: boolean
+  message?: string
+  data?: RequestStockTransferResponse
+  meta?: Meta
+}
+
+export type RequestStockTransferResponse = {
+  transferId?: number
+}
+
+export type ReceiveStockTransferRequest = {
+  items: Array<ReceivedTransferItemRequest>
+}
+
+export type ReceivedTransferItemRequest = {
+  productId: number
+  quantityReceived?: number
+}
+
+export type InitiateStockCountRequest = {
+  outletId: number
+}
+
+export type ApiResponseInitiateStockCountResponse = {
+  status?: boolean
+  message?: string
+  data?: InitiateStockCountResponse
+  meta?: Meta
+}
+
+export type InitiateStockCountResponse = {
+  stockCountId?: number
+}
+
+export type CountedItemRequest = {
+  inventoryId: number
+  countedQuantity?: number
+}
+
+export type ReconcileStockCountRequest = {
+  items: Array<CountedItemRequest>
+}
+
+export type CreateCustomerReturnRequest = {
+  salesOrderId: number
+  outletId: number
+  customerId: number
+  items: Array<ReturnItemRequest>
+  refundAmount: number
+  refundCurrency: "NGN"
+  reason: string
+  refundMethod: "CASH" | "CREDIT_NOTE" | "WALLET"
+}
+
+export type ReturnItemRequest = {
+  productId: number
+  quantity?: number
+}
+
+export type ApiResponseCreateCustomerReturnResponse = {
+  status?: boolean
+  message?: string
+  data?: CreateCustomerReturnResponse
+  meta?: Meta
+}
+
+export type CreateCustomerReturnResponse = {
+  returnId?: number
+}
+
+export type IssueReservedAccountRequest = {
+  ownerType: "CUSTOMER" | "VENDOR"
+  ownerReferenceId: string
+  customerType: string
+  customerReferenceId: string
+  fullName: string
+  email: string
+  bvn: string
+  provider: string
+}
+
+export type ApiResponseLong = {
+  status?: boolean
+  message?: string
+  data?: number
+  meta?: Meta
+}
+
 export type RegisterRequest = {
   firstName: string
   lastName: string
@@ -149,6 +322,271 @@ export type RefreshTokenWebResponse = {
   refreshTokenExpiresAt?: string
 }
 
+export type CreatePurchaseOrderRequest = {
+  outletId: number
+  supplierId: number
+  expectedDeliveryDate?: string
+  currency?: "NGN"
+  items?: Array<PurchaseOrderItemRequest>
+}
+
+export type PurchaseOrderItemRequest = {
+  productId: number
+  quantity?: number
+  unitCost: number
+}
+
+export type ApiResponseCreatePurchaseOrderResponse = {
+  status?: boolean
+  message?: string
+  data?: CreatePurchaseOrderResponse
+  meta?: Meta
+}
+
+export type CreatePurchaseOrderResponse = {
+  purchaseOrderId?: number
+}
+
+export type ReceivePurchaseOrderRequest = {
+  receivedItems: Array<ReceivedItemRequest>
+}
+
+export type ReceivedItemRequest = {
+  productId: number
+  quantityReceived?: number
+}
+
+export type CreateProductRequest = {
+  vendorId?: number
+  code: string
+  name: string
+  description?: string
+  categoryId?: number
+  departmentId?: number
+  taxable?: boolean
+  service?: boolean
+  hasVariants?: boolean
+  type: "PHYSICAL" | "DIGITAL" | "SERVICE"
+}
+
+export type ApiResponseCreateProductResponse = {
+  status?: boolean
+  message?: string
+  data?: CreateProductResponse
+  meta?: Meta
+}
+
+export type CreateProductResponse = {
+  productId?: number
+}
+
+export type SetProductPriceRequest = {
+  variantId?: number
+  priceLevel: "RETAIL" | "WHOLESALE"
+  costPrice?: number
+  sellingPrice: number
+}
+
+export type RefundPosSaleRequest = {
+  salesOrderId: number
+  reason: string
+  customerNuban?: string
+  customerBankCode?: string
+}
+
+export type OrderItemRequest = {
+  productId: number
+  variantId?: number
+  quantity?: number
+  unitPrice: number
+  currency: "NGN"
+  taxAmount?: number
+  discountAmount?: number
+}
+
+export type ProcessCreditSaleRequest = {
+  outletId: number
+  customerId: number
+  items: Array<OrderItemRequest>
+}
+
+export type ApiResponseProcessCreditSaleResponse = {
+  status?: boolean
+  message?: string
+  data?: ProcessCreditSaleResponse
+  meta?: Meta
+}
+
+export type ProcessCreditSaleResponse = {
+  salesOrderId?: number
+}
+
+export type ProcessPosCheckoutRequest = {
+  outletId: number
+  tillId?: number
+  customerId?: number
+  type:
+    | "POS_RETAIL"
+    | "POS_WHOLESALE"
+    | "POS_HOSPITALITY"
+    | "ONLINE"
+    | "LAYAWAY"
+    | "PROFORMA"
+  items: Array<OrderItemRequest>
+  discountId?: number
+  paymentMethod:
+    "CASH" | "CARD" | "BANK_TRANSFER" | "USSD" | "CREDIT" | "LAYAWAY"
+}
+
+export type ApiResponseProcessPosCheckoutResponse = {
+  status?: boolean
+  message?: string
+  data?: ProcessPosCheckoutResponse
+  meta?: Meta
+}
+
+export type ProcessPosCheckoutResponse = {
+  salesOrderId?: number
+  status?:
+    | "PENDING"
+    | "PAYMENT_PENDING"
+    | "COMPLETED"
+    | "REFUNDED"
+    | "FAILED"
+    | "LAYAWAY"
+    | "PROFORMA"
+}
+
+export type EnablePaymentCapabilityRequest = {
+  terminalProvider?: string
+}
+
+export type ApiResponseEnablePaymentCapabilityResult = {
+  status?: boolean
+  message?: string
+  data?: EnablePaymentCapabilityResult
+  meta?: Meta
+}
+
+export type EnablePaymentCapabilityResult = {
+  providerProfileId?: number
+  capability?: string
+  status?: string
+}
+
+export type DisputeSettlementRequest = {
+  reason: string
+}
+
+export type InitializeChargeRequest = {
+  reference: string
+  amount: number
+  currency: "NGN"
+  channel: "CARD" | "USSD"
+  email: string
+  sourceSystem: string
+  sourceReferenceId: string
+  customerReferenceId?: string
+  terminalAssignmentId?: number
+  metadata?: {
+    [key: string]: {
+      [key: string]: unknown
+    }
+  }
+}
+
+export type ApiResponseInitializeChargeResponse = {
+  status?: boolean
+  message?: string
+  data?: InitializeChargeResponse
+  meta?: Meta
+}
+
+export type InitializeChargeResponse = {
+  chargeId?: number
+  reference?: string
+  amount?: number
+  currency?: "NGN"
+  channel?: "CARD" | "USSD"
+  status?:
+    | "INITIALIZED"
+    | "PENDING"
+    | "SUCCESSFUL"
+    | "FAILED"
+    | "EXPIRED"
+    | "REFUND_PENDING"
+    | "PARTIALLY_REFUNDED"
+    | "REFUNDED"
+  authorizationUrl?: string
+  accessCode?: string
+  expiresAt?: string
+}
+
+export type RefundChargeRequest = {
+  reason: string
+}
+
+export type ApiResponseRefundChargeResponse = {
+  status?: boolean
+  message?: string
+  data?: RefundChargeResponse
+  meta?: Meta
+}
+
+export type RefundChargeResponse = {
+  chargeId?: number
+  reference?: string
+  status?:
+    | "INITIALIZED"
+    | "PENDING"
+    | "SUCCESSFUL"
+    | "FAILED"
+    | "EXPIRED"
+    | "REFUND_PENDING"
+    | "PARTIALLY_REFUNDED"
+    | "REFUNDED"
+  reason?: string
+}
+
+export type CreateBusinessAccountRequest = {
+  name: string
+  accountType: string
+  currency: string
+}
+
+export type ApiResponseCreateBusinessAccountResponse = {
+  status?: boolean
+  message?: string
+  data?: CreateBusinessAccountResponse
+  meta?: Meta
+}
+
+export type CreateBusinessAccountResponse = {
+  accountId?: number
+}
+
+export type TransferBetweenAccountsRequest = {
+  sourceAccountId: number
+  destinationAccountId: number
+  amount: number
+  currency: string
+  reference: string
+  description: string
+}
+
+export type AccountTransferResponse = {
+  transactionId?: number
+  reference?: string
+  postedAt?: string
+}
+
+export type ApiResponseAccountTransferResponse = {
+  status?: boolean
+  message?: string
+  data?: AccountTransferResponse
+  meta?: Meta
+}
+
 export type ResetPasswordRequest = {
   email: string
   otp: string
@@ -172,15 +610,36 @@ export type CreateOutletRequest = {
   managerId?: number
 }
 
-export type ApiResponseLong = {
+export type SwitchOrganizationRequest = {
+  organizationId: number
+}
+
+export type CreateOnlineOrderRequest = {
+  outletId: number
+  customerId: number
+  items: Array<OrderItemRequest>
+  deliveryAddress: string
+  paymentMethod:
+    "CASH" | "CARD" | "BANK_TRANSFER" | "USSD" | "CREDIT" | "LAYAWAY"
+}
+
+export type ApiResponseCreateOnlineOrderResponse = {
   status?: boolean
   message?: string
-  data?: number
+  data?: CreateOnlineOrderResponse
   meta?: Meta
 }
 
-export type SwitchOrganizationRequest = {
-  organizationId: number
+export type CreateOnlineOrderResponse = {
+  salesOrderId?: number
+  status?:
+    | "PENDING"
+    | "PAYMENT_PENDING"
+    | "COMPLETED"
+    | "REFUNDED"
+    | "FAILED"
+    | "LAYAWAY"
+    | "PROFORMA"
 }
 
 export type LoginRequest = {
@@ -205,6 +664,63 @@ export type LoginWebResponse = {
   message?: string
 }
 
+export type KotItemRequest = {
+  productId: number
+  name: string
+  quantity?: number
+}
+
+export type SendKitchenOrderRequest = {
+  salesOrderId: number
+  tableId: number
+  outletId: number
+  items: Array<KotItemRequest>
+}
+
+export type ApiResponseSendKitchenOrderResponse = {
+  status?: boolean
+  message?: string
+  data?: SendKitchenOrderResponse
+  meta?: Meta
+}
+
+export type SendKitchenOrderResponse = {
+  kotId?: number
+}
+
+export type CreateJournalEntryRequest = {
+  entryNumber: string
+  date: string
+  reference?: string
+  description?: string
+  lines: Array<JournalLineRequest>
+}
+
+export type JournalLineRequest = {
+  accountId: number
+  amount: number
+  currency: string
+  type: "DEBIT" | "CREDIT"
+}
+
+export type ApiResponseCreateJournalEntryResponse = {
+  status?: boolean
+  message?: string
+  data?: CreateJournalEntryResponse
+  meta?: Meta
+}
+
+export type CreateJournalEntryResponse = {
+  entryId?: number
+  entryNumber?: string
+  status?: "DRAFT" | "PENDING_APPROVAL" | "POSTED" | "VOIDED"
+  lineCount?: number
+}
+
+export type VoidJournalEntryRequest = {
+  reason: string
+}
+
 export type InviteMemberRequest = {
   email: string
   roleId: number
@@ -212,6 +728,12 @@ export type InviteMemberRequest = {
 
 export type InvitationTokenRequest = {
   token: string
+}
+
+export type AdjustStockRequest = {
+  inventoryId: number
+  newQuantity?: number
+  reason: "DAMAGE" | "EXPIRY" | "THEFT" | "CORRECTION" | "INITIAL_COUNT"
 }
 
 export type SwitchEnvironmentRequest = {
@@ -223,10 +745,55 @@ export type VerifyEmailRequest = {
   otp: string
 }
 
+export type CreateDiscountRequest = {
+  name: string
+  type: "PERCENTAGE" | "FLAT_AMOUNT"
+  value: number
+  scope: "ORDER_LEVEL" | "ITEM_LEVEL"
+  minOrderAmount?: number
+  maxUses?: number
+  validFrom?: string
+  validTo?: string
+}
+
+export type ApiResponseCreateDiscountResponse = {
+  status?: boolean
+  message?: string
+  data?: CreateDiscountResponse
+  meta?: Meta
+}
+
+export type CreateDiscountResponse = {
+  discountId?: number
+}
+
 export type AuthorizeDeviceRequest = {
   email: string
   otp: string
   deviceFingerprint: string
+}
+
+export type CreateCustomerDepositRequest = {
+  salesOrderId: number
+  initialDeposit: number
+  totalAmount: number
+  currency: "NGN"
+}
+
+export type ApiResponseCreateCustomerDepositResponse = {
+  status?: boolean
+  message?: string
+  data?: CreateCustomerDepositResponse
+  meta?: Meta
+}
+
+export type CreateCustomerDepositResponse = {
+  depositId?: number
+}
+
+export type AddCustomerDepositPaymentRequest = {
+  paymentAmount: number
+  currency: "NGN"
 }
 
 export type SaveComplianceDocumentRequest = {
@@ -261,8 +828,124 @@ export type RotateApiKeyRequest = {
   name?: string
 }
 
+export type CreateAccountRequest = {
+  code: string
+  name: string
+  type: "ASSET" | "LIABILITY" | "EQUITY" | "REVENUE" | "EXPENSE"
+  parentAccountId?: number
+  isSystemAccount?: boolean
+}
+
+export type ApiResponseCreateAccountResponse = {
+  status?: boolean
+  message?: string
+  data?: CreateAccountResponse
+  meta?: Meta
+}
+
+export type CreateAccountResponse = {
+  id?: number
+  organizationId?: number
+  code?: string
+  name?: string
+  type?: "ASSET" | "LIABILITY" | "EQUITY" | "REVENUE" | "EXPENSE"
+  parentAccountId?: number
+  isSystemAccount?: boolean
+  isActive?: boolean
+  createdAt?: string
+}
+
 export type AssignRoleRequest = {
   roleId: number
+}
+
+export type ApiResponseListVendorResult = {
+  status?: boolean
+  message?: string
+  data?: Array<VendorResult>
+  meta?: Meta
+}
+
+export type VendorResult = {
+  id?: number
+  organizationId?: number
+  userId?: number
+  businessName?: string
+  email?: string
+  phone?: string
+  settlementBankCode?: string
+  settlementAccountNumber?: string
+  settlementAccountName?: string
+  commissionRate?: number
+  disbursementSchedule?: "DAILY" | "WEEKLY" | "ON_DEMAND"
+  status?: "PENDING" | "ACTIVE" | "SUSPENDED" | "TERMINATED"
+  createdAt?: string
+}
+
+export type ApiResponseTillSummaryResult = {
+  status?: boolean
+  message?: string
+  data?: TillSummaryResult
+  meta?: Meta
+}
+
+export type Money = {
+  amount?: number
+  currency?: "NGN"
+  zero?: boolean
+  negative?: boolean
+  positive?: boolean
+  notZero?: boolean
+}
+
+export type TillSummaryResult = {
+  tillId?: number
+  organizationId?: number
+  outletId?: number
+  name?: string
+  openingFloat?: Money
+  expectedClosingBalance?: Money
+  actualClosingBalance?: Money
+  status?: "OPEN" | "CLOSED"
+  openedAt?: string
+  closedAt?: string
+  openedBy?: number
+  closedBy?: number
+}
+
+export type ApiResponseListTableResult = {
+  status?: boolean
+  message?: string
+  data?: Array<TableResult>
+  meta?: Meta
+}
+
+export type TableResult = {
+  id?: number
+  organizationId?: number
+  outletId?: number
+  tableNumber?: string
+  covers?: number
+  status?: "AVAILABLE" | "OCCUPIED" | "RESERVED" | "BILL_REQUESTED"
+  currentOrderId?: number
+}
+
+export type ApiResponseListSupplierResult = {
+  status?: boolean
+  message?: string
+  data?: Array<SupplierResult>
+  meta?: Meta
+}
+
+export type SupplierResult = {
+  id?: number
+  organizationId?: number
+  name?: string
+  email?: string
+  phone?: string
+  address?: string
+  status?: "ACTIVE" | "INACTIVE"
+  createdAt?: string
 }
 
 export type SignedUrlRequest = {
@@ -281,6 +964,37 @@ export type ApiResponseSignedUrlResponse = {
 export type SignedUrlResponse = {
   signedUrl?: string
   objectPath?: string
+}
+
+export type ApiResponsePageResultStockTransferResponse = {
+  status?: boolean
+  message?: string
+  data?: PageResultStockTransferResponse
+  meta?: Meta
+}
+
+export type PageResultStockTransferResponse = {
+  content?: Array<StockTransferResponse>
+  pageNumber?: number
+  pageSize?: number
+  totalElements?: number
+  totalPages?: number
+}
+
+export type StockTransferItemResponse = {
+  productId?: number
+  quantityRequested?: number
+  quantityReceived?: number
+}
+
+export type StockTransferResponse = {
+  transferId?: number
+  sourceOutletId?: number
+  destinationOutletId?: number
+  status?: "REQUESTED" | "APPROVED" | "DISPATCHED" | "RECEIVED" | "CANCELLED"
+  items?: Array<StockTransferItemResponse>
+  requestedAt?: string
+  receivedAt?: string
 }
 
 export type ApiResponseListSessionWebResponse = {
@@ -340,6 +1054,178 @@ export type PermissionDetail = {
   description?: string
 }
 
+export type ApiResponsePageResultReservedAccountResult = {
+  status?: boolean
+  message?: string
+  data?: PageResultReservedAccountResult
+  meta?: Meta
+}
+
+export type PageResultReservedAccountResult = {
+  content?: Array<ReservedAccountResult>
+  pageNumber?: number
+  pageSize?: number
+  totalElements?: number
+  totalPages?: number
+}
+
+export type ReservedAccountResult = {
+  id?: number
+  ownerType?: "CUSTOMER" | "VENDOR"
+  ownerReferenceId?: string
+  provider?: string
+  accountName?: string
+  maskedAccountNumber?: string
+  bankName?: string
+  bankCode?: string
+  currency?: string
+  status?:
+    | "REQUESTED"
+    | "PENDING"
+    | "ACTIVE"
+    | "SUSPENDED"
+    | "FROZEN"
+    | "CLOSED"
+    | "FAILED"
+  activatedAt?: string
+}
+
+export type ApiResponseReservedAccountResult = {
+  status?: boolean
+  message?: string
+  data?: ReservedAccountResult
+  meta?: Meta
+}
+
+export type ApiResponsePageResultPurchaseOrderResult = {
+  status?: boolean
+  message?: string
+  data?: PageResultPurchaseOrderResult
+  meta?: Meta
+}
+
+export type PageResultPurchaseOrderResult = {
+  content?: Array<PurchaseOrderResult>
+  pageNumber?: number
+  pageSize?: number
+  totalElements?: number
+  totalPages?: number
+}
+
+export type PurchaseOrderResult = {
+  id?: number
+  organizationId?: number
+  outletId?: number
+  supplierId?: number
+  status?: "DRAFT" | "SENT" | "PARTIALLY_RECEIVED" | "RECEIVED" | "CANCELLED"
+  totalAmount?: Money
+  expectedDeliveryDate?: string
+  itemsCount?: number
+  createdAt?: string
+}
+
+export type ApiResponsePageResultProductResult = {
+  status?: boolean
+  message?: string
+  data?: PageResultProductResult
+  meta?: Meta
+}
+
+export type PageResultProductResult = {
+  content?: Array<ProductResult>
+  pageNumber?: number
+  pageSize?: number
+  totalElements?: number
+  totalPages?: number
+}
+
+export type ProductResult = {
+  id?: number
+  organizationId?: number
+  vendorId?: number
+  code?: string
+  name?: string
+  description?: string
+  categoryId?: number
+  departmentId?: number
+  manufacturerId?: number
+  taxable?: boolean
+  service?: boolean
+  hasVariants?: boolean
+  status?: "ACTIVE" | "INACTIVE" | "PENDING_APPROVAL" | "DELETED"
+  type?: "PHYSICAL" | "DIGITAL" | "SERVICE"
+  createdAt?: string
+}
+
+export type ApiResponseProductResult = {
+  status?: boolean
+  message?: string
+  data?: ProductResult
+  meta?: Meta
+}
+
+export type ApiResponsePageResultSalesOrderResult = {
+  status?: boolean
+  message?: string
+  data?: PageResultSalesOrderResult
+  meta?: Meta
+}
+
+export type PageResultSalesOrderResult = {
+  content?: Array<SalesOrderResult>
+  pageNumber?: number
+  pageSize?: number
+  totalElements?: number
+  totalPages?: number
+}
+
+export type SalesOrderItemResult = {
+  id?: number
+  productId?: number
+  variantId?: number
+  quantity?: number
+  unitPrice?: Money
+  totalPrice?: Money
+  taxAmount?: Money
+  discountAmount?: Money
+}
+
+export type SalesOrderResult = {
+  id?: number
+  organizationId?: number
+  outletId?: number
+  vendorId?: number
+  customerId?: number
+  cashierId?: number
+  tillId?: number
+  type?:
+    | "POS_RETAIL"
+    | "POS_WHOLESALE"
+    | "POS_HOSPITALITY"
+    | "ONLINE"
+    | "LAYAWAY"
+    | "PROFORMA"
+  status?:
+    | "PENDING"
+    | "PAYMENT_PENDING"
+    | "COMPLETED"
+    | "REFUNDED"
+    | "FAILED"
+    | "LAYAWAY"
+    | "PROFORMA"
+  items?: Array<SalesOrderItemResult>
+  discountId?: number
+  totalGross?: Money
+  totalDiscount?: Money
+  totalTax?: Money
+  totalNet?: Money
+  paymentMethod?:
+    "CASH" | "CARD" | "BANK_TRANSFER" | "USSD" | "CREDIT" | "LAYAWAY"
+  chargeReference?: string
+  saleDate?: string
+  deliveryAddress?: string
+}
+
 export type ApiResponseListPermissionResult = {
   status?: boolean
   message?: string
@@ -356,6 +1242,213 @@ export type PermissionResult = {
   displayName?: string
   description?: string
   active?: boolean
+}
+
+export type AccountEntryResponse = {
+  accountId?: number
+  accountType?: string
+  accountName?: string
+  entryType?: string
+  direction?: string
+  amount?: number
+  currency?: string
+}
+
+export type ApiResponsePageResultTransactionResponse = {
+  status?: boolean
+  message?: string
+  data?: PageResultTransactionResponse
+  meta?: Meta
+}
+
+export type PageResultTransactionResponse = {
+  content?: Array<TransactionResponse>
+  pageNumber?: number
+  pageSize?: number
+  totalElements?: number
+  totalPages?: number
+}
+
+export type TransactionResponse = {
+  id?: number
+  type?: string
+  status?: string
+  amount?: number
+  fee?: number
+  netAmount?: number
+  currency?: string
+  direction?: string
+  channel?: string
+  provider?: string
+  reference?: string
+  sourceSystem?: string
+  sourceReferenceId?: string
+  partyType?: string
+  partyReferenceId?: string
+  outletId?: number
+  recipientName?: string
+  description?: string
+  metadata?: {
+    [key: string]: string
+  }
+  accountEntries?: Array<AccountEntryResponse>
+  createdAt?: string
+  completedAt?: string
+}
+
+export type ApiResponseTransactionResponse = {
+  status?: boolean
+  message?: string
+  data?: TransactionResponse
+  meta?: Meta
+}
+
+export type ApiResponseTransactionVolumeResponse = {
+  status?: boolean
+  message?: string
+  data?: TransactionVolumeResponse
+  meta?: Meta
+}
+
+export type TransactionVolumeResponse = {
+  organizationId?: number
+  month?: string
+  chargeCount?: number
+  chargeAmount?: number
+  payoutCount?: number
+  payoutAmount?: number
+  currency?: string
+}
+
+export type ApiResponsePageResultSettlementResponse = {
+  status?: boolean
+  message?: string
+  data?: PageResultSettlementResponse
+  meta?: Meta
+}
+
+export type PageResultSettlementResponse = {
+  content?: Array<SettlementResponse>
+  pageNumber?: number
+  pageSize?: number
+  totalElements?: number
+  totalPages?: number
+}
+
+export type SettlementResponse = {
+  id?: number
+  provider?: string
+  providerSettlementId?: string
+  amount?: number
+  currency?: string
+  settledAt?: string
+  status?: string
+  description?: string
+}
+
+export type ApiResponseSettlementResponse = {
+  status?: boolean
+  message?: string
+  data?: SettlementResponse
+  meta?: Meta
+}
+
+export type ApiResponseChargeDetailsResponse = {
+  status?: boolean
+  message?: string
+  data?: ChargeDetailsResponse
+  meta?: Meta
+}
+
+export type ChargeDetailsResponse = {
+  id?: number
+  reference?: string
+  amount?: number
+  currency?: "NGN"
+  channel?: "CARD" | "USSD"
+  status?:
+    | "INITIALIZED"
+    | "PENDING"
+    | "SUCCESSFUL"
+    | "FAILED"
+    | "EXPIRED"
+    | "REFUND_PENDING"
+    | "PARTIALLY_REFUNDED"
+    | "REFUNDED"
+  customerReferenceId?: string
+  providerFee?: number
+  authorizationUrl?: string
+  accessCode?: string
+  failureMessage?: string
+  providerRefundReference?: string
+  refundReason?: string
+  refundedAt?: string
+  disputeReference?: string
+  disputeStatus?: string
+  disputeReason?: string
+  successfulAt?: string
+  expiresAt?: string
+  createdAt?: string
+}
+
+export type ApiResponseListFinancialAccountSummaryResponse = {
+  status?: boolean
+  message?: string
+  data?: Array<FinancialAccountSummaryResponse>
+  meta?: Meta
+}
+
+export type FinancialAccountSummaryResponse = {
+  id?: number
+  businessName?: string
+  name?: string
+  type?: string
+  scope?: string
+  currency?: string
+  status?: string
+  frozen?: boolean
+  restrictions?: Array<string>
+  ledgerBalance?: number
+  availableBalance?: number
+  pendingSettlementBalance?: number
+  balanceAsOf?: string
+  createdAt?: string
+}
+
+export type ApiResponseFinancialAccountResponse = {
+  status?: boolean
+  message?: string
+  data?: FinancialAccountResponse
+  meta?: Meta
+}
+
+export type ExternalBankAccountResponse = {
+  id?: number
+  accountName?: string
+  maskedAccountNumber?: string
+  bankName?: string
+  bankCode?: string
+  currency?: string
+  status?: string
+  activatedAt?: string
+}
+
+export type FinancialAccountResponse = {
+  id?: number
+  businessName?: string
+  name?: string
+  type?: string
+  scope?: string
+  currency?: string
+  status?: string
+  frozen?: boolean
+  restrictions?: Array<string>
+  ledgerBalance?: number
+  availableBalance?: number
+  pendingSettlementBalance?: number
+  balanceAsOf?: string
+  bankAccount?: ExternalBankAccountResponse
+  createdAt?: string
 }
 
 export type ApiResponseListOutletResponse = {
@@ -418,42 +1511,10 @@ export type OrganizationDetailsResponse = {
   createdAt?: string
 }
 
-export type GetActivitiesRequestDto = {
-  organizationId?: number
-  page?: number
-  size?: number
-}
-
-export type ActivityLogDto = {
-  id?: string
-  organizationId?: number
-  actorUserId?: number
-  action?:
-    | "USER_REGISTERED"
-    | "USER_LOGIN"
-    | "ORGANIZATION_CREATED"
-    | "MEMBER_JOINED"
-    | "MEMBER_REMOVED"
-    | "INVITATION_SENT"
-    | "INVITATION_ACCEPTED"
-    | "COMPLIANCE_SUBMITTED"
-    | "COMPLIANCE_APPROVED"
-    | "COMPLIANCE_REJECTED"
-    | "API_KEY_GENERATED"
-  entityType?: string
-  entityId?: string
-  metadata?: {
-    [key: string]: {
-      [key: string]: unknown
-    }
-  }
-  occurredAt?: string
-}
-
-export type ApiResponseListActivityLogDto = {
+export type ApiResponseSalesOrderResult = {
   status?: boolean
   message?: string
-  data?: Array<ActivityLogDto>
+  data?: SalesOrderResult
   meta?: Meta
 }
 
@@ -516,97 +1577,71 @@ export type UserProfileResponse = {
   phone?: string
   imageUrl?: string
   country?: string
-  activeOrganizationId?: number
+  activeEnvironment?: string
+  complianceApproved?: boolean
+  activeOrganizationRole?: string
+  activeOrganization?: OrganizationDetailsResponse
   createdAt?: string
   organizations?: Array<OrganizationSummaryResponse>
 }
 
-export type ApiResponsePageResultLedgerTransactionResponse = {
+export type ApiResponseListJournalEntrySummaryResult = {
   status?: boolean
   message?: string
-  data?: PageResultLedgerTransactionResponse
+  data?: Array<JournalEntrySummaryResult>
   meta?: Meta
 }
 
-export type LedgerEntryResponse = {
-  accountId?: number
-  entryType?: "DEBIT" | "CREDIT"
-  amount?: number
-}
-
-export type LedgerTransactionResponse = {
-  transactionId?: number
-  reference?: string
-  sourceSystem?:
-    | "COMMERCE_CHECKOUT"
-    | "COMMERCE_REFUND"
-    | "PLATFORM_BILLING"
-    | "PAYROLL"
-    | "LOAN_DISBURSEMENT"
-    | "INTER_OUTLET_TRANSFER"
-    | "CASH_BANKING"
-    | "EXTERNAL_COLLECTION"
-    | "CARD_CHARGE"
-    | "PAYOUT"
-    | "SETTLEMENT"
-    | "SPLIT"
-    | "ESCROW_RELEASE"
-    | "ESCROW_REFUND"
-    | "MANUAL"
-    | "SYSTEM"
-  sourceReferenceId?: string
-  description?: string
-  currency?: string
-  postedAt?: string
-  entries?: Array<LedgerEntryResponse>
-}
-
-export type PageResultLedgerTransactionResponse = {
-  content?: Array<LedgerTransactionResponse>
-  pageNumber?: number
-  pageSize?: number
-  totalElements?: number
-  totalPages?: number
-}
-
-export type AccountBalanceResponse = {
-  accountId?: number
-  accountType?:
-    | "OPERATING"
-    | "PAYROLL_RESERVE"
-    | "TAX_HOLDING"
-    | "ESCROW"
-    | "SUSPENSE"
-    | "PROVIDER_CLEARING"
-    | "TILL"
-    | "SPLIT_HOLDING"
-    | "CUSTOMER_FUNDS"
-    | "VENDOR_PAYABLE"
-  balance?: number
-  currency?: string
-  asOf?: string
-}
-
-export type ApiResponseAccountBalanceResponse = {
-  status?: boolean
-  message?: string
-  data?: AccountBalanceResponse
-  meta?: Meta
-}
-
-export type ApiResponseWalletBalancesResponse = {
-  status?: boolean
-  message?: string
-  data?: WalletBalancesResponse
-  meta?: Meta
-}
-
-export type WalletBalancesResponse = {
+export type JournalEntrySummaryResult = {
+  id?: number
   organizationId?: number
-  balancesByAccountType?: {
-    [key: string]: number
-  }
+  entryNumber?: string
+  date?: string
+  reference?: string
+  description?: string
+  lineCount?: number
+  status?: "DRAFT" | "PENDING_APPROVAL" | "POSTED" | "VOIDED"
+  source?: "AUTOMATIC" | "MANUAL"
+  totalDebits?: Money
+  totalCredits?: Money
+  initiatedBy?: number
+  approvedBy?: number
+  approvedAt?: string
+  createdAt?: string
+}
+
+export type ApiResponseJournalEntryResponse = {
+  status?: boolean
+  message?: string
+  data?: JournalEntryResponse
+  meta?: Meta
+}
+
+export type JournalEntryResponse = {
+  id?: number
+  organizationId?: number
+  entryNumber?: string
+  date?: string
+  reference?: string
+  description?: string
+  lines?: Array<JournalLineResponse>
+  status?: "DRAFT" | "PENDING_APPROVAL" | "POSTED" | "VOIDED"
+  source?: "AUTOMATIC" | "MANUAL"
+  totalDebits?: number
+  totalCredits?: number
   currency?: string
+  initiatedBy?: number
+  approvedBy?: number
+  approvedAt?: string
+  createdAt?: string
+}
+
+export type JournalLineResponse = {
+  id?: number
+  accountId?: number
+  amount?: number
+  currency?: string
+  type?: "DEBIT" | "CREDIT"
 }
 
 export type ApiResponseListInvitationResult = {
@@ -625,6 +1660,57 @@ export type InvitationResult = {
   createdAt?: string
 }
 
+export type ApiResponseInventoryLevelResponse = {
+  status?: boolean
+  message?: string
+  data?: InventoryLevelResponse
+  meta?: Meta
+}
+
+export type InventoryLevelResponse = {
+  inventoryId?: number
+  productId?: number
+  outletId?: number
+  quantity?: number
+  reservedQuantity?: number
+  availableQuantity?: number
+  reorderLevel?: number
+  safeStock?: number
+  isLowStock?: boolean
+}
+
+export type ApiResponseStockSummaryResponse = {
+  status?: boolean
+  message?: string
+  data?: StockSummaryResponse
+  meta?: Meta
+}
+
+export type StockSummaryResponse = {
+  outletId?: number
+  totalSkus?: number
+  totalQuantity?: number
+  lowStockCount?: number
+  outOfStockCount?: number
+}
+
+export type ApiResponseListLowStockResponse = {
+  status?: boolean
+  message?: string
+  data?: Array<LowStockResponse>
+  meta?: Meta
+}
+
+export type LowStockResponse = {
+  inventoryId?: number
+  productId?: number
+  variantId?: number
+  outletId?: number
+  quantity?: number
+  reorderLevel?: number
+  safeStock?: number
+}
+
 export type ApiResponseListTrustedDeviceWebResponse = {
   status?: boolean
   message?: string
@@ -639,6 +1725,22 @@ export type TrustedDeviceWebResponse = {
   lastSeenIp?: string
   trustedAt?: string
   expiresAt?: string
+}
+
+export type ApiResponseCustomerCreditResult = {
+  status?: boolean
+  message?: string
+  data?: CustomerCreditResult
+  meta?: Meta
+}
+
+export type CustomerCreditResult = {
+  id?: number
+  organizationId?: number
+  customerId?: number
+  creditLimit?: Money
+  outstandingDebt?: Money
+  status?: "WITHIN_LIMIT" | "OVER_LIMIT" | "SETTLED" | "BLOCKED"
 }
 
 export type AddressData = {
@@ -764,6 +1866,65 @@ export type ServiceAgreementData = {
   termsVersion?: string
 }
 
+export type ApiResponseBusinessBankingResult = {
+  status?: boolean
+  message?: string
+  data?: BusinessBankingResult
+  meta?: Meta
+}
+
+export type BusinessBankingResult = {
+  profileId?: number
+  status?: string
+  depositAccount?: ExternalAccountResult
+  subAccount?: ExternalAccountResult
+}
+
+export type ExternalAccountResult = {
+  id?: number
+  accountName?: string
+  maskedAccountNumber?: string
+  bankName?: string
+  bankCode?: string
+  currency?: string
+  status?:
+    | "REQUESTED"
+    | "PENDING"
+    | "ACTIVE"
+    | "SUSPENDED"
+    | "FROZEN"
+    | "CLOSED"
+    | "FAILED"
+  activatedAt?: string
+}
+
+export type ApiResponseListAuditLogResponse = {
+  status?: boolean
+  message?: string
+  data?: Array<AuditLogResponse>
+  meta?: Meta
+}
+
+export type AuditLogResponse = {
+  id?: number
+  userId?: number
+  organizationId?: number
+  action?: string
+  resourceType?: string
+  resourceId?: string
+  previousState?: string
+  newState?: string
+  ipAddress?: string
+  timestamp?: string
+}
+
+export type ApiResponseAuditLogResponse = {
+  status?: boolean
+  message?: string
+  data?: AuditLogResponse
+  meta?: Meta
+}
+
 export type ApiKeyResult = {
   id?: number
   organizationId?: number
@@ -780,6 +1941,32 @@ export type ApiResponseListApiKeyResult = {
   status?: boolean
   message?: string
   data?: Array<ApiKeyResult>
+  meta?: Meta
+}
+
+export type AccountResponse = {
+  id?: number
+  organizationId?: number
+  code?: string
+  name?: string
+  type?: "ASSET" | "LIABILITY" | "EQUITY" | "REVENUE" | "EXPENSE"
+  parentAccountId?: number
+  isSystemAccount?: boolean
+  isActive?: boolean
+  createdAt?: string
+}
+
+export type ApiResponseListAccountResponse = {
+  status?: boolean
+  message?: string
+  data?: Array<AccountResponse>
+  meta?: Meta
+}
+
+export type ApiResponseAccountResponse = {
+  status?: boolean
+  message?: string
+  data?: AccountResponse
   meta?: Meta
 }
 
@@ -973,6 +2160,318 @@ export type UpdateBusinessProfileResponses = {
 export type UpdateBusinessProfileResponse =
   UpdateBusinessProfileResponses[keyof UpdateBusinessProfileResponses]
 
+export type ListVendorsData = {
+  body?: never
+  path?: never
+  query?: {
+    status?: "PENDING" | "ACTIVE" | "SUSPENDED" | "TERMINATED"
+  }
+  url: "/api/v1/vendors"
+}
+
+export type ListVendorsResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseListVendorResult
+}
+
+export type ListVendorsResponse =
+  ListVendorsResponses[keyof ListVendorsResponses]
+
+export type CreateVendorData = {
+  body: CreateVendorRequest
+  path?: never
+  query?: never
+  url: "/api/v1/vendors"
+}
+
+export type CreateVendorResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseCreateVendorResponse
+}
+
+export type CreateVendorResponse2 =
+  CreateVendorResponses[keyof CreateVendorResponses]
+
+export type SuspendVendorData = {
+  body: SuspendVendorRequest
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/vendors/{id}/suspend"
+}
+
+export type SuspendVendorResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type SuspendVendorResponse =
+  SuspendVendorResponses[keyof SuspendVendorResponses]
+
+export type ApproveVendorData = {
+  body?: never
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/vendors/{id}/approve"
+}
+
+export type ApproveVendorResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type ApproveVendorResponse =
+  ApproveVendorResponses[keyof ApproveVendorResponses]
+
+export type OpenTillData = {
+  body: OpenTillRequest
+  path?: never
+  query?: never
+  url: "/api/v1/tills"
+}
+
+export type OpenTillResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseOpenTillResponse
+}
+
+export type OpenTillResponse2 = OpenTillResponses[keyof OpenTillResponses]
+
+export type CloseTillData = {
+  body: CloseTillRequest
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/tills/{id}/close"
+}
+
+export type CloseTillResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type CloseTillResponse = CloseTillResponses[keyof CloseTillResponses]
+
+export type OccupyTableData = {
+  body: OccupyTableRequest
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/tables/{id}/occupy"
+}
+
+export type OccupyTableResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type OccupyTableResponse =
+  OccupyTableResponses[keyof OccupyTableResponses]
+
+export type ClearTableData = {
+  body?: never
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/tables/{id}/clear"
+}
+
+export type ClearTableResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type ClearTableResponse = ClearTableResponses[keyof ClearTableResponses]
+
+export type RequestBillData = {
+  body?: never
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/tables/{id}/bill"
+}
+
+export type RequestBillResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type RequestBillResponse =
+  RequestBillResponses[keyof RequestBillResponses]
+
+export type ListSuppliersData = {
+  body?: never
+  path?: never
+  query?: {
+    status?: "ACTIVE" | "INACTIVE"
+  }
+  url: "/api/v1/suppliers"
+}
+
+export type ListSuppliersResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseListSupplierResult
+}
+
+export type ListSuppliersResponse =
+  ListSuppliersResponses[keyof ListSuppliersResponses]
+
+export type CreateSupplierData = {
+  body: CreateSupplierRequest
+  path?: never
+  query?: never
+  url: "/api/v1/suppliers"
+}
+
+export type CreateSupplierResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseCreateSupplierResponse
+}
+
+export type CreateSupplierResponse2 =
+  CreateSupplierResponses[keyof CreateSupplierResponses]
+
+export type ListTransfersData = {
+  body?: never
+  path?: never
+  query?: {
+    status?: "REQUESTED" | "APPROVED" | "DISPATCHED" | "RECEIVED" | "CANCELLED"
+    page?: number
+    size?: number
+  }
+  url: "/api/v1/stock-transfers"
+}
+
+export type ListTransfersResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponsePageResultStockTransferResponse
+}
+
+export type ListTransfersResponse =
+  ListTransfersResponses[keyof ListTransfersResponses]
+
+export type RequestTransferData = {
+  body: RequestStockTransferRequest
+  path?: never
+  query?: never
+  url: "/api/v1/stock-transfers"
+}
+
+export type RequestTransferResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseRequestStockTransferResponse
+}
+
+export type RequestTransferResponse =
+  RequestTransferResponses[keyof RequestTransferResponses]
+
+export type ReceiveTransferData = {
+  body: ReceiveStockTransferRequest
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/stock-transfers/{id}/receive"
+}
+
+export type ReceiveTransferResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type ReceiveTransferResponse =
+  ReceiveTransferResponses[keyof ReceiveTransferResponses]
+
+export type ApproveTransferData = {
+  body?: never
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/stock-transfers/{id}/approve"
+}
+
+export type ApproveTransferResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type ApproveTransferResponse =
+  ApproveTransferResponses[keyof ApproveTransferResponses]
+
+export type InitiateStockCountData = {
+  body: InitiateStockCountRequest
+  path?: never
+  query?: never
+  url: "/api/v1/stock-counts"
+}
+
+export type InitiateStockCountResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseInitiateStockCountResponse
+}
+
+export type InitiateStockCountResponse2 =
+  InitiateStockCountResponses[keyof InitiateStockCountResponses]
+
+export type ReconcileStockCountData = {
+  body: ReconcileStockCountRequest
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/stock-counts/{id}/reconcile"
+}
+
+export type ReconcileStockCountResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type ReconcileStockCountResponse =
+  ReconcileStockCountResponses[keyof ReconcileStockCountResponses]
+
 export type ListData = {
   body?: never
   path?: never
@@ -1005,6 +2504,144 @@ export type CreateResponses = {
 
 export type CreateResponse = CreateResponses[keyof CreateResponses]
 
+export type CreateReturnData = {
+  body: CreateCustomerReturnRequest
+  path?: never
+  query?: never
+  url: "/api/v1/returns"
+}
+
+export type CreateReturnResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseCreateCustomerReturnResponse
+}
+
+export type CreateReturnResponse =
+  CreateReturnResponses[keyof CreateReturnResponses]
+
+export type ApproveReturnData = {
+  body?: never
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/returns/{id}/approve"
+}
+
+export type ApproveReturnResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type ApproveReturnResponse =
+  ApproveReturnResponses[keyof ApproveReturnResponses]
+
+export type List1Data = {
+  body?: never
+  path?: never
+  query?: {
+    ownerType?: "CUSTOMER" | "VENDOR"
+    ownerReferenceId?: string
+    status?:
+      | "REQUESTED"
+      | "PENDING"
+      | "ACTIVE"
+      | "SUSPENDED"
+      | "FROZEN"
+      | "CLOSED"
+      | "FAILED"
+    page?: number
+    size?: number
+  }
+  url: "/api/v1/reserved-accounts"
+}
+
+export type List1Responses = {
+  /**
+   * OK
+   */
+  200: ApiResponsePageResultReservedAccountResult
+}
+
+export type List1Response = List1Responses[keyof List1Responses]
+
+export type IssueData = {
+  body: IssueReservedAccountRequest
+  headers: {
+    "Idempotency-Key": string
+  }
+  path?: never
+  query?: never
+  url: "/api/v1/reserved-accounts"
+}
+
+export type IssueResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseLong
+}
+
+export type IssueResponse = IssueResponses[keyof IssueResponses]
+
+export type SuspendData = {
+  body?: never
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/reserved-accounts/{id}/suspend"
+}
+
+export type SuspendResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type SuspendResponse = SuspendResponses[keyof SuspendResponses]
+
+export type ReactivateData = {
+  body?: never
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/reserved-accounts/{id}/reactivate"
+}
+
+export type ReactivateResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type ReactivateResponse = ReactivateResponses[keyof ReactivateResponses]
+
+export type CloseData = {
+  body?: never
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/reserved-accounts/{id}/close"
+}
+
+export type CloseResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type CloseResponse = CloseResponses[keyof CloseResponses]
+
 export type RegisterData = {
   body: RegisterRequest
   path?: never
@@ -1036,6 +2673,382 @@ export type RefreshResponses = {
 }
 
 export type RefreshResponse = RefreshResponses[keyof RefreshResponses]
+
+export type ListPurchaseOrdersData = {
+  body?: never
+  path?: never
+  query?: {
+    status?: "DRAFT" | "SENT" | "PARTIALLY_RECEIVED" | "RECEIVED" | "CANCELLED"
+    page?: number
+    size?: number
+  }
+  url: "/api/v1/purchase-orders"
+}
+
+export type ListPurchaseOrdersResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponsePageResultPurchaseOrderResult
+}
+
+export type ListPurchaseOrdersResponse =
+  ListPurchaseOrdersResponses[keyof ListPurchaseOrdersResponses]
+
+export type CreatePurchaseOrderData = {
+  body: CreatePurchaseOrderRequest
+  path?: never
+  query?: never
+  url: "/api/v1/purchase-orders"
+}
+
+export type CreatePurchaseOrderResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseCreatePurchaseOrderResponse
+}
+
+export type CreatePurchaseOrderResponse2 =
+  CreatePurchaseOrderResponses[keyof CreatePurchaseOrderResponses]
+
+export type SendPurchaseOrderData = {
+  body?: never
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/purchase-orders/{id}/send"
+}
+
+export type SendPurchaseOrderResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type SendPurchaseOrderResponse =
+  SendPurchaseOrderResponses[keyof SendPurchaseOrderResponses]
+
+export type ReceivePurchaseOrderData = {
+  body: ReceivePurchaseOrderRequest
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/purchase-orders/{id}/receive"
+}
+
+export type ReceivePurchaseOrderResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type ReceivePurchaseOrderResponse =
+  ReceivePurchaseOrderResponses[keyof ReceivePurchaseOrderResponses]
+
+export type ListProductsData = {
+  body?: never
+  path?: never
+  query?: {
+    vendorId?: number
+    categoryId?: number
+    status?: "ACTIVE" | "INACTIVE" | "PENDING_APPROVAL" | "DELETED"
+    search?: string
+    page?: number
+    size?: number
+  }
+  url: "/api/v1/products"
+}
+
+export type ListProductsResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponsePageResultProductResult
+}
+
+export type ListProductsResponse =
+  ListProductsResponses[keyof ListProductsResponses]
+
+export type CreateProductData = {
+  body: CreateProductRequest
+  path?: never
+  query?: never
+  url: "/api/v1/products"
+}
+
+export type CreateProductResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseCreateProductResponse
+}
+
+export type CreateProductResponse2 =
+  CreateProductResponses[keyof CreateProductResponses]
+
+export type SetProductPriceData = {
+  body: SetProductPriceRequest
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/products/{id}/price"
+}
+
+export type SetProductPriceResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type SetProductPriceResponse =
+  SetProductPriceResponses[keyof SetProductPriceResponses]
+
+export type ApproveVendorProductData = {
+  body?: never
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/products/{id}/approve"
+}
+
+export type ApproveVendorProductResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type ApproveVendorProductResponse =
+  ApproveVendorProductResponses[keyof ApproveVendorProductResponses]
+
+export type RefundSaleData = {
+  body: RefundPosSaleRequest
+  path?: never
+  query?: never
+  url: "/api/v1/pos/refund"
+}
+
+export type RefundSaleResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type RefundSaleResponse = RefundSaleResponses[keyof RefundSaleResponses]
+
+export type ProcessCreditSaleData = {
+  body: ProcessCreditSaleRequest
+  path?: never
+  query?: never
+  url: "/api/v1/pos/credit-sale"
+}
+
+export type ProcessCreditSaleResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseProcessCreditSaleResponse
+}
+
+export type ProcessCreditSaleResponse2 =
+  ProcessCreditSaleResponses[keyof ProcessCreditSaleResponses]
+
+export type CheckoutData = {
+  body: ProcessPosCheckoutRequest
+  path?: never
+  query?: never
+  url: "/api/v1/pos/checkout"
+}
+
+export type CheckoutResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseProcessPosCheckoutResponse
+}
+
+export type CheckoutResponse = CheckoutResponses[keyof CheckoutResponses]
+
+export type EnableData = {
+  body?: EnablePaymentCapabilityRequest
+  path: {
+    capability: string
+  }
+  query?: never
+  url: "/api/v1/payment-capabilities/{capability}/enable"
+}
+
+export type EnableResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseEnablePaymentCapabilityResult
+}
+
+export type EnableResponse = EnableResponses[keyof EnableResponses]
+
+export type RetryData = {
+  body?: never
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/pay/settlements/{id}/retry-reconciliation"
+}
+
+export type RetryResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type RetryResponse = RetryResponses[keyof RetryResponses]
+
+export type ResolveData = {
+  body?: never
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/pay/settlements/{id}/resolve-dispute"
+}
+
+export type ResolveResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type ResolveResponse = ResolveResponses[keyof ResolveResponses]
+
+export type DisputeData = {
+  body: DisputeSettlementRequest
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/pay/settlements/{id}/dispute"
+}
+
+export type DisputeResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type DisputeResponse = DisputeResponses[keyof DisputeResponses]
+
+export type GetDetailsData = {
+  body?: never
+  path?: never
+  query: {
+    id: number
+  }
+  url: "/api/v1/pay/charges"
+}
+
+export type GetDetailsResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseChargeDetailsResponse
+}
+
+export type GetDetailsResponse = GetDetailsResponses[keyof GetDetailsResponses]
+
+export type InitializeData = {
+  body: InitializeChargeRequest
+  path?: never
+  query?: never
+  url: "/api/v1/pay/charges"
+}
+
+export type InitializeResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseInitializeChargeResponse
+}
+
+export type InitializeResponse = InitializeResponses[keyof InitializeResponses]
+
+export type RefundData = {
+  body: RefundChargeRequest
+  path: {
+    chargeId: number
+  }
+  query?: never
+  url: "/api/v1/pay/charges/{chargeId}/refunds"
+}
+
+export type RefundResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseRefundChargeResponse
+}
+
+export type RefundResponse = RefundResponses[keyof RefundResponses]
+
+export type List2Data = {
+  body?: never
+  path?: never
+  query?: never
+  url: "/api/v1/pay/accounts"
+}
+
+export type List2Responses = {
+  /**
+   * OK
+   */
+  200: ApiResponseListFinancialAccountSummaryResponse
+}
+
+export type List2Response = List2Responses[keyof List2Responses]
+
+export type Create1Data = {
+  body: CreateBusinessAccountRequest
+  path?: never
+  query?: never
+  url: "/api/v1/pay/accounts"
+}
+
+export type Create1Responses = {
+  /**
+   * OK
+   */
+  200: ApiResponseCreateBusinessAccountResponse
+}
+
+export type Create1Response = Create1Responses[keyof Create1Responses]
+
+export type TransferData = {
+  body: TransferBetweenAccountsRequest
+  path?: never
+  query?: never
+  url: "/api/v1/pay/account-transfers"
+}
+
+export type TransferResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseAccountTransferResponse
+}
+
+export type TransferResponse = TransferResponses[keyof TransferResponses]
 
 export type ResetPasswordData = {
   body: ResetPasswordRequest
@@ -1177,6 +3190,23 @@ export type SwitchOrganizationResponses = {
 export type SwitchOrganizationResponse =
   SwitchOrganizationResponses[keyof SwitchOrganizationResponses]
 
+export type CreateOnlineOrderData = {
+  body: CreateOnlineOrderRequest
+  path?: never
+  query?: never
+  url: "/api/v1/orders/online"
+}
+
+export type CreateOnlineOrderResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseCreateOnlineOrderResponse
+}
+
+export type CreateOnlineOrderResponse2 =
+  CreateOnlineOrderResponses[keyof CreateOnlineOrderResponses]
+
 export type LogoutData = {
   body?: never
   path?: never
@@ -1225,7 +3255,138 @@ export type LoginResponses = {
 
 export type LoginResponse = LoginResponses[keyof LoginResponses]
 
-export type List1Data = {
+export type SendKitchenOrderData = {
+  body: SendKitchenOrderRequest
+  path?: never
+  query?: never
+  url: "/api/v1/kitchen-orders"
+}
+
+export type SendKitchenOrderResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseSendKitchenOrderResponse
+}
+
+export type SendKitchenOrderResponse2 =
+  SendKitchenOrderResponses[keyof SendKitchenOrderResponses]
+
+export type MarkKotServedData = {
+  body?: never
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/kitchen-orders/{id}/served"
+}
+
+export type MarkKotServedResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type MarkKotServedResponse =
+  MarkKotServedResponses[keyof MarkKotServedResponses]
+
+export type MarkKotReadyData = {
+  body?: never
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/kitchen-orders/{id}/ready"
+}
+
+export type MarkKotReadyResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type MarkKotReadyResponse =
+  MarkKotReadyResponses[keyof MarkKotReadyResponses]
+
+export type ListJournalEntriesData = {
+  body?: never
+  path?: never
+  query: {
+    status?: "DRAFT" | "PENDING_APPROVAL" | "POSTED" | "VOIDED"
+    id: number
+  }
+  url: "/api/v1/journal-entries"
+}
+
+export type ListJournalEntriesResponses = {
+  /**
+   * OK
+   */
+  200:
+    ApiResponseJournalEntryResponse | ApiResponseListJournalEntrySummaryResult
+}
+
+export type ListJournalEntriesResponse =
+  ListJournalEntriesResponses[keyof ListJournalEntriesResponses]
+
+export type RecordJournalEntryData = {
+  body: CreateJournalEntryRequest
+  path?: never
+  query?: never
+  url: "/api/v1/journal-entries"
+}
+
+export type RecordJournalEntryResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseCreateJournalEntryResponse
+}
+
+export type RecordJournalEntryResponse =
+  RecordJournalEntryResponses[keyof RecordJournalEntryResponses]
+
+export type VoidJournalEntryData = {
+  body: VoidJournalEntryRequest
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/journal-entries/{id}/void"
+}
+
+export type VoidJournalEntryResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type VoidJournalEntryResponse =
+  VoidJournalEntryResponses[keyof VoidJournalEntryResponses]
+
+export type ApproveJournalEntryData = {
+  body?: never
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/journal-entries/{id}/approve"
+}
+
+export type ApproveJournalEntryResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type ApproveJournalEntryResponse =
+  ApproveJournalEntryResponses[keyof ApproveJournalEntryResponses]
+
+export type List3Data = {
   body?: never
   path?: never
   query?: {
@@ -1234,14 +3395,14 @@ export type List1Data = {
   url: "/api/v1/invitations"
 }
 
-export type List1Responses = {
+export type List3Responses = {
   /**
    * OK
    */
   200: ApiResponseListInvitationResult
 }
 
-export type List1Response = List1Responses[keyof List1Responses]
+export type List3Response = List3Responses[keyof List3Responses]
 
 export type InviteData = {
   body: InviteMemberRequest
@@ -1290,6 +3451,23 @@ export type AcceptResponses = {
 }
 
 export type AcceptResponse = AcceptResponses[keyof AcceptResponses]
+
+export type AdjustStockData = {
+  body: AdjustStockRequest
+  path?: never
+  query?: never
+  url: "/api/v1/inventory/adjust"
+}
+
+export type AdjustStockResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type AdjustStockResponse =
+  AdjustStockResponses[keyof AdjustStockResponses]
 
 export type ReplayEventData = {
   body?: never
@@ -1361,6 +3539,23 @@ export type ResendVerificationResponses = {
 export type ResendVerificationResponse =
   ResendVerificationResponses[keyof ResendVerificationResponses]
 
+export type CreateDiscountData = {
+  body: CreateDiscountRequest
+  path?: never
+  query?: never
+  url: "/api/v1/discounts"
+}
+
+export type CreateDiscountResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseCreateDiscountResponse
+}
+
+export type CreateDiscountResponse2 =
+  CreateDiscountResponses[keyof CreateDiscountResponses]
+
 export type VerifyData = {
   body: AuthorizeDeviceRequest
   path?: never
@@ -1376,6 +3571,42 @@ export type VerifyResponses = {
 }
 
 export type VerifyResponse = VerifyResponses[keyof VerifyResponses]
+
+export type CreateDepositData = {
+  body: CreateCustomerDepositRequest
+  path?: never
+  query?: never
+  url: "/api/v1/deposits"
+}
+
+export type CreateDepositResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseCreateCustomerDepositResponse
+}
+
+export type CreateDepositResponse =
+  CreateDepositResponses[keyof CreateDepositResponses]
+
+export type AddDepositPaymentData = {
+  body: AddCustomerDepositPaymentRequest
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/deposits/{id}/payment"
+}
+
+export type AddDepositPaymentResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type AddDepositPaymentResponse =
+  AddDepositPaymentResponses[keyof AddDepositPaymentResponses]
 
 export type SubmitData = {
   body?: never
@@ -1428,7 +3659,7 @@ export type AcceptAgreementResponses = {
 export type AcceptAgreementResponse =
   AcceptAgreementResponses[keyof AcceptAgreementResponses]
 
-export type List2Data = {
+export type List4Data = {
   body?: never
   path?: never
   query?: {
@@ -1437,30 +3668,30 @@ export type List2Data = {
   url: "/api/v1/api-keys"
 }
 
-export type List2Responses = {
+export type List4Responses = {
   /**
    * OK
    */
   200: ApiResponseListApiKeyResult
 }
 
-export type List2Response = List2Responses[keyof List2Responses]
+export type List4Response = List4Responses[keyof List4Responses]
 
-export type IssueData = {
+export type Issue1Data = {
   body: IssueApiKeyRequest
   path?: never
   query?: never
   url: "/api/v1/api-keys"
 }
 
-export type IssueResponses = {
+export type Issue1Responses = {
   /**
    * OK
    */
   200: ApiResponseIssuedApiKeyResult
 }
 
-export type IssueResponse = IssueResponses[keyof IssueResponses]
+export type Issue1Response = Issue1Responses[keyof Issue1Responses]
 
 export type RotateData = {
   body: RotateApiKeyRequest
@@ -1516,7 +3747,7 @@ export type FreezeResponses = {
 
 export type FreezeResponse = FreezeResponses[keyof FreezeResponses]
 
-export type CloseData = {
+export type Close1Data = {
   body?: never
   path: {
     accountId: number
@@ -1525,14 +3756,69 @@ export type CloseData = {
   url: "/api/v1/admin/ledger-accounts/{accountId}/close"
 }
 
-export type CloseResponses = {
+export type Close1Responses = {
   /**
    * OK
    */
   200: ApiResponseVoid
 }
 
-export type CloseResponse = CloseResponses[keyof CloseResponses]
+export type Close1Response = Close1Responses[keyof Close1Responses]
+
+export type ListAccountsData = {
+  body?: never
+  path?: never
+  query: {
+    id: number
+  }
+  url: "/api/v1/accounts"
+}
+
+export type ListAccountsResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseAccountResponse | ApiResponseListAccountResponse
+}
+
+export type ListAccountsResponse =
+  ListAccountsResponses[keyof ListAccountsResponses]
+
+export type CreateAccountData = {
+  body: CreateAccountRequest
+  path?: never
+  query?: never
+  url: "/api/v1/accounts"
+}
+
+export type CreateAccountResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseCreateAccountResponse
+}
+
+export type CreateAccountResponse2 =
+  CreateAccountResponses[keyof CreateAccountResponses]
+
+export type DeactivateAccountData = {
+  body?: never
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/accounts/{id}/deactivate"
+}
+
+export type DeactivateAccountResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseVoid
+}
+
+export type DeactivateAccountResponse =
+  DeactivateAccountResponses[keyof DeactivateAccountResponses]
 
 export type AssignRoleData = {
   body: AssignRoleRequest
@@ -1551,6 +3837,44 @@ export type AssignRoleResponses = {
 }
 
 export type AssignRoleResponse = AssignRoleResponses[keyof AssignRoleResponses]
+
+export type GetTillSummaryData = {
+  body?: never
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/tills/{id}/summary"
+}
+
+export type GetTillSummaryResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseTillSummaryResult
+}
+
+export type GetTillSummaryResponse =
+  GetTillSummaryResponses[keyof GetTillSummaryResponses]
+
+export type ListActiveTablesData = {
+  body?: never
+  path?: never
+  query: {
+    outletId: number
+  }
+  url: "/api/v1/tables"
+}
+
+export type ListActiveTablesResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseListTableResult
+}
+
+export type ListActiveTablesResponse =
+  ListActiveTablesResponses[keyof ListActiveTablesResponses]
 
 export type GetSignedUrlData = {
   body?: never
@@ -1571,21 +3895,21 @@ export type GetSignedUrlResponses = {
 export type GetSignedUrlResponse =
   GetSignedUrlResponses[keyof GetSignedUrlResponses]
 
-export type List3Data = {
+export type List5Data = {
   body?: never
   path?: never
   query?: never
   url: "/api/v1/sessions"
 }
 
-export type List3Responses = {
+export type List5Responses = {
   /**
    * OK
    */
   200: ApiResponseListSessionWebResponse
 }
 
-export type List3Response = List3Responses[keyof List3Responses]
+export type List5Response = List5Responses[keyof List5Responses]
 
 export type PermissionsData = {
   body?: never
@@ -1606,7 +3930,69 @@ export type PermissionsResponses = {
 export type PermissionsResponse =
   PermissionsResponses[keyof PermissionsResponses]
 
-export type List4Data = {
+export type GetData = {
+  body?: never
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/reserved-accounts/{id}"
+}
+
+export type GetResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseReservedAccountResult
+}
+
+export type GetResponse = GetResponses[keyof GetResponses]
+
+export type SearchByBarcodeData = {
+  body?: never
+  path?: never
+  query: {
+    barcode: string
+  }
+  url: "/api/v1/products/barcode"
+}
+
+export type SearchByBarcodeResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseProductResult
+}
+
+export type SearchByBarcodeResponse =
+  SearchByBarcodeResponses[keyof SearchByBarcodeResponses]
+
+export type ListTransactionsData = {
+  body?: never
+  path?: never
+  query: {
+    outletId: number
+    tillId?: number
+    cashierId?: number
+    from?: string
+    to?: string
+    page?: number
+    size?: number
+  }
+  url: "/api/v1/pos/transactions"
+}
+
+export type ListTransactionsResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponsePageResultSalesOrderResult
+}
+
+export type ListTransactionsResponse =
+  ListTransactionsResponses[keyof ListTransactionsResponses]
+
+export type List6Data = {
   body?: never
   path?: never
   query?: {
@@ -1615,35 +4001,269 @@ export type List4Data = {
   url: "/api/v1/permissions"
 }
 
-export type List4Responses = {
+export type List6Responses = {
   /**
    * OK
    */
   200: ApiResponseListPermissionResult
 }
 
-export type List4Response = List4Responses[keyof List4Responses]
+export type List6Response = List6Responses[keyof List6Responses]
 
-export type ListActivityData = {
+export type List7Data = {
   body?: never
-  path?: never
-  query: {
-    request: GetActivitiesRequestDto
+  path: {
+    vendorId: string
   }
-  url: "/api/v1/organizations/{organizationId}/activity"
+  query?: {
+    page?: number
+    size?: number
+  }
+  url: "/api/v1/pay/vendors/{vendorId}/transactions"
 }
 
-export type ListActivityResponses = {
+export type List7Responses = {
   /**
    * OK
    */
-  200: ApiResponseListActivityLogDto
+  200: ApiResponsePageResultTransactionResponse
 }
 
-export type ListActivityResponse =
-  ListActivityResponses[keyof ListActivityResponses]
+export type List7Response = List7Responses[keyof List7Responses]
 
-export type List5Data = {
+export type List8Data = {
+  body?: never
+  path?: never
+  query?: {
+    type?:
+      | "CHARGE"
+      | "REFUND"
+      | "PAYOUT"
+      | "SETTLEMENT"
+      | "ACCOUNT_FUNDING"
+      | "ACCOUNT_TRANSFER"
+      | "LEDGER_POST"
+    status?:
+      | "PENDING"
+      | "SUCCESSFUL"
+      | "FAILED"
+      | "REFUND_PENDING"
+      | "REFUNDED"
+      | "DISPUTED"
+      | "REVERSED"
+    direction?: "INCOMING" | "OUTGOING" | "INTERNAL"
+    channel?: string
+    provider?: string
+    sourceSystem?: string
+    sourceReferenceId?: string
+    partyType?: string
+    partyReferenceId?: string
+    outletId?: number
+    currency?: string
+    reference?: string
+    search?: string
+    minAmount?: number
+    maxAmount?: number
+    from?: string
+    to?: string
+    page?: number
+    size?: number
+    sort?: string
+  }
+  url: "/api/v1/pay/transactions"
+}
+
+export type List8Responses = {
+  /**
+   * OK
+   */
+  200: ApiResponsePageResultTransactionResponse
+}
+
+export type List8Response = List8Responses[keyof List8Responses]
+
+export type Get1Data = {
+  body?: never
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/pay/transactions/{id}"
+}
+
+export type Get1Responses = {
+  /**
+   * OK
+   */
+  200: ApiResponseTransactionResponse
+}
+
+export type Get1Response = Get1Responses[keyof Get1Responses]
+
+export type VolumeData = {
+  body?: never
+  path?: never
+  query: {
+    month: string
+  }
+  url: "/api/v1/pay/transactions/volume"
+}
+
+export type VolumeResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseTransactionVolumeResponse
+}
+
+export type VolumeResponse = VolumeResponses[keyof VolumeResponses]
+
+export type ByReferenceData = {
+  body?: never
+  path?: never
+  query: {
+    reference: string
+  }
+  url: "/api/v1/pay/transactions/by-reference"
+}
+
+export type ByReferenceResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseTransactionResponse
+}
+
+export type ByReferenceResponse =
+  ByReferenceResponses[keyof ByReferenceResponses]
+
+export type List9Data = {
+  body?: never
+  path?: never
+  query?: {
+    status?:
+      | "PROVIDER_PENDING"
+      | "AWAITING_ANCHOR_CREDIT"
+      | "CONFIRMED"
+      | "RECONCILIATION_REQUIRED"
+      | "DISPUTED"
+      | "FAILED"
+    from?: string
+    to?: string
+    page?: number
+    size?: number
+  }
+  url: "/api/v1/pay/settlements"
+}
+
+export type List9Responses = {
+  /**
+   * OK
+   */
+  200: ApiResponsePageResultSettlementResponse
+}
+
+export type List9Response = List9Responses[keyof List9Responses]
+
+export type Get2Data = {
+  body?: never
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/pay/settlements/{id}"
+}
+
+export type Get2Responses = {
+  /**
+   * OK
+   */
+  200: ApiResponseSettlementResponse
+}
+
+export type Get2Response = Get2Responses[keyof Get2Responses]
+
+export type List10Data = {
+  body?: never
+  path: {
+    customerId: string
+  }
+  query?: {
+    page?: number
+    size?: number
+  }
+  url: "/api/v1/pay/customers/{customerId}/transactions"
+}
+
+export type List10Responses = {
+  /**
+   * OK
+   */
+  200: ApiResponsePageResultTransactionResponse
+}
+
+export type List10Response = List10Responses[keyof List10Responses]
+
+export type Get3Data = {
+  body?: never
+  path: {
+    id: number
+  }
+  query?: never
+  url: "/api/v1/pay/accounts/{id}"
+}
+
+export type Get3Responses = {
+  /**
+   * OK
+   */
+  200: ApiResponseFinancialAccountResponse
+}
+
+export type Get3Response = Get3Responses[keyof Get3Responses]
+
+export type List11Data = {
+  body?: never
+  path: {
+    accountId: number
+  }
+  query?: {
+    page?: number
+    size?: number
+    sort?: string
+  }
+  url: "/api/v1/pay/accounts/{accountId}/transactions"
+}
+
+export type List11Responses = {
+  /**
+   * OK
+   */
+  200: ApiResponsePageResultTransactionResponse
+}
+
+export type List11Response = List11Responses[keyof List11Responses]
+
+export type GetSalesOrderData = {
+  body?: never
+  path?: never
+  query: {
+    id: number
+  }
+  url: "/api/v1/orders"
+}
+
+export type GetSalesOrderResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseSalesOrderResult
+}
+
+export type GetSalesOrderResponse =
+  GetSalesOrderResponses[keyof GetSalesOrderResponses]
+
+export type List12Data = {
   body?: never
   path?: never
   query?: {
@@ -1652,14 +4272,14 @@ export type List5Data = {
   url: "/api/v1/members"
 }
 
-export type List5Responses = {
+export type List12Responses = {
   /**
    * OK
    */
   200: ApiResponseListMemberResult
 }
 
-export type List5Response = List5Responses[keyof List5Responses]
+export type List12Response = List12Responses[keyof List12Responses]
 
 export type DeactivateData = {
   body?: never
@@ -1697,87 +4317,64 @@ export type DetailsResponses = {
 
 export type DetailsResponse = DetailsResponses[keyof DetailsResponses]
 
-export type HistoryData = {
+export type GetInventoryLevelData = {
   body?: never
   path?: never
   query: {
-    accountId?: number
-    dateFrom?: string
-    dateTo?: string
-    page?: number
-    size?: number
-    partyType: string
-    partyReferenceId: string
-    currency?: string
+    outletId: number
+    productId: number
+    variantId?: number
   }
-  url: "/api/v1/ledger-entries"
+  url: "/api/v1/inventory"
 }
 
-export type HistoryResponses = {
+export type GetInventoryLevelResponses = {
   /**
    * OK
    */
-  200: ApiResponsePageResultLedgerTransactionResponse
+  200: ApiResponseInventoryLevelResponse
 }
 
-export type HistoryResponse = HistoryResponses[keyof HistoryResponses]
+export type GetInventoryLevelResponse =
+  GetInventoryLevelResponses[keyof GetInventoryLevelResponses]
 
-export type PartyBalanceData = {
+export type GetStockSummaryData = {
   body?: never
   path?: never
   query: {
-    partyType: string
-    partyReferenceId: string
-    currency?: string
+    outletId: number
   }
-  url: "/api/v1/ledger-accounts/party-balance"
+  url: "/api/v1/inventory/summary"
 }
 
-export type PartyBalanceResponses = {
+export type GetStockSummaryResponses = {
   /**
    * OK
    */
-  200: ApiResponseAccountBalanceResponse
+  200: ApiResponseStockSummaryResponse
 }
 
-export type PartyBalanceResponse =
-  PartyBalanceResponses[keyof PartyBalanceResponses]
+export type GetStockSummaryResponse =
+  GetStockSummaryResponses[keyof GetStockSummaryResponses]
 
-export type WalletBalancesData = {
-  body?: never
-  path?: never
-  query?: never
-  url: "/api/v1/ledger-accounts/balances"
-}
-
-export type WalletBalancesResponses = {
-  /**
-   * OK
-   */
-  200: ApiResponseWalletBalancesResponse
-}
-
-export type WalletBalancesResponse2 =
-  WalletBalancesResponses[keyof WalletBalancesResponses]
-
-export type BalanceData = {
+export type ListLowStockProductsData = {
   body?: never
   path?: never
   query: {
-    accountType: string
-    currency?: string
+    outletId: number
   }
-  url: "/api/v1/ledger-accounts/balance"
+  url: "/api/v1/inventory/low-stock"
 }
 
-export type BalanceResponses = {
+export type ListLowStockProductsResponses = {
   /**
    * OK
    */
-  200: ApiResponseAccountBalanceResponse
+  200: ApiResponseListLowStockResponse
 }
 
-export type BalanceResponse = BalanceResponses[keyof BalanceResponses]
+export type ListLowStockProductsResponse =
+  ListLowStockProductsResponses[keyof ListLowStockProductsResponses]
 
 export type RevokeData = {
   body?: never
@@ -1797,21 +4394,40 @@ export type RevokeResponses = {
 
 export type RevokeResponse = RevokeResponses[keyof RevokeResponses]
 
-export type List6Data = {
+export type List13Data = {
   body?: never
   path?: never
   query?: never
   url: "/api/v1/devices"
 }
 
-export type List6Responses = {
+export type List13Responses = {
   /**
    * OK
    */
   200: ApiResponseListTrustedDeviceWebResponse
 }
 
-export type List6Response = List6Responses[keyof List6Responses]
+export type List13Response = List13Responses[keyof List13Responses]
+
+export type GetCustomerCreditData = {
+  body?: never
+  path?: never
+  query: {
+    customerId: number
+  }
+  url: "/api/v1/credits"
+}
+
+export type GetCustomerCreditResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseCustomerCreditResult
+}
+
+export type GetCustomerCreditResponse =
+  GetCustomerCreditResponses[keyof GetCustomerCreditResponses]
 
 export type Details1Data = {
   body?: never
@@ -1828,6 +4444,44 @@ export type Details1Responses = {
 }
 
 export type Details1Response = Details1Responses[keyof Details1Responses]
+
+export type Get4Data = {
+  body?: never
+  path?: never
+  query?: never
+  url: "/api/v1/business-accounts"
+}
+
+export type Get4Responses = {
+  /**
+   * OK
+   */
+  200: ApiResponseBusinessBankingResult
+}
+
+export type Get4Response = Get4Responses[keyof Get4Responses]
+
+export type ListAuditLogsData = {
+  body?: never
+  path?: never
+  query: {
+    resourceType?: string
+    page?: number
+    size?: number
+    id: number
+  }
+  url: "/api/v1/audit-logs"
+}
+
+export type ListAuditLogsResponses = {
+  /**
+   * OK
+   */
+  200: ApiResponseAuditLogResponse | ApiResponseListAuditLogResponse
+}
+
+export type ListAuditLogsResponse =
+  ListAuditLogsResponses[keyof ListAuditLogsResponses]
 
 export type JwksData = {
   body?: never

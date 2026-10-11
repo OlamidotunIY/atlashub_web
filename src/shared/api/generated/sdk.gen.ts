@@ -13,20 +13,64 @@ import type {
   AcceptAgreementResponses,
   AcceptData,
   AcceptResponses,
+  AddDepositPaymentData,
+  AddDepositPaymentResponses,
+  AdjustStockData,
+  AdjustStockResponses,
+  ApproveJournalEntryData,
+  ApproveJournalEntryResponses,
+  ApproveReturnData,
+  ApproveReturnResponses,
+  ApproveTransferData,
+  ApproveTransferResponses,
+  ApproveVendorData,
+  ApproveVendorProductData,
+  ApproveVendorProductResponses,
+  ApproveVendorResponses,
   AssignRoleData,
   AssignRoleResponses,
-  BalanceData,
-  BalanceResponses,
+  ByReferenceData,
+  ByReferenceResponses,
   ChangePasswordData,
   ChangePasswordResponses,
+  CheckoutData,
+  CheckoutResponses,
+  ClearTableData,
+  ClearTableResponses,
+  Close1Data,
+  Close1Responses,
   CloseData,
   CloseOutletData,
   CloseOutletResponses,
   CloseResponses,
+  CloseTillData,
+  CloseTillResponses,
+  Create1Data,
+  Create1Responses,
+  CreateAccountData,
+  CreateAccountResponses,
   CreateData,
+  CreateDepositData,
+  CreateDepositResponses,
+  CreateDiscountData,
+  CreateDiscountResponses,
+  CreateOnlineOrderData,
+  CreateOnlineOrderResponses,
   CreateOutletData,
   CreateOutletResponses,
+  CreateProductData,
+  CreateProductResponses,
+  CreatePurchaseOrderData,
+  CreatePurchaseOrderResponses,
   CreateResponses,
+  CreateReturnData,
+  CreateReturnResponses,
+  CreateSupplierData,
+  CreateSupplierResponses,
+  CreateVendorData,
+  CreateVendorResponses,
+  DeactivateAccountData,
+  DeactivateAccountResponses,
   DeactivateData,
   DeactivateResponses,
   DeclineData,
@@ -37,26 +81,64 @@ import type {
   Details1Responses,
   DetailsData,
   DetailsResponses,
+  DisputeData,
+  DisputeResponses,
+  EnableData,
+  EnableResponses,
   ForgotPasswordData,
   ForgotPasswordResponses,
   FreezeData,
   FreezeResponses,
+  Get1Data,
+  Get1Responses,
+  Get2Data,
+  Get2Responses,
+  Get3Data,
+  Get3Responses,
+  Get4Data,
+  Get4Responses,
+  GetCustomerCreditData,
+  GetCustomerCreditResponses,
+  GetData,
+  GetDetailsData,
+  GetDetailsResponses,
+  GetInventoryLevelData,
+  GetInventoryLevelResponses,
   GetMeData,
   GetMeResponses,
   GetOrganizationData,
   GetOrganizationResponses,
   GetOutletData,
   GetOutletResponses,
+  GetResponses,
+  GetSalesOrderData,
+  GetSalesOrderResponses,
   GetSignedUrlData,
   GetSignedUrlResponses,
-  HistoryData,
-  HistoryResponses,
+  GetStockSummaryData,
+  GetStockSummaryResponses,
+  GetTillSummaryData,
+  GetTillSummaryResponses,
+  InitializeData,
+  InitializeResponses,
+  InitiateStockCountData,
+  InitiateStockCountResponses,
   InviteData,
   InviteResponses,
+  Issue1Data,
+  Issue1Responses,
   IssueData,
   IssueResponses,
   JwksData,
   JwksResponses,
+  List10Data,
+  List10Responses,
+  List11Data,
+  List11Responses,
+  List12Data,
+  List12Responses,
+  List13Data,
+  List13Responses,
   List1Data,
   List1Responses,
   List2Data,
@@ -69,34 +151,90 @@ import type {
   List5Responses,
   List6Data,
   List6Responses,
-  ListActivityData,
-  ListActivityResponses,
+  List7Data,
+  List7Responses,
+  List8Data,
+  List8Responses,
+  List9Data,
+  List9Responses,
+  ListAccountsData,
+  ListAccountsResponses,
+  ListActiveTablesData,
+  ListActiveTablesResponses,
+  ListAuditLogsData,
+  ListAuditLogsResponses,
   ListData,
+  ListJournalEntriesData,
+  ListJournalEntriesResponses,
+  ListLowStockProductsData,
+  ListLowStockProductsResponses,
   ListOutletsData,
   ListOutletsResponses,
+  ListProductsData,
+  ListProductsResponses,
+  ListPurchaseOrdersData,
+  ListPurchaseOrdersResponses,
   ListResponses,
+  ListSuppliersData,
+  ListSuppliersResponses,
+  ListTransactionsData,
+  ListTransactionsResponses,
+  ListTransfersData,
+  ListTransfersResponses,
+  ListVendorsData,
+  ListVendorsResponses,
   LoginData,
   LoginResponses,
   LogoutAllData,
   LogoutAllResponses,
   LogoutData,
   LogoutResponses,
-  PartyBalanceData,
-  PartyBalanceResponses,
+  MarkKotReadyData,
+  MarkKotReadyResponses,
+  MarkKotServedData,
+  MarkKotServedResponses,
+  OccupyTableData,
+  OccupyTableResponses,
+  OpenTillData,
+  OpenTillResponses,
   PermissionsData,
   PermissionsResponses,
+  ProcessCreditSaleData,
+  ProcessCreditSaleResponses,
+  ReactivateData,
+  ReactivateResponses,
+  ReceivePurchaseOrderData,
+  ReceivePurchaseOrderResponses,
+  ReceiveTransferData,
+  ReceiveTransferResponses,
+  ReconcileStockCountData,
+  ReconcileStockCountResponses,
+  RecordJournalEntryData,
+  RecordJournalEntryResponses,
   RefreshData,
   RefreshResponses,
+  RefundData,
+  RefundResponses,
+  RefundSaleData,
+  RefundSaleResponses,
   RegisterData,
   RegisterResponses,
   ReplaceData,
   ReplaceResponses,
   ReplayEventData,
   ReplayEventResponses,
+  RequestBillData,
+  RequestBillResponses,
+  RequestTransferData,
+  RequestTransferResponses,
   ResendVerificationData,
   ResendVerificationResponses,
   ResetPasswordData,
   ResetPasswordResponses,
+  ResolveData,
+  ResolveResponses,
+  RetryData,
+  RetryResponses,
   Revoke1Data,
   Revoke1Responses,
   Revoke2Data,
@@ -107,14 +245,28 @@ import type {
   RotateResponses,
   SaveData,
   SaveResponses,
+  SearchByBarcodeData,
+  SearchByBarcodeResponses,
+  SendKitchenOrderData,
+  SendKitchenOrderResponses,
+  SendPurchaseOrderData,
+  SendPurchaseOrderResponses,
+  SetProductPriceData,
+  SetProductPriceResponses,
   SubmitData,
   SubmitResponses,
+  SuspendData,
   SuspendOutletData,
   SuspendOutletResponses,
+  SuspendResponses,
+  SuspendVendorData,
+  SuspendVendorResponses,
   SwitchEnvironmentData,
   SwitchEnvironmentResponses,
   SwitchOrganizationData,
   SwitchOrganizationResponses,
+  TransferData,
+  TransferResponses,
   UnfreezeData,
   UnfreezeResponses,
   UpdateBusinessProfileData,
@@ -133,8 +285,10 @@ import type {
   VerifyEmailData,
   VerifyEmailResponses,
   VerifyResponses,
-  WalletBalancesData,
-  WalletBalancesResponses,
+  VoidJournalEntryData,
+  VoidJournalEntryResponses,
+  VolumeData,
+  VolumeResponses,
 } from "./types.gen"
 
 export type Options<
@@ -329,6 +483,292 @@ export const updateBusinessProfile = <ThrowOnError extends boolean = false>(
   })
 
 /**
+ * List vendors
+ */
+export const listVendors = <ThrowOnError extends boolean = false>(
+  options?: Options<ListVendorsData, ThrowOnError>
+): RequestResult<ListVendorsResponses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<ListVendorsResponses, unknown, ThrowOnError>({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/vendors",
+    ...options,
+  })
+
+/**
+ * Create vendor
+ */
+export const createVendor = <ThrowOnError extends boolean = false>(
+  options: Options<CreateVendorData, ThrowOnError>
+): RequestResult<CreateVendorResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<CreateVendorResponses, unknown, ThrowOnError>(
+    {
+      security: [{ scheme: "bearer", type: "http" }],
+      url: "/api/v1/vendors",
+      ...options,
+      headers: {
+        "Content-Type": "application/json",
+        ...options.headers,
+      },
+    }
+  )
+
+/**
+ * Suspend vendor
+ */
+export const suspendVendor = <ThrowOnError extends boolean = false>(
+  options: Options<SuspendVendorData, ThrowOnError>
+): RequestResult<SuspendVendorResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    SuspendVendorResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/vendors/{id}/suspend",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Approve vendor
+ */
+export const approveVendor = <ThrowOnError extends boolean = false>(
+  options: Options<ApproveVendorData, ThrowOnError>
+): RequestResult<ApproveVendorResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    ApproveVendorResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/vendors/{id}/approve",
+    ...options,
+  })
+
+/**
+ * Open till
+ */
+export const openTill = <ThrowOnError extends boolean = false>(
+  options: Options<OpenTillData, ThrowOnError>
+): RequestResult<OpenTillResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<OpenTillResponses, unknown, ThrowOnError>({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/tills",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Close till
+ */
+export const closeTill = <ThrowOnError extends boolean = false>(
+  options: Options<CloseTillData, ThrowOnError>
+): RequestResult<CloseTillResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<CloseTillResponses, unknown, ThrowOnError>({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/tills/{id}/close",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Occupy hospitality table
+ */
+export const occupyTable = <ThrowOnError extends boolean = false>(
+  options: Options<OccupyTableData, ThrowOnError>
+): RequestResult<OccupyTableResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<OccupyTableResponses, unknown, ThrowOnError>({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/tables/{id}/occupy",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Clear hospitality table
+ */
+export const clearTable = <ThrowOnError extends boolean = false>(
+  options: Options<ClearTableData, ThrowOnError>
+): RequestResult<ClearTableResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<ClearTableResponses, unknown, ThrowOnError>({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/tables/{id}/clear",
+    ...options,
+  })
+
+/**
+ * Request bill for hospitality table
+ */
+export const requestBill = <ThrowOnError extends boolean = false>(
+  options: Options<RequestBillData, ThrowOnError>
+): RequestResult<RequestBillResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<RequestBillResponses, unknown, ThrowOnError>({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/tables/{id}/bill",
+    ...options,
+  })
+
+/**
+ * List suppliers
+ */
+export const listSuppliers = <ThrowOnError extends boolean = false>(
+  options?: Options<ListSuppliersData, ThrowOnError>
+): RequestResult<ListSuppliersResponses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<
+    ListSuppliersResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/suppliers",
+    ...options,
+  })
+
+/**
+ * Create supplier
+ */
+export const createSupplier = <ThrowOnError extends boolean = false>(
+  options: Options<CreateSupplierData, ThrowOnError>
+): RequestResult<CreateSupplierResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    CreateSupplierResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/suppliers",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * List stock transfers for an organization
+ */
+export const listTransfers = <ThrowOnError extends boolean = false>(
+  options?: Options<ListTransfersData, ThrowOnError>
+): RequestResult<ListTransfersResponses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<
+    ListTransfersResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/stock-transfers",
+    ...options,
+  })
+
+/**
+ * Request an inter-outlet stock transfer
+ */
+export const requestTransfer = <ThrowOnError extends boolean = false>(
+  options: Options<RequestTransferData, ThrowOnError>
+): RequestResult<RequestTransferResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    RequestTransferResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/stock-transfers",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Receive items for an approved stock transfer at the destination outlet
+ */
+export const receiveTransfer = <ThrowOnError extends boolean = false>(
+  options: Options<ReceiveTransferData, ThrowOnError>
+): RequestResult<ReceiveTransferResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    ReceiveTransferResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/stock-transfers/{id}/receive",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Approve an inter-outlet stock transfer
+ */
+export const approveTransfer = <ThrowOnError extends boolean = false>(
+  options: Options<ApproveTransferData, ThrowOnError>
+): RequestResult<ApproveTransferResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    ApproveTransferResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/stock-transfers/{id}/approve",
+    ...options,
+  })
+
+/**
+ * Initiate a new stock count for an outlet
+ */
+export const initiateStockCount = <ThrowOnError extends boolean = false>(
+  options: Options<InitiateStockCountData, ThrowOnError>
+): RequestResult<InitiateStockCountResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    InitiateStockCountResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/stock-counts",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Reconcile counted stock against system quantities
+ */
+export const reconcileStockCount = <ThrowOnError extends boolean = false>(
+  options: Options<ReconcileStockCountData, ThrowOnError>
+): RequestResult<ReconcileStockCountResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    ReconcileStockCountResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/stock-counts/{id}/reconcile",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
  * List custom roles
  */
 export const list = <ThrowOnError extends boolean = false>(
@@ -355,6 +795,99 @@ export const create = <ThrowOnError extends boolean = false>(
   })
 
 /**
+ * Create a new customer return request
+ */
+export const createReturn = <ThrowOnError extends boolean = false>(
+  options: Options<CreateReturnData, ThrowOnError>
+): RequestResult<CreateReturnResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<CreateReturnResponses, unknown, ThrowOnError>(
+    {
+      security: [{ scheme: "bearer", type: "http" }],
+      url: "/api/v1/returns",
+      ...options,
+      headers: {
+        "Content-Type": "application/json",
+        ...options.headers,
+      },
+    }
+  )
+
+/**
+ * Manually approve a customer return
+ */
+export const approveReturn = <ThrowOnError extends boolean = false>(
+  options: Options<ApproveReturnData, ThrowOnError>
+): RequestResult<ApproveReturnResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    ApproveReturnResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/returns/{id}/approve",
+    ...options,
+  })
+
+/**
+ * List reserved accounts
+ */
+export const list1 = <ThrowOnError extends boolean = false>(
+  options?: Options<List1Data, ThrowOnError>
+): RequestResult<List1Responses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<List1Responses, unknown, ThrowOnError>({
+    url: "/api/v1/reserved-accounts",
+    ...options,
+  })
+
+/**
+ * Issue a reserved account
+ */
+export const issue = <ThrowOnError extends boolean = false>(
+  options: Options<IssueData, ThrowOnError>
+): RequestResult<IssueResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<IssueResponses, unknown, ThrowOnError>({
+    url: "/api/v1/reserved-accounts",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Suspend a reserved account
+ */
+export const suspend = <ThrowOnError extends boolean = false>(
+  options: Options<SuspendData, ThrowOnError>
+): RequestResult<SuspendResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<SuspendResponses, unknown, ThrowOnError>({
+    url: "/api/v1/reserved-accounts/{id}/suspend",
+    ...options,
+  })
+
+/**
+ * Reactivate a reserved account
+ */
+export const reactivate = <ThrowOnError extends boolean = false>(
+  options: Options<ReactivateData, ThrowOnError>
+): RequestResult<ReactivateResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<ReactivateResponses, unknown, ThrowOnError>({
+    url: "/api/v1/reserved-accounts/{id}/reactivate",
+    ...options,
+  })
+
+/**
+ * Close a reserved account
+ */
+export const close = <ThrowOnError extends boolean = false>(
+  options: Options<CloseData, ThrowOnError>
+): RequestResult<CloseResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<CloseResponses, unknown, ThrowOnError>({
+    url: "/api/v1/reserved-accounts/{id}/close",
+    ...options,
+  })
+
+/**
  * Register a new user and organization
  */
 export const register = <ThrowOnError extends boolean = false>(
@@ -377,6 +910,321 @@ export const refresh = <ThrowOnError extends boolean = false>(
 ): RequestResult<RefreshResponses, unknown, ThrowOnError> =>
   (options.client ?? client).post<RefreshResponses, unknown, ThrowOnError>({
     url: "/api/v1/refresh",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * List purchase orders
+ */
+export const listPurchaseOrders = <ThrowOnError extends boolean = false>(
+  options?: Options<ListPurchaseOrdersData, ThrowOnError>
+): RequestResult<ListPurchaseOrdersResponses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<
+    ListPurchaseOrdersResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/purchase-orders",
+    ...options,
+  })
+
+/**
+ * Create purchase order
+ */
+export const createPurchaseOrder = <ThrowOnError extends boolean = false>(
+  options: Options<CreatePurchaseOrderData, ThrowOnError>
+): RequestResult<CreatePurchaseOrderResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    CreatePurchaseOrderResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/purchase-orders",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Send purchase order
+ */
+export const sendPurchaseOrder = <ThrowOnError extends boolean = false>(
+  options: Options<SendPurchaseOrderData, ThrowOnError>
+): RequestResult<SendPurchaseOrderResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    SendPurchaseOrderResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/purchase-orders/{id}/send",
+    ...options,
+  })
+
+/**
+ * Receive items for purchase order
+ */
+export const receivePurchaseOrder = <ThrowOnError extends boolean = false>(
+  options: Options<ReceivePurchaseOrderData, ThrowOnError>
+): RequestResult<ReceivePurchaseOrderResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    ReceivePurchaseOrderResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/purchase-orders/{id}/receive",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * List products
+ */
+export const listProducts = <ThrowOnError extends boolean = false>(
+  options?: Options<ListProductsData, ThrowOnError>
+): RequestResult<ListProductsResponses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<ListProductsResponses, unknown, ThrowOnError>(
+    {
+      security: [{ scheme: "bearer", type: "http" }],
+      url: "/api/v1/products",
+      ...options,
+    }
+  )
+
+/**
+ * Create product
+ */
+export const createProduct = <ThrowOnError extends boolean = false>(
+  options: Options<CreateProductData, ThrowOnError>
+): RequestResult<CreateProductResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    CreateProductResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/products",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Set product price
+ */
+export const setProductPrice = <ThrowOnError extends boolean = false>(
+  options: Options<SetProductPriceData, ThrowOnError>
+): RequestResult<SetProductPriceResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    SetProductPriceResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/products/{id}/price",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Approve vendor product
+ */
+export const approveVendorProduct = <ThrowOnError extends boolean = false>(
+  options: Options<ApproveVendorProductData, ThrowOnError>
+): RequestResult<ApproveVendorProductResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    ApproveVendorProductResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/products/{id}/approve",
+    ...options,
+  })
+
+/**
+ * Refund POS sale
+ */
+export const refundSale = <ThrowOnError extends boolean = false>(
+  options: Options<RefundSaleData, ThrowOnError>
+): RequestResult<RefundSaleResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<RefundSaleResponses, unknown, ThrowOnError>({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/pos/refund",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Process credit sale
+ */
+export const processCreditSale = <ThrowOnError extends boolean = false>(
+  options: Options<ProcessCreditSaleData, ThrowOnError>
+): RequestResult<ProcessCreditSaleResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    ProcessCreditSaleResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/pos/credit-sale",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Process POS checkout
+ */
+export const checkout = <ThrowOnError extends boolean = false>(
+  options: Options<CheckoutData, ThrowOnError>
+): RequestResult<CheckoutResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<CheckoutResponses, unknown, ThrowOnError>({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/pos/checkout",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Enable a payment capability
+ */
+export const enable = <ThrowOnError extends boolean = false>(
+  options: Options<EnableData, ThrowOnError>
+): RequestResult<EnableResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<EnableResponses, unknown, ThrowOnError>({
+    url: "/api/v1/payment-capabilities/{capability}/enable",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+export const retry = <ThrowOnError extends boolean = false>(
+  options: Options<RetryData, ThrowOnError>
+): RequestResult<RetryResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<RetryResponses, unknown, ThrowOnError>({
+    url: "/api/v1/pay/settlements/{id}/retry-reconciliation",
+    ...options,
+  })
+
+export const resolve = <ThrowOnError extends boolean = false>(
+  options: Options<ResolveData, ThrowOnError>
+): RequestResult<ResolveResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<ResolveResponses, unknown, ThrowOnError>({
+    url: "/api/v1/pay/settlements/{id}/resolve-dispute",
+    ...options,
+  })
+
+export const dispute = <ThrowOnError extends boolean = false>(
+  options: Options<DisputeData, ThrowOnError>
+): RequestResult<DisputeResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<DisputeResponses, unknown, ThrowOnError>({
+    url: "/api/v1/pay/settlements/{id}/dispute",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Get charge details by ID
+ */
+export const getDetails = <ThrowOnError extends boolean = false>(
+  options: Options<GetDetailsData, ThrowOnError>
+): RequestResult<GetDetailsResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<GetDetailsResponses, unknown, ThrowOnError>({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/pay/charges",
+    ...options,
+  })
+
+/**
+ * Initialize universal checkout charge
+ */
+export const initialize = <ThrowOnError extends boolean = false>(
+  options: Options<InitializeData, ThrowOnError>
+): RequestResult<InitializeResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<InitializeResponses, unknown, ThrowOnError>({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/pay/charges",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Request a refund for a successful charge
+ */
+export const refund = <ThrowOnError extends boolean = false>(
+  options: Options<RefundData, ThrowOnError>
+): RequestResult<RefundResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<RefundResponses, unknown, ThrowOnError>({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/pay/charges/{chargeId}/refunds",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+export const list2 = <ThrowOnError extends boolean = false>(
+  options?: Options<List2Data, ThrowOnError>
+): RequestResult<List2Responses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<List2Responses, unknown, ThrowOnError>({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/pay/accounts",
+    ...options,
+  })
+
+export const create1 = <ThrowOnError extends boolean = false>(
+  options: Options<Create1Data, ThrowOnError>
+): RequestResult<Create1Responses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<Create1Responses, unknown, ThrowOnError>({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/pay/accounts",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+export const transfer = <ThrowOnError extends boolean = false>(
+  options: Options<TransferData, ThrowOnError>
+): RequestResult<TransferResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<TransferResponses, unknown, ThrowOnError>({
+    url: "/api/v1/pay/account-transfers",
     ...options,
     headers: {
       "Content-Type": "application/json",
@@ -521,6 +1369,26 @@ export const switchOrganization = <ThrowOnError extends boolean = false>(
   })
 
 /**
+ * Create online order
+ */
+export const createOnlineOrder = <ThrowOnError extends boolean = false>(
+  options: Options<CreateOnlineOrderData, ThrowOnError>
+): RequestResult<CreateOnlineOrderResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    CreateOnlineOrderResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/orders/online",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
  * Log out current session
  */
 export const logout = <ThrowOnError extends boolean = false>(
@@ -560,12 +1428,134 @@ export const login = <ThrowOnError extends boolean = false>(
   })
 
 /**
+ * Send kitchen order ticket
+ */
+export const sendKitchenOrder = <ThrowOnError extends boolean = false>(
+  options: Options<SendKitchenOrderData, ThrowOnError>
+): RequestResult<SendKitchenOrderResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    SendKitchenOrderResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/kitchen-orders",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Mark kitchen order served
+ */
+export const markKotServed = <ThrowOnError extends boolean = false>(
+  options: Options<MarkKotServedData, ThrowOnError>
+): RequestResult<MarkKotServedResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    MarkKotServedResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/kitchen-orders/{id}/served",
+    ...options,
+  })
+
+/**
+ * Mark kitchen order ready
+ */
+export const markKotReady = <ThrowOnError extends boolean = false>(
+  options: Options<MarkKotReadyData, ThrowOnError>
+): RequestResult<MarkKotReadyResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<MarkKotReadyResponses, unknown, ThrowOnError>(
+    {
+      security: [{ scheme: "bearer", type: "http" }],
+      url: "/api/v1/kitchen-orders/{id}/ready",
+      ...options,
+    }
+  )
+
+/**
+ * Get journal entry by ID
+ */
+export const listJournalEntries = <ThrowOnError extends boolean = false>(
+  options: Options<ListJournalEntriesData, ThrowOnError>
+): RequestResult<ListJournalEntriesResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<
+    ListJournalEntriesResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/journal-entries",
+    ...options,
+  })
+
+/**
+ * Record a manual journal entry
+ */
+export const recordJournalEntry = <ThrowOnError extends boolean = false>(
+  options: Options<RecordJournalEntryData, ThrowOnError>
+): RequestResult<RecordJournalEntryResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    RecordJournalEntryResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/journal-entries",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Void a posted journal entry
+ */
+export const voidJournalEntry = <ThrowOnError extends boolean = false>(
+  options: Options<VoidJournalEntryData, ThrowOnError>
+): RequestResult<VoidJournalEntryResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    VoidJournalEntryResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/journal-entries/{id}/void",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Approve a pending journal entry
+ */
+export const approveJournalEntry = <ThrowOnError extends boolean = false>(
+  options: Options<ApproveJournalEntryData, ThrowOnError>
+): RequestResult<ApproveJournalEntryResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    ApproveJournalEntryResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/journal-entries/{id}/approve",
+    ...options,
+  })
+
+/**
  * List organization invitations
  */
-export const list1 = <ThrowOnError extends boolean = false>(
-  options?: Options<List1Data, ThrowOnError>
-): RequestResult<List1Responses, unknown, ThrowOnError> =>
-  (options?.client ?? client).get<List1Responses, unknown, ThrowOnError>({
+export const list3 = <ThrowOnError extends boolean = false>(
+  options?: Options<List3Data, ThrowOnError>
+): RequestResult<List3Responses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<List3Responses, unknown, ThrowOnError>({
     url: "/api/v1/invitations",
     ...options,
   })
@@ -608,6 +1598,22 @@ export const accept = <ThrowOnError extends boolean = false>(
 ): RequestResult<AcceptResponses, unknown, ThrowOnError> =>
   (options.client ?? client).post<AcceptResponses, unknown, ThrowOnError>({
     url: "/api/v1/invitations/accept",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Manually adjust stock quantity
+ */
+export const adjustStock = <ThrowOnError extends boolean = false>(
+  options: Options<AdjustStockData, ThrowOnError>
+): RequestResult<AdjustStockResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<AdjustStockResponses, unknown, ThrowOnError>({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/inventory/adjust",
     ...options,
     headers: {
       "Content-Type": "application/json",
@@ -681,6 +1687,26 @@ export const resendVerification = <ThrowOnError extends boolean = false>(
   })
 
 /**
+ * Create discount
+ */
+export const createDiscount = <ThrowOnError extends boolean = false>(
+  options: Options<CreateDiscountData, ThrowOnError>
+): RequestResult<CreateDiscountResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    CreateDiscountResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/discounts",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
  * Verify a trusted device
  */
 export const verify = <ThrowOnError extends boolean = false>(
@@ -688,6 +1714,46 @@ export const verify = <ThrowOnError extends boolean = false>(
 ): RequestResult<VerifyResponses, unknown, ThrowOnError> =>
   (options.client ?? client).post<VerifyResponses, unknown, ThrowOnError>({
     url: "/api/v1/devices/verify",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Create customer layaway deposit
+ */
+export const createDeposit = <ThrowOnError extends boolean = false>(
+  options: Options<CreateDepositData, ThrowOnError>
+): RequestResult<CreateDepositResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    CreateDepositResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/deposits",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Add payment to customer deposit
+ */
+export const addDepositPayment = <ThrowOnError extends boolean = false>(
+  options: Options<AddDepositPaymentData, ThrowOnError>
+): RequestResult<AddDepositPaymentResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    AddDepositPaymentResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/deposits/{id}/payment",
     ...options,
     headers: {
       "Content-Type": "application/json",
@@ -743,10 +1809,10 @@ export const acceptAgreement = <ThrowOnError extends boolean = false>(
 /**
  * List API keys
  */
-export const list2 = <ThrowOnError extends boolean = false>(
-  options?: Options<List2Data, ThrowOnError>
-): RequestResult<List2Responses, unknown, ThrowOnError> =>
-  (options?.client ?? client).get<List2Responses, unknown, ThrowOnError>({
+export const list4 = <ThrowOnError extends boolean = false>(
+  options?: Options<List4Data, ThrowOnError>
+): RequestResult<List4Responses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<List4Responses, unknown, ThrowOnError>({
     url: "/api/v1/api-keys",
     ...options,
   })
@@ -754,10 +1820,10 @@ export const list2 = <ThrowOnError extends boolean = false>(
 /**
  * Create an API key
  */
-export const issue = <ThrowOnError extends boolean = false>(
-  options: Options<IssueData, ThrowOnError>
-): RequestResult<IssueResponses, unknown, ThrowOnError> =>
-  (options.client ?? client).post<IssueResponses, unknown, ThrowOnError>({
+export const issue1 = <ThrowOnError extends boolean = false>(
+  options: Options<Issue1Data, ThrowOnError>
+): RequestResult<Issue1Responses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<Issue1Responses, unknown, ThrowOnError>({
     url: "/api/v1/api-keys",
     ...options,
     headers: {
@@ -806,11 +1872,59 @@ export const freeze = <ThrowOnError extends boolean = false>(
 /**
  * Close a ledger account
  */
-export const close = <ThrowOnError extends boolean = false>(
-  options: Options<CloseData, ThrowOnError>
-): RequestResult<CloseResponses, unknown, ThrowOnError> =>
-  (options.client ?? client).post<CloseResponses, unknown, ThrowOnError>({
+export const close1 = <ThrowOnError extends boolean = false>(
+  options: Options<Close1Data, ThrowOnError>
+): RequestResult<Close1Responses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<Close1Responses, unknown, ThrowOnError>({
     url: "/api/v1/admin/ledger-accounts/{accountId}/close",
+    ...options,
+  })
+
+/**
+ * Get account by ID
+ */
+export const listAccounts = <ThrowOnError extends boolean = false>(
+  options: Options<ListAccountsData, ThrowOnError>
+): RequestResult<ListAccountsResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<ListAccountsResponses, unknown, ThrowOnError>({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/accounts",
+    ...options,
+  })
+
+/**
+ * Create an account in Chart of Accounts
+ */
+export const createAccount = <ThrowOnError extends boolean = false>(
+  options: Options<CreateAccountData, ThrowOnError>
+): RequestResult<CreateAccountResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    CreateAccountResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/accounts",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  })
+
+/**
+ * Deactivate an account
+ */
+export const deactivateAccount = <ThrowOnError extends boolean = false>(
+  options: Options<DeactivateAccountData, ThrowOnError>
+): RequestResult<DeactivateAccountResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).post<
+    DeactivateAccountResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/accounts/{id}/deactivate",
     ...options,
   })
 
@@ -830,6 +1944,38 @@ export const assignRole = <ThrowOnError extends boolean = false>(
   })
 
 /**
+ * Get till summary
+ */
+export const getTillSummary = <ThrowOnError extends boolean = false>(
+  options: Options<GetTillSummaryData, ThrowOnError>
+): RequestResult<GetTillSummaryResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<
+    GetTillSummaryResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/tills/{id}/summary",
+    ...options,
+  })
+
+/**
+ * List active hospitality tables for outlet
+ */
+export const listActiveTables = <ThrowOnError extends boolean = false>(
+  options: Options<ListActiveTablesData, ThrowOnError>
+): RequestResult<ListActiveTablesResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<
+    ListActiveTablesResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/tables",
+    ...options,
+  })
+
+/**
  * Request a pre-signed Firebase Storage upload URL
  *
  * Returns a short-lived PUT URL. The frontend should upload the file directly to this URL using HTTP PUT with the matching Content-Type header.
@@ -846,10 +1992,10 @@ export const getSignedUrl = <ThrowOnError extends boolean = false>(
 /**
  * List active sessions
  */
-export const list3 = <ThrowOnError extends boolean = false>(
-  options?: Options<List3Data, ThrowOnError>
-): RequestResult<List3Responses, unknown, ThrowOnError> =>
-  (options?.client ?? client).get<List3Responses, unknown, ThrowOnError>({
+export const list5 = <ThrowOnError extends boolean = false>(
+  options?: Options<List5Data, ThrowOnError>
+): RequestResult<List5Responses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<List5Responses, unknown, ThrowOnError>({
     url: "/api/v1/sessions",
     ...options,
   })
@@ -866,34 +2012,168 @@ export const permissions = <ThrowOnError extends boolean = false>(
   })
 
 /**
+ * Get a reserved account
+ */
+export const get = <ThrowOnError extends boolean = false>(
+  options: Options<GetData, ThrowOnError>
+): RequestResult<GetResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<GetResponses, unknown, ThrowOnError>({
+    url: "/api/v1/reserved-accounts/{id}",
+    ...options,
+  })
+
+/**
+ * Search product by barcode
+ */
+export const searchByBarcode = <ThrowOnError extends boolean = false>(
+  options: Options<SearchByBarcodeData, ThrowOnError>
+): RequestResult<SearchByBarcodeResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<
+    SearchByBarcodeResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/products/barcode",
+    ...options,
+  })
+
+/**
+ * List POS transactions
+ */
+export const listTransactions = <ThrowOnError extends boolean = false>(
+  options: Options<ListTransactionsData, ThrowOnError>
+): RequestResult<ListTransactionsResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<
+    ListTransactionsResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/pos/transactions",
+    ...options,
+  })
+
+/**
  * List available permissions
  */
-export const list4 = <ThrowOnError extends boolean = false>(
-  options?: Options<List4Data, ThrowOnError>
-): RequestResult<List4Responses, unknown, ThrowOnError> =>
-  (options?.client ?? client).get<List4Responses, unknown, ThrowOnError>({
+export const list6 = <ThrowOnError extends boolean = false>(
+  options?: Options<List6Data, ThrowOnError>
+): RequestResult<List6Responses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<List6Responses, unknown, ThrowOnError>({
     url: "/api/v1/permissions",
     ...options,
   })
 
-/**
- * List Organization Activity
- */
-export const listActivity = <ThrowOnError extends boolean = false>(
-  options: Options<ListActivityData, ThrowOnError>
-): RequestResult<ListActivityResponses, unknown, ThrowOnError> =>
-  (options.client ?? client).get<ListActivityResponses, unknown, ThrowOnError>({
-    url: "/api/v1/organizations/{organizationId}/activity",
+export const list7 = <ThrowOnError extends boolean = false>(
+  options: Options<List7Data, ThrowOnError>
+): RequestResult<List7Responses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<List7Responses, unknown, ThrowOnError>({
+    url: "/api/v1/pay/vendors/{vendorId}/transactions",
     ...options,
   })
 
 /**
+ * List organization transactions
+ */
+export const list8 = <ThrowOnError extends boolean = false>(
+  options?: Options<List8Data, ThrowOnError>
+): RequestResult<List8Responses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<List8Responses, unknown, ThrowOnError>({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/pay/transactions",
+    ...options,
+  })
+
+export const get1 = <ThrowOnError extends boolean = false>(
+  options: Options<Get1Data, ThrowOnError>
+): RequestResult<Get1Responses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<Get1Responses, unknown, ThrowOnError>({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/pay/transactions/{id}",
+    ...options,
+  })
+
+export const volume = <ThrowOnError extends boolean = false>(
+  options: Options<VolumeData, ThrowOnError>
+): RequestResult<VolumeResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<VolumeResponses, unknown, ThrowOnError>({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/pay/transactions/volume",
+    ...options,
+  })
+
+export const byReference = <ThrowOnError extends boolean = false>(
+  options: Options<ByReferenceData, ThrowOnError>
+): RequestResult<ByReferenceResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<ByReferenceResponses, unknown, ThrowOnError>({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/pay/transactions/by-reference",
+    ...options,
+  })
+
+export const list9 = <ThrowOnError extends boolean = false>(
+  options?: Options<List9Data, ThrowOnError>
+): RequestResult<List9Responses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<List9Responses, unknown, ThrowOnError>({
+    url: "/api/v1/pay/settlements",
+    ...options,
+  })
+
+export const get2 = <ThrowOnError extends boolean = false>(
+  options: Options<Get2Data, ThrowOnError>
+): RequestResult<Get2Responses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<Get2Responses, unknown, ThrowOnError>({
+    url: "/api/v1/pay/settlements/{id}",
+    ...options,
+  })
+
+export const list10 = <ThrowOnError extends boolean = false>(
+  options: Options<List10Data, ThrowOnError>
+): RequestResult<List10Responses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<List10Responses, unknown, ThrowOnError>({
+    url: "/api/v1/pay/customers/{customerId}/transactions",
+    ...options,
+  })
+
+export const get3 = <ThrowOnError extends boolean = false>(
+  options: Options<Get3Data, ThrowOnError>
+): RequestResult<Get3Responses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<Get3Responses, unknown, ThrowOnError>({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/pay/accounts/{id}",
+    ...options,
+  })
+
+export const list11 = <ThrowOnError extends boolean = false>(
+  options: Options<List11Data, ThrowOnError>
+): RequestResult<List11Responses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<List11Responses, unknown, ThrowOnError>({
+    url: "/api/v1/pay/accounts/{accountId}/transactions",
+    ...options,
+  })
+
+/**
+ * Get sales order by id
+ */
+export const getSalesOrder = <ThrowOnError extends boolean = false>(
+  options: Options<GetSalesOrderData, ThrowOnError>
+): RequestResult<GetSalesOrderResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<GetSalesOrderResponses, unknown, ThrowOnError>(
+    {
+      security: [{ scheme: "bearer", type: "http" }],
+      url: "/api/v1/orders",
+      ...options,
+    }
+  )
+
+/**
  * List organization members
  */
-export const list5 = <ThrowOnError extends boolean = false>(
-  options?: Options<List5Data, ThrowOnError>
-): RequestResult<List5Responses, unknown, ThrowOnError> =>
-  (options?.client ?? client).get<List5Responses, unknown, ThrowOnError>({
+export const list12 = <ThrowOnError extends boolean = false>(
+  options?: Options<List12Data, ThrowOnError>
+): RequestResult<List12Responses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<List12Responses, unknown, ThrowOnError>({
     url: "/api/v1/members",
     ...options,
   })
@@ -920,47 +2200,50 @@ export const details = <ThrowOnError extends boolean = false>(
   })
 
 /**
- * Get party ledger history
+ * Get inventory level for a product at an outlet
  */
-export const history_ = <ThrowOnError extends boolean = false>(
-  options: Options<HistoryData, ThrowOnError>
-): RequestResult<HistoryResponses, unknown, ThrowOnError> =>
-  (options.client ?? client).get<HistoryResponses, unknown, ThrowOnError>({
-    url: "/api/v1/ledger-entries",
-    ...options,
-  })
-
-/**
- * Get party ledger balance
- */
-export const partyBalance = <ThrowOnError extends boolean = false>(
-  options: Options<PartyBalanceData, ThrowOnError>
-): RequestResult<PartyBalanceResponses, unknown, ThrowOnError> =>
-  (options.client ?? client).get<PartyBalanceResponses, unknown, ThrowOnError>({
-    url: "/api/v1/ledger-accounts/party-balance",
-    ...options,
-  })
-
-/**
- * Get organization ledger balances
- */
-export const walletBalances = <ThrowOnError extends boolean = false>(
-  options?: Options<WalletBalancesData, ThrowOnError>
-): RequestResult<WalletBalancesResponses, unknown, ThrowOnError> =>
-  (options?.client ?? client).get<
-    WalletBalancesResponses,
+export const getInventoryLevel = <ThrowOnError extends boolean = false>(
+  options: Options<GetInventoryLevelData, ThrowOnError>
+): RequestResult<GetInventoryLevelResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<
+    GetInventoryLevelResponses,
     unknown,
     ThrowOnError
-  >({ url: "/api/v1/ledger-accounts/balances", ...options })
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/inventory",
+    ...options,
+  })
 
 /**
- * Get ledger account balance
+ * Get stock summary metrics for an outlet
  */
-export const balance = <ThrowOnError extends boolean = false>(
-  options: Options<BalanceData, ThrowOnError>
-): RequestResult<BalanceResponses, unknown, ThrowOnError> =>
-  (options.client ?? client).get<BalanceResponses, unknown, ThrowOnError>({
-    url: "/api/v1/ledger-accounts/balance",
+export const getStockSummary = <ThrowOnError extends boolean = false>(
+  options: Options<GetStockSummaryData, ThrowOnError>
+): RequestResult<GetStockSummaryResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<
+    GetStockSummaryResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/inventory/summary",
+    ...options,
+  })
+
+/**
+ * List low stock products for an outlet
+ */
+export const listLowStockProducts = <ThrowOnError extends boolean = false>(
+  options: Options<ListLowStockProductsData, ThrowOnError>
+): RequestResult<ListLowStockProductsResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<
+    ListLowStockProductsResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/inventory/low-stock",
     ...options,
   })
 
@@ -978,11 +2261,27 @@ export const revoke = <ThrowOnError extends boolean = false>(
 /**
  * List trusted devices
  */
-export const list6 = <ThrowOnError extends boolean = false>(
-  options?: Options<List6Data, ThrowOnError>
-): RequestResult<List6Responses, unknown, ThrowOnError> =>
-  (options?.client ?? client).get<List6Responses, unknown, ThrowOnError>({
+export const list13 = <ThrowOnError extends boolean = false>(
+  options?: Options<List13Data, ThrowOnError>
+): RequestResult<List13Responses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<List13Responses, unknown, ThrowOnError>({
     url: "/api/v1/devices",
+    ...options,
+  })
+
+/**
+ * Get customer credit details
+ */
+export const getCustomerCredit = <ThrowOnError extends boolean = false>(
+  options: Options<GetCustomerCreditData, ThrowOnError>
+): RequestResult<GetCustomerCreditResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<
+    GetCustomerCreditResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: "bearer", type: "http" }],
+    url: "/api/v1/credits",
     ...options,
   })
 
@@ -996,6 +2295,31 @@ export const details1 = <ThrowOnError extends boolean = false>(
     url: "/api/v1/compliance",
     ...options,
   })
+
+/**
+ * Get business banking details
+ */
+export const get4 = <ThrowOnError extends boolean = false>(
+  options?: Options<Get4Data, ThrowOnError>
+): RequestResult<Get4Responses, unknown, ThrowOnError> =>
+  (options?.client ?? client).get<Get4Responses, unknown, ThrowOnError>({
+    url: "/api/v1/business-accounts",
+    ...options,
+  })
+
+/**
+ * Get audit log by ID
+ */
+export const listAuditLogs = <ThrowOnError extends boolean = false>(
+  options: Options<ListAuditLogsData, ThrowOnError>
+): RequestResult<ListAuditLogsResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<ListAuditLogsResponses, unknown, ThrowOnError>(
+    {
+      security: [{ scheme: "bearer", type: "http" }],
+      url: "/api/v1/audit-logs",
+      ...options,
+    }
+  )
 
 /**
  * Get the JWT JSON Web Key Set
