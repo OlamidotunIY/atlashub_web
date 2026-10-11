@@ -23,6 +23,7 @@ import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuCheckboxItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -208,26 +209,30 @@ export function DataTable<TData extends RowData>({
                 }
               />
               <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuLabel className="font-semibold text-xs text-muted-foreground">
-                  Toggle Columns
-                </DropdownMenuLabel>
+                <DropdownMenuGroup>
+                  <DropdownMenuLabel className="font-semibold text-xs text-muted-foreground">
+                    Toggle Columns
+                  </DropdownMenuLabel>
+                </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                {table
-                  .getAllLeafColumns()
-                  .filter((column) => column.getCanHide())
-                  .map((column) => {
-                    const label = columnLabels?.[column.id] ?? column.id;
-                    return (
-                      <DropdownMenuCheckboxItem
-                        key={column.id}
-                        checked={column.getIsVisible()}
-                        onCheckedChange={(checked) => column.toggleVisibility(checked)}
-                        className="text-xs cursor-pointer capitalize"
-                      >
-                        {label}
-                      </DropdownMenuCheckboxItem>
-                    );
-                  })}
+                <DropdownMenuGroup>
+                  {table
+                    .getAllLeafColumns()
+                    .filter((column) => column.getCanHide())
+                    .map((column) => {
+                      const label = columnLabels?.[column.id] ?? column.id;
+                      return (
+                        <DropdownMenuCheckboxItem
+                          key={column.id}
+                          checked={column.getIsVisible()}
+                          onCheckedChange={(checked) => column.toggleVisibility(checked)}
+                          className="text-xs cursor-pointer capitalize"
+                        >
+                          {label}
+                        </DropdownMenuCheckboxItem>
+                      );
+                    })}
+                </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>
           )}
