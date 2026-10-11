@@ -34,7 +34,7 @@ const ONBOARDING_STEPS = [
 export function OnboardingLayout()
 {
   const { data: user } = useAuthAccount();
-  const { clear, jti, refreshToken, expiresAt } = authStore()
+  const { clear, jti } = authStore();
   const { mutateAsync: logout } = useLogout();
   const location = useLocation();
 
@@ -42,11 +42,7 @@ export function OnboardingLayout()
   {
     if (jti)
     {
-      await logout({
-        refreshToken: refreshToken as string,
-        accessTokenExpiresAt: String(expiresAt),
-        accessTokenJti: jti
-      }).catch(() => { });
+      await logout().catch(() => { });
     }
     clear();
   };

@@ -6,18 +6,32 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 const PAGE_TITLES: Record<string, string> = {
   [MERCHANT_ROUTES.DASHBOARD]: 'Overview',
-  [MERCHANT_ROUTES.ATLAS_PAY]: 'AtlasPay',
-  [MERCHANT_ROUTES.ATLAS_PAY_TRANSACTIONS]: 'Transactions',
-  [MERCHANT_ROUTES.ATLAS_PAY_ACCOUNTS]: 'Accounts',
+  [MERCHANT_ROUTES.ACCOUNTS]: 'My accounts',
+  [MERCHANT_ROUTES.PAYMENT]: 'Payment',
+  [MERCHANT_ROUTES.PAYMENT_ACCOUNTS]: 'Accounts',
+  [MERCHANT_ROUTES.PAYMENT_CHARGES]: 'Charges',
+  [MERCHANT_ROUTES.PAYMENT_SPLITS]: 'Splits',
+  [MERCHANT_ROUTES.PAYMENT_SETTLEMENTS]: 'Settlements',
   [MERCHANT_ROUTES.COMMERCE]: 'Commerce',
   [MERCHANT_ROUTES.COMMERCE_PRODUCTS]: 'Products',
   [MERCHANT_ROUTES.COMMERCE_ORDERS]: 'Orders',
   [MERCHANT_ROUTES.COMMERCE_INVENTORY]: 'Inventory',
+  [MERCHANT_ROUTES.HR]: 'HR',
+  [MERCHANT_ROUTES.HR_EMPLOYEES]: 'Employees',
+  [MERCHANT_ROUTES.HR_PAYROLL]: 'Payroll',
+  [MERCHANT_ROUTES.HR_ATTENDANCE]: 'Attendance',
+  [MERCHANT_ROUTES.ACCOUNTING]: 'Accounting',
+  [MERCHANT_ROUTES.ACCOUNTING_INVOICES]: 'Invoices',
+  [MERCHANT_ROUTES.ACCOUNTING_EXPENSES]: 'Expenses',
+  [MERCHANT_ROUTES.ACCOUNTING_CHART_OF_ACCOUNTS]: 'Chart of Accounts',
+  [MERCHANT_ROUTES.ACCOUNTING_REPORTS]: 'Accounting Reports',
   [MERCHANT_ROUTES.LOGISTICS]: 'Logistics',
   [MERCHANT_ROUTES.LOGISTICS_SHIPMENTS]: 'Shipments',
   [MERCHANT_ROUTES.LOGISTICS_FLEET]: 'Fleet',
   [MERCHANT_ROUTES.TEAM]: 'Team',
   [MERCHANT_ROUTES.SETTINGS]: 'Settings',
+  [MERCHANT_ROUTES.AUDIT_LOGS]: 'Audit logs',
+  [MERCHANT_ROUTES.DEVELOPERS]: 'Developers',
   [MERCHANT_ROUTES.MARKETPLACE]: 'Marketplace',
 };
 
@@ -27,7 +41,7 @@ export function MainHeader()
   const navigate = useNavigate();
   const { data: user } = useMe();
   const { mutate: switchEnvironment, isPending } = useSwitchEnvironment();
-  const title = PAGE_TITLES[pathname] ?? 'AtlasHub';
+  const title = PAGE_TITLES[pathname] ?? (pathname.startsWith('/accounts/') ? 'Account Details' : 'AtlasHub');
   const isTestMode = user?.activeEnvironment !== 'LIVE';
   const canSwitchEnvironment = user?.complianceApproved === true;
 

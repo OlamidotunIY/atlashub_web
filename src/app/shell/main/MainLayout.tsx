@@ -9,7 +9,7 @@ export function MainLayout() {
       <MainSidebar />
       <SidebarInset>
         <MainHeader />
-        <div className="flex flex-1 flex-col overflow-auto p-4 md:p-6">
+        <div className="flex flex-1 flex-col overflow-auto p-4 md:p-6 w-full">
           <Outlet />
         </div>
       </SidebarInset>
