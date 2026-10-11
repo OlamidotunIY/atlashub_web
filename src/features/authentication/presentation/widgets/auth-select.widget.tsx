@@ -40,7 +40,7 @@ export function AuthSelectWidget({
         {label}
         {required && <span className="text-destructive"> *</span>}
       </FieldLabel>
-      <Select value={value} onValueChange={onChange}>
+      <Select value={value} onValueChange={(val) => { if (val !== null) onChange(val); }}>
         <SelectTrigger id={id} className="w-full" disabled={disabled}>
           {selectedOption ? (
             <span data-slot="select-value" className="flex flex-1 text-left items-center gap-2">

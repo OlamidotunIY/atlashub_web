@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Field } from '@/shared/ui';
 
 export interface AuthButtonWidgetProps {

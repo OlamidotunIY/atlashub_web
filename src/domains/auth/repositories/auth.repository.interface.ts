@@ -1,4 +1,4 @@
-import type { LogoutRequest, RefreshTokenRequest, SwitchEnvironmentRequest, SwitchOrganizationRequest, VerifyEmailRequest } from "@/shared/api/generated"
+import type { RefreshTokenRequest, SwitchEnvironmentRequest, SwitchOrganizationRequest, VerifyEmailRequest } from "@/shared/api/generated"
 import type { TokenPair } from "../entities/token-pair.entity.js"
 import type { AuthAccount } from "../entities/auth-account.entity.js"
 
@@ -9,7 +9,7 @@ export interface IAuthRepository {
   refreshToken(req: RefreshTokenRequest): Promise<TokenPair>
   switchOrganization(req: SwitchOrganizationRequest): Promise<TokenPair>
   switchEnvironment(req: SwitchEnvironmentRequest): Promise<TokenPair>
-  logout(req: LogoutRequest): Promise<void>
+  logout(): Promise<void>
   logoutAll(): Promise<void>
   getMe(): Promise<AuthAccount>
 }
