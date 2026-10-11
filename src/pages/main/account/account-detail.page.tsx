@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAccount, useAccountTransactions, AccountInfoCard, AccountTransactionsTable } from '@/features/account';
+import { useSetBreadcrumbs } from '@/app/shell';
 import { MERCHANT_ROUTES } from '@/constants';
 import { Button } from '@/shared/ui/button';
 import { ArrowLeftIcon } from '@phosphor-icons/react';
@@ -11,6 +12,15 @@ export function AccountDetailPage() {
 
   const { data: account, isLoading: isAccountLoading } = useAccount(parsedId);
   const { data: txData, isLoading: isTxLoading, refetch } = useAccountTransactions(parsedId);
+
+  useSetBreadcrumbs(
+    account?.name
+      ? [
+          { label: 'My accounts', href: MERCHANT_ROUTES.ACCOUNTS },
+          { label: account.name },
+        ]
+      : undefined
+  );
 
   return (
     <div className="flex-1 flex flex-col w-full space-y-6">

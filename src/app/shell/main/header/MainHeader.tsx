@@ -1,39 +1,22 @@
+import React from 'react';
 import { MERCHANT_ROUTES } from '@/constants';
 import { useMe, useSwitchEnvironment } from '@/features/authentication';
-import { Badge, Button, Separator, SidebarTrigger, Switch } from '@/shared/ui';
+import {
+  Badge,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+  Button,
+  Separator,
+  SidebarTrigger,
+  Switch,
+} from '@/shared/ui';
 import { GearSixIcon } from '@phosphor-icons/react';
-import { useLocation, useNavigate } from 'react-router-dom';
-
-const PAGE_TITLES: Record<string, string> = {
-  [MERCHANT_ROUTES.DASHBOARD]: 'Overview',
-  [MERCHANT_ROUTES.ACCOUNTS]: 'My accounts',
-  [MERCHANT_ROUTES.PAYMENT]: 'Payment',
-  [MERCHANT_ROUTES.PAYMENT_ACCOUNTS]: 'Accounts',
-  [MERCHANT_ROUTES.PAYMENT_CHARGES]: 'Charges',
-  [MERCHANT_ROUTES.PAYMENT_SPLITS]: 'Splits',
-  [MERCHANT_ROUTES.PAYMENT_SETTLEMENTS]: 'Settlements',
-  [MERCHANT_ROUTES.COMMERCE]: 'Commerce',
-  [MERCHANT_ROUTES.COMMERCE_PRODUCTS]: 'Products',
-  [MERCHANT_ROUTES.COMMERCE_ORDERS]: 'Orders',
-  [MERCHANT_ROUTES.COMMERCE_INVENTORY]: 'Inventory',
-  [MERCHANT_ROUTES.HR]: 'HR',
-  [MERCHANT_ROUTES.HR_EMPLOYEES]: 'Employees',
-  [MERCHANT_ROUTES.HR_PAYROLL]: 'Payroll',
-  [MERCHANT_ROUTES.HR_ATTENDANCE]: 'Attendance',
-  [MERCHANT_ROUTES.ACCOUNTING]: 'Accounting',
-  [MERCHANT_ROUTES.ACCOUNTING_INVOICES]: 'Invoices',
-  [MERCHANT_ROUTES.ACCOUNTING_EXPENSES]: 'Expenses',
-  [MERCHANT_ROUTES.ACCOUNTING_CHART_OF_ACCOUNTS]: 'Chart of Accounts',
-  [MERCHANT_ROUTES.ACCOUNTING_REPORTS]: 'Accounting Reports',
-  [MERCHANT_ROUTES.LOGISTICS]: 'Logistics',
-  [MERCHANT_ROUTES.LOGISTICS_SHIPMENTS]: 'Shipments',
-  [MERCHANT_ROUTES.LOGISTICS_FLEET]: 'Fleet',
-  [MERCHANT_ROUTES.TEAM]: 'Team',
-  [MERCHANT_ROUTES.SETTINGS]: 'Settings',
-  [MERCHANT_ROUTES.AUDIT_LOGS]: 'Audit logs',
-  [MERCHANT_ROUTES.DEVELOPERS]: 'Developers',
-  [MERCHANT_ROUTES.MARKETPLACE]: 'Marketplace',
-};
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { resolveBreadcrumbs, useBreadcrumbsStore } from './breadcrumbs.store';
 
 export function MainHeader()
 {
@@ -41,7 +24,9 @@ export function MainHeader()
   const navigate = useNavigate();
   const { data: user } = useMe();
   const { mutate: switchEnvironment, isPending } = useSwitchEnvironment();
-  const title = PAGE_TITLES[pathname] ?? (pathname.startsWith('/accounts/') ? 'Account Details' : 'AtlasHub');
+
+  const customBreadcrumbs = useBreadcrumbsStore((s) => s.customBreadcrumbs);
+  const breadcrumbs = customBreadcrumbs ?? resolveBreadcrumbs(pathname);
   const isTestMode = user?.activeEnvironment !== 'LIVE';
   const canSwitchEnvironment = user?.complianceApproved === true;
 
@@ -55,7 +40,27 @@ export function MainHeader()
       <div className="z-10 flex min-w-0 items-center">
         <SidebarTrigger className="-ml-1" />
         <Separator orientation="vertical" className="mx-3 h-4" />
-        <h1 className="truncate text-sm font-medium">{title}</h1>
+        <Breadcrumb>
+          <BreadcrumbList>
+            {breadcrumbs.map((crumb, idx) => {
+              const isLast = idx === breadcrumbs.length - 1;
+              return (
+                <React.Fragment key={`${crumb.label}-${idx}`}>
+                  <BreadcrumbItem>
+                    {isLast || !crumb.href ? (
+                      <BreadcrumbPage>{crumb.label}</BreadcrumbPage>
+                    ) : (
+                      <BreadcrumbLink asChild>
+                        <Link to={crumb.href}>{crumb.label}</Link>
+                      </BreadcrumbLink>
+                    )}
+                  </BreadcrumbItem>
+                  {!isLast && <BreadcrumbSeparator />}
+                </React.Fragment>
+              );
+            })}
+          </BreadcrumbList>
+        </Breadcrumb>
       </div>
 
       <div className="absolute top-0 w-full left-0">
