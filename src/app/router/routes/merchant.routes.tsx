@@ -29,9 +29,10 @@ const placeholderRouteDefinitions: ReadonlyArray<readonly [string, string]> = [
   [MERCHANT_ROUTES.HR_LEAVE, "Leave"],
   [MERCHANT_ROUTES.HR_LOANS, "Loans and advances"],
   [MERCHANT_ROUTES.HR_PAYSLIPS, "Payslips"],
-  [MERCHANT_ROUTES.LOGISTICS_DRIVERS, "Drivers"],
   [MERCHANT_ROUTES.LOGISTICS_RETURNS, "Returns"],
   [MERCHANT_ROUTES.LOGISTICS_WAREHOUSES, "Warehouses"],
+  [MERCHANT_ROUTES.LOGISTICS_STOCK_TRANSFERS, "Stock transfers"],
+  [MERCHANT_ROUTES.LOGISTICS_INCENTIVES, "Shipping incentives"],
   [MERCHANT_ROUTES.INSIGHTS, "Insights overview"],
   [MERCHANT_ROUTES.ANALYTICS, "Analytics"],
   [MERCHANT_ROUTES.REPORTS, "Reports"],
@@ -149,10 +150,6 @@ export const merchantRoutes: RouteObject[] = [
       {
         path: MERCHANT_ROUTES.LOGISTICS_SHIPMENTS,
         element: <PlaceholderPage title="Shipments" />,
-      },
-      {
-        path: MERCHANT_ROUTES.LOGISTICS_FLEET,
-        element: <PlaceholderPage title="Fleet" />,
       },
       {
         path: MERCHANT_ROUTES.SETTINGS,

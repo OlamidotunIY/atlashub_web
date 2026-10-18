@@ -5,26 +5,42 @@ import {
   PlusIcon,
   WalletIcon,
 } from "@phosphor-icons/react"
+import { useState } from "react"
 import { Button } from "@/shared/ui/button"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/shared/ui"
 import { DashboardMetricCard } from "./dashboard-metric-card"
-import { CashFlowCard } from "./cash-flow-card"
+import {
+  CASH_FLOW_PERIODS,
+  CashFlowCard,
+  type CashFlowPeriod,
+} from "./cash-flow-card"
 import { AttentionCard } from "./attention-card"
 import { RecentActivityCard } from "./recent-activity-card"
-import { BusinessSnapshotCard } from "./business-snapshot-card"
+import {
+  BusinessSnapshotCard,
+  type BusinessModule,
+} from "./business-snapshot-card"
 
 interface DashboardOverviewProps {
   onCreateTransaction: () => void
   onViewTransactions: () => void
   onViewApprovals: () => void
-  onViewOperations: () => void
+  onModuleSelect: (module: BusinessModule) => void
 }
 
 export function DashboardOverview({
   onCreateTransaction,
   onViewTransactions,
   onViewApprovals,
-  onViewOperations,
+  onModuleSelect,
 }: DashboardOverviewProps) {
+  const [period, setPeriod] = useState<CashFlowPeriod>("this-month")
   return (
     <div className="flex w-full flex-col gap-6 pb-8">
       <header className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
@@ -38,10 +54,22 @@ export function DashboardOverview({
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" className="rounded-xl">
-            <CalendarBlankIcon className="size-4" weight="bold" />
-            This month
-          </Button>
+          <Select
+            value={period}
+            onValueChange={(value) => setPeriod(value as CashFlowPeriod)}
+          >
+            <SelectTrigger size="sm" className="rounded-xl text-xs">
+              <CalendarBlankIcon className="size-4" weight="bold" />
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent align="end">
+              {CASH_FLOW_PERIODS.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           <Button onClick={onCreateTransaction} className="rounded-xl">
             <PlusIcon className="size-4" weight="bold" />
             New transaction
@@ -83,21 +111,21 @@ export function DashboardOverview({
         />
       </section>
 
-      <section className="grid grid-cols-1 gap-6 xl:grid-cols-5">
-        <div className="xl:col-span-3">
-          <CashFlowCard />
+      <section className="grid grid-cols-1 gap-6 xl:auto-rows-fr xl:grid-cols-5">
+        <div className="flex xl:col-span-3">
+          <CashFlowCard period={period} onPeriodChange={setPeriod} />
         </div>
-        <div className="xl:col-span-2">
+        <div className="flex xl:col-span-2">
           <AttentionCard onViewAll={onViewApprovals} />
         </div>
       </section>
 
-      <section className="grid grid-cols-1 gap-6 xl:grid-cols-5">
-        <div className="xl:col-span-3">
+      <section className="grid grid-cols-1 gap-6 xl:auto-rows-fr xl:grid-cols-5">
+        <div className="flex xl:col-span-3">
           <RecentActivityCard onViewAll={onViewTransactions} />
         </div>
-        <div className="xl:col-span-2">
-          <BusinessSnapshotCard onViewOperations={onViewOperations} />
+        <div className="flex xl:col-span-2">
+          <BusinessSnapshotCard onModuleSelect={onModuleSelect} />
         </div>
       </section>
     </div>

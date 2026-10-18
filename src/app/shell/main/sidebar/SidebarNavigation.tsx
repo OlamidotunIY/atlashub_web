@@ -88,8 +88,16 @@ const productNavigationItems: SidebarNavigationItemDefinition[] = [
     items: [
       { label: "Overview", to: MERCHANT_ROUTES.LOGISTICS },
       { label: "Shipments", to: MERCHANT_ROUTES.LOGISTICS_SHIPMENTS },
-      { label: "Fleet", to: MERCHANT_ROUTES.LOGISTICS_FLEET },
+      { label: "Warehouses", to: MERCHANT_ROUTES.LOGISTICS_WAREHOUSES },
+      {
+        label: "Stock transfers",
+        to: MERCHANT_ROUTES.LOGISTICS_STOCK_TRANSFERS,
+      },
       { label: "Returns", to: MERCHANT_ROUTES.LOGISTICS_RETURNS },
+      {
+        label: "Shipping incentives",
+        to: MERCHANT_ROUTES.LOGISTICS_INCENTIVES,
+      },
     ],
   },
 ]

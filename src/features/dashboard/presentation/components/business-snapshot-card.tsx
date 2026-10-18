@@ -1,90 +1,112 @@
 import {
   ArrowRightIcon,
+  CheckCircleIcon,
   PackageIcon,
   ReceiptIcon,
+  ShieldCheckIcon,
+  TruckIcon,
   UsersThreeIcon,
 } from "@phosphor-icons/react"
 import { Button } from "@/shared/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card"
+import { Card, CardContent } from "@/shared/ui/card"
+
+export type BusinessModule =
+  "commerce" | "people" | "logistics" | "accounting" | "compliance"
 
 const snapshotItems = [
   {
-    label: "Orders this month",
-    value: "248",
+    module: "commerce",
+    label: "Commerce",
+    value: "248 orders",
     detail: "18 awaiting fulfilment",
-    progress: 72,
     icon: ReceiptIcon,
-    color: "bg-primary",
+    tone: "text-primary",
   },
   {
-    label: "Inventory health",
-    value: "96%",
-    detail: "4 products need restocking",
-    progress: 96,
-    icon: PackageIcon,
-    color: "bg-emerald-500",
-  },
-  {
-    label: "Active customers",
-    value: "1,284",
-    detail: "86 new this month",
-    progress: 64,
+    module: "people",
+    label: "People",
+    value: "24 working",
+    detail: "Payroll closes in 6 days",
     icon: UsersThreeIcon,
-    color: "bg-violet-500",
+    tone: "text-violet-600",
+  },
+  {
+    module: "logistics",
+    label: "Logistics",
+    value: "14 in transit",
+    detail: "2 stock transfers en route",
+    icon: TruckIcon,
+    tone: "text-sky-600",
+  },
+  {
+    module: "accounting",
+    label: "Accounting",
+    value: "₦82,400 due",
+    detail: "2 invoices are overdue",
+    icon: PackageIcon,
+    tone: "text-amber-600",
+  },
+  {
+    module: "compliance",
+    label: "Compliance",
+    value: "Up to date",
+    detail: "No actions required",
+    icon: ShieldCheckIcon,
+    tone: "text-emerald-600",
   },
 ] as const
 
 export function BusinessSnapshotCard({
-  onViewOperations,
+  onModuleSelect,
 }: {
-  onViewOperations: () => void
+  onModuleSelect: (module: BusinessModule) => void
 }) {
   return (
-    <Card className="rounded-3xl py-5 shadow-xs">
-      <CardHeader className="px-5">
-        <div>
-          <CardTitle className="text-sm font-semibold">
-            Business snapshot
-          </CardTitle>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Your operational performance this month
-          </p>
+    <Card className="h-full max-h-[340px] rounded-3xl py-5 shadow-xs">
+      <CardContent className="px-5">
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <p className="text-sm font-semibold">Business health</p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Your teams and operations at a glance
+            </p>
+          </div>
+          <CheckCircleIcon
+            className="size-4 shrink-0 text-emerald-600"
+            weight="bold"
+          />
         </div>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={onViewOperations}
-          className="h-7 rounded-lg px-1.5 text-xs text-primary"
-        >
-          Operations <ArrowRightIcon className="size-3.5" weight="bold" />
-        </Button>
-      </CardHeader>
-      <CardContent className="px-5 pt-3">
-        <ul className="divide-y divide-border/70">
+        <ul className="mt-3 divide-y divide-border/70">
           {snapshotItems.map((item) => {
             const Icon = item.icon
             return (
-              <li key={item.label} className="py-3 first:pt-0 last:pb-0">
-                <div className="flex items-center gap-3">
-                  <span className="flex size-8 items-center justify-center rounded-xl bg-muted text-muted-foreground">
-                    <Icon className="size-4" weight="bold" />
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-xs font-medium">{item.label}</p>
-                    <p className="mt-0.5 text-xs text-muted-foreground">
-                      {item.detail}
-                    </p>
-                  </div>
-                  <p className="text-sm font-semibold tracking-tight">
-                    {item.value}
-                  </p>
-                </div>
-                <div className="mt-2 ml-11 h-1 overflow-hidden rounded-full bg-muted">
+              <li key={item.module}>
+                <Button
+                  variant="ghost"
+                  onClick={() => onModuleSelect(item.module)}
+                  className="h-auto w-full justify-start rounded-xl px-0 py-2 text-left hover:bg-transparent"
+                >
                   <span
-                    className={`block h-full rounded-full ${item.color}`}
-                    style={{ width: `${item.progress}%` }}
+                    className={`flex size-7 items-center justify-center rounded-lg bg-muted ${item.tone}`}
+                  >
+                    <Icon className="size-3.5" weight="bold" />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="flex items-center justify-between gap-2">
+                      <span className="text-xs font-medium">{item.label}</span>
+                      <span className="text-xs font-semibold text-foreground">
+                        {item.value}
+                      </span>
+                    </span>
+                    <span className="mt-0.5 block truncate text-xs font-normal text-muted-foreground">
+                      {item.detail}
+                    </span>
+                  </span>
+                  <ArrowRightIcon
+                    className="size-3.5 text-muted-foreground"
+                    weight="bold"
                   />
-                </div>
+                </Button>
               </li>
             )
           })}

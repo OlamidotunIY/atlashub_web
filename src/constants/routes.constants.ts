@@ -45,10 +45,10 @@ export const MERCHANT_ROUTES = {
   HR_PAYSLIPS: "/hr/payslips",
   LOGISTICS: "/logistics",
   LOGISTICS_SHIPMENTS: "/logistics/shipments",
-  LOGISTICS_FLEET: "/logistics/fleet",
-  LOGISTICS_DRIVERS: "/logistics/drivers",
+  LOGISTICS_STOCK_TRANSFERS: "/logistics/stock-transfers",
   LOGISTICS_RETURNS: "/logistics/returns",
   LOGISTICS_WAREHOUSES: "/logistics/warehouses",
+  LOGISTICS_INCENTIVES: "/logistics/shipping-incentives",
 
   INSIGHTS: "/insights",
   ANALYTICS: "/insights/analytics",

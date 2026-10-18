@@ -107,9 +107,21 @@ const KNOWN_ROUTE_BREADCRUMBS: Record<string, BreadcrumbItemData[]> = {
     { label: "Logistics", href: MERCHANT_ROUTES.LOGISTICS },
     { label: "Shipments" },
   ],
-  [MERCHANT_ROUTES.LOGISTICS_FLEET]: [
+  [MERCHANT_ROUTES.LOGISTICS_WAREHOUSES]: [
     { label: "Logistics", href: MERCHANT_ROUTES.LOGISTICS },
-    { label: "Fleet" },
+    { label: "Warehouses" },
+  ],
+  [MERCHANT_ROUTES.LOGISTICS_STOCK_TRANSFERS]: [
+    { label: "Logistics", href: MERCHANT_ROUTES.LOGISTICS },
+    { label: "Stock transfers" },
+  ],
+  [MERCHANT_ROUTES.LOGISTICS_RETURNS]: [
+    { label: "Logistics", href: MERCHANT_ROUTES.LOGISTICS },
+    { label: "Returns" },
+  ],
+  [MERCHANT_ROUTES.LOGISTICS_INCENTIVES]: [
+    { label: "Logistics", href: MERCHANT_ROUTES.LOGISTICS },
+    { label: "Shipping incentives" },
   ],
   [MERCHANT_ROUTES.SETTINGS_TEAM]: [{ label: "Settings" }, { label: "Team" }],
   [MERCHANT_ROUTES.SETTINGS]: [{ label: "Settings" }],

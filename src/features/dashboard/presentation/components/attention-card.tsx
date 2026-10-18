@@ -4,7 +4,7 @@ import {
   WarningCircleIcon,
 } from "@phosphor-icons/react"
 import { Button } from "@/shared/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card"
+import { Card, CardContent } from "@/shared/ui/card"
 
 const attentionItems = [
   {
@@ -26,20 +26,20 @@ const attentionItems = [
 
 export function AttentionCard({ onViewAll }: { onViewAll: () => void }) {
   return (
-    <Card className="rounded-3xl py-5 shadow-xs">
-      <CardHeader className="px-5">
-        <CardTitle className="text-sm font-semibold">Needs attention</CardTitle>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={onViewAll}
-          className="h-7 rounded-lg px-1.5 text-xs text-primary"
-        >
-          View all <ArrowRightIcon className="size-3.5" weight="bold" />
-        </Button>
-      </CardHeader>
-      <CardContent className="px-5 pt-3">
-        <ul className="divide-y divide-border/70">
+    <Card className="h-full max-h-[360px] rounded-3xl py-5 shadow-xs">
+      <CardContent className="px-5">
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-sm font-semibold">Needs attention</p>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onViewAll}
+            className="h-7 rounded-lg px-1.5 text-xs text-primary"
+          >
+            View all <ArrowRightIcon className="size-3.5" weight="bold" />
+          </Button>
+        </div>
+        <ul className="mt-4 divide-y divide-border/70">
           {attentionItems.map((item) => {
             const isWarning = item.tone === "warning"
             const Icon = isWarning ? WarningCircleIcon : CheckCircleIcon
