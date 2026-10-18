@@ -10,17 +10,20 @@ import { DashboardMetricCard } from "./dashboard-metric-card"
 import { CashFlowCard } from "./cash-flow-card"
 import { AttentionCard } from "./attention-card"
 import { RecentActivityCard } from "./recent-activity-card"
+import { BusinessSnapshotCard } from "./business-snapshot-card"
 
 interface DashboardOverviewProps {
   onCreateTransaction: () => void
   onViewTransactions: () => void
   onViewApprovals: () => void
+  onViewOperations: () => void
 }
 
 export function DashboardOverview({
   onCreateTransaction,
   onViewTransactions,
   onViewApprovals,
+  onViewOperations,
 }: DashboardOverviewProps) {
   return (
     <div className="flex w-full flex-col gap-6 pb-8">
@@ -93,12 +96,8 @@ export function DashboardOverview({
         <div className="xl:col-span-3">
           <RecentActivityCard onViewAll={onViewTransactions} />
         </div>
-        <div className="rounded-3xl border border-dashed border-border bg-muted/20 p-5 xl:col-span-2">
-          <p className="text-sm font-semibold">Your business snapshot</p>
-          <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-            Orders, invoices, inventory, and people metrics will appear here as
-            those modules are enabled for your organization.
-          </p>
+        <div className="xl:col-span-2">
+          <BusinessSnapshotCard onViewOperations={onViewOperations} />
         </div>
       </section>
     </div>

@@ -10,6 +10,7 @@ export function OverviewPage() {
       onCreateTransaction={() => navigate(MERCHANT_ROUTES.FINANCE_TRANSACTIONS)}
       onViewTransactions={() => navigate(MERCHANT_ROUTES.FINANCE_TRANSACTIONS)}
       onViewApprovals={() => navigate(MERCHANT_ROUTES.APPROVALS)}
+      onViewOperations={() => navigate(MERCHANT_ROUTES.OPERATIONS)}
     />
   )
 }
