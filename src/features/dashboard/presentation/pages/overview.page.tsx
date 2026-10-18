@@ -6,7 +6,6 @@ export function OverviewPage() {
   const navigate = useNavigate()
   return (
     <DashboardOverview
-      onCreateTransaction={() => navigate(MERCHANT_ROUTES.FINANCE_TRANSACTIONS)}
       onViewTransactions={() => navigate(MERCHANT_ROUTES.FINANCE_TRANSACTIONS)}
       onViewApprovals={() => navigate(MERCHANT_ROUTES.APPROVALS)}
       onViewCommerce={() => navigate(MERCHANT_ROUTES.COMMERCE)}
@@ -14,6 +13,7 @@ export function OverviewPage() {
       onViewPeople={() => navigate(MERCHANT_ROUTES.HR)}
       onViewAccounting={() => navigate(MERCHANT_ROUTES.ACCOUNTING)}
       onViewCompliance={() => navigate(MERCHANT_ROUTES.COMPLIANCE)}
+      onViewInventory={() => navigate(MERCHANT_ROUTES.COMMERCE_INVENTORY)}
     />
   )
 }

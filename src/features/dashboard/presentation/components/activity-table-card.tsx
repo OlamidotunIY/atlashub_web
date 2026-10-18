@@ -1,24 +1,30 @@
+import { useMemo } from "react"
 import { ArrowRightIcon } from "@phosphor-icons/react"
+import { createColumnHelper } from "@tanstack/react-table"
 import { Button } from "@/shared/ui/button"
-import { Card, CardContent } from "@/shared/ui/card"
 import { Badge } from "@/shared/ui/badge"
+import { Card, CardContent } from "@/shared/ui/card"
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/shared/ui/table"
+  DataTable,
+  type DataTableFeatures,
+} from "@/shared/composites/data-table"
 
-const activityRows = [
+type ActivityStatus = "Pending" | "In progress" | "Complete" | "Action needed"
+interface ActivityRow {
+  module: string
+  event: string
+  reference: string
+  value: string
+  status: ActivityStatus
+}
+
+const activityRows: ActivityRow[] = [
   {
     module: "Finance",
     event: "Settlement initiated",
     reference: "SET-84152",
     value: "₦215,000",
     status: "Pending",
-    tone: "secondary",
   },
   {
     module: "Logistics",
@@ -26,7 +32,6 @@ const activityRows = [
     reference: "ATL-2026-4M8K",
     value: "14 in transit",
     status: "In progress",
-    tone: "outline",
   },
   {
     module: "Commerce",
@@ -34,7 +39,6 @@ const activityRows = [
     reference: "ORD-10982",
     value: "₦128,000",
     status: "Complete",
-    tone: "secondary",
   },
   {
     module: "People",
@@ -42,14 +46,60 @@ const activityRows = [
     reference: "October payroll",
     value: "6 days left",
     status: "Action needed",
-    tone: "destructive",
   },
-] as const
+]
+
+const statusVariant: Record<
+  ActivityStatus,
+  "secondary" | "outline" | "destructive"
+> = {
+  Pending: "secondary",
+  "In progress": "outline",
+  Complete: "secondary",
+  "Action needed": "destructive",
+}
+const columnHelper = createColumnHelper<DataTableFeatures, ActivityRow>()
+const activityColumns = columnHelper.columns([
+  columnHelper.accessor("module", {
+    header: "Module",
+    enableHiding: false,
+    cell: ({ getValue }) => (
+      <span className="text-xs font-medium">{getValue()}</span>
+    ),
+  }),
+  columnHelper.accessor("event", {
+    header: "Activity",
+    enableHiding: false,
+    cell: ({ row }) => (
+      <div>
+        <p className="text-xs font-medium">{row.original.event}</p>
+        <p className="mt-0.5 text-xs text-muted-foreground">
+          {row.original.value}
+        </p>
+      </div>
+    ),
+  }),
+  columnHelper.accessor("reference", {
+    header: "Reference",
+    cell: ({ getValue }) => (
+      <span className="text-xs text-muted-foreground">{getValue()}</span>
+    ),
+  }),
+  columnHelper.accessor("status", {
+    header: () => <div className="text-right">Status</div>,
+    cell: ({ getValue }) => (
+      <div className="text-right">
+        <Badge variant={statusVariant[getValue()]}>{getValue()}</Badge>
+      </div>
+    ),
+  }),
+])
 
 export function ActivityTableCard({ onViewAll }: { onViewAll: () => void }) {
+  const data = useMemo(() => activityRows, [])
   return (
     <Card className="h-full max-h-[340px] w-full rounded-3xl py-5 shadow-xs">
-      <CardContent className="px-5">
+      <CardContent className="flex h-full min-h-0 flex-col px-5">
         <div className="flex items-center justify-between gap-3">
           <div>
             <p className="text-sm font-semibold">Business activity</p>
@@ -66,39 +116,14 @@ export function ActivityTableCard({ onViewAll }: { onViewAll: () => void }) {
             View all <ArrowRightIcon className="size-3.5" weight="bold" />
           </Button>
         </div>
-        <div className="mt-4 overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Module</TableHead>
-                <TableHead>Activity</TableHead>
-                <TableHead>Reference</TableHead>
-                <TableHead className="text-right">Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {activityRows.map((row) => (
-                <TableRow key={row.reference}>
-                  <TableCell className="py-3 text-xs font-medium">
-                    {row.module}
-                  </TableCell>
-                  <TableCell className="py-3">
-                    <p className="text-xs font-medium">{row.event}</p>
-                    <p className="mt-0.5 text-xs text-muted-foreground">
-                      {row.value}
-                    </p>
-                  </TableCell>
-                  <TableCell className="py-3 text-xs text-muted-foreground">
-                    {row.reference}
-                  </TableCell>
-                  <TableCell className="py-3 text-right">
-                    <Badge variant={row.tone}>{row.status}</Badge>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+        <DataTable
+          columns={activityColumns}
+          data={data}
+          searchKey="event"
+          searchPlaceholder="Search activity"
+          enableColumnVisibility={false}
+          className="mt-4 min-h-0 flex-1 overflow-hidden"
+        />
       </CardContent>
     </Card>
   )

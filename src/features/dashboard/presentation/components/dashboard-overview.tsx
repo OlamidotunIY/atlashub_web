@@ -2,13 +2,11 @@ import {
   BankIcon,
   CalendarBlankIcon,
   ChartLineUpIcon,
-  PlusIcon,
   ReceiptIcon,
   TruckIcon,
   WalletIcon,
 } from "@phosphor-icons/react"
 import { useState } from "react"
-import { Button } from "@/shared/ui/button"
 import {
   Select,
   SelectContent,
@@ -27,9 +25,9 @@ import { CommercePerformanceCard } from "./commerce-performance-card"
 import { LogisticsPerformanceCard } from "./logistics-performance-card"
 import { ActivityTableCard } from "./activity-table-card"
 import { OrganizationStatisticsCard } from "./organization-statistics-card"
+import { InventoryUrgencyCard } from "./inventory-urgency-card"
 
 interface DashboardOverviewProps {
-  onCreateTransaction: () => void
   onViewTransactions: () => void
   onViewApprovals: () => void
   onViewCommerce: () => void
@@ -37,10 +35,10 @@ interface DashboardOverviewProps {
   onViewPeople: () => void
   onViewAccounting: () => void
   onViewCompliance: () => void
+  onViewInventory: () => void
 }
 
 export function DashboardOverview({
-  onCreateTransaction,
   onViewTransactions,
   onViewApprovals,
   onViewCommerce,
@@ -48,6 +46,7 @@ export function DashboardOverview({
   onViewPeople,
   onViewAccounting,
   onViewCompliance,
+  onViewInventory,
 }: DashboardOverviewProps) {
   const [period, setPeriod] = useState<CashFlowPeriod>("this-month")
   return (
@@ -79,10 +78,6 @@ export function DashboardOverview({
               ))}
             </SelectContent>
           </Select>
-          <Button onClick={onCreateTransaction} className="rounded-xl">
-            <PlusIcon className="size-4" weight="bold" />
-            New transaction
-          </Button>
         </div>
       </header>
 
@@ -141,6 +136,10 @@ export function DashboardOverview({
         <div className="flex xl:col-span-2">
           <AttentionCard onViewAll={onViewApprovals} />
         </div>
+      </section>
+
+      <section aria-label="Inventory urgency">
+        <InventoryUrgencyCard onViewInventory={onViewInventory} />
       </section>
 
       <section className="grid grid-cols-1 gap-6 xl:auto-rows-fr xl:grid-cols-5">

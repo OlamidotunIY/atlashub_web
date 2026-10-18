@@ -1,14 +1,21 @@
 import { AuthGuard } from "@/app/guard"
 import { MainLayout } from "@/app/shell"
 import { MERCHANT_ROUTES } from "@/constants"
-import { OverviewPage, AccountsPage, AccountDetailPage } from "@/pages/main"
-import { PlaceholderPage } from "@/pages/placeholder"
+import { OverviewPage } from "@/features/dashboard"
+import { AccountsPage, AccountDetailPage } from "@/features/account"
+import { FinanceOverviewPage } from "@/features/finance"
+import { CommerceOverviewPage } from "@/features/commerce"
+import { PeopleOverviewPage } from "@/features/people"
+import { LogisticsOverviewPage } from "@/features/logistics"
+import { AccountingOverviewPage } from "@/features/accounting"
+import { InsightsOverviewPage } from "@/features/insights"
+import { ComplianceOverviewPage } from "@/features/compliance"
+import { PlaceholderPage } from "@/app/presentation/pages"
 import type { RouteObject } from "react-router-dom"
 
 const placeholderRouteDefinitions: ReadonlyArray<readonly [string, string]> = [
   [MERCHANT_ROUTES.NOTIFICATIONS, "Notifications"],
   [MERCHANT_ROUTES.APPROVALS, "Approvals"],
-  [MERCHANT_ROUTES.FINANCE, "Finance overview"],
   [MERCHANT_ROUTES.FINANCE_ACCOUNTS, "Finance accounts"],
   [MERCHANT_ROUTES.FINANCE_ACCOUNT_DETAIL, "Account detail"],
   [MERCHANT_ROUTES.FINANCE_TRANSACTIONS, "Transactions"],
@@ -33,7 +40,6 @@ const placeholderRouteDefinitions: ReadonlyArray<readonly [string, string]> = [
   [MERCHANT_ROUTES.LOGISTICS_WAREHOUSES, "Warehouses"],
   [MERCHANT_ROUTES.LOGISTICS_STOCK_TRANSFERS, "Stock transfers"],
   [MERCHANT_ROUTES.LOGISTICS_INCENTIVES, "Shipping incentives"],
-  [MERCHANT_ROUTES.INSIGHTS, "Insights overview"],
   [MERCHANT_ROUTES.ANALYTICS, "Analytics"],
   [MERCHANT_ROUTES.REPORTS, "Reports"],
   [MERCHANT_ROUTES.ACCOUNTING_LEDGER, "General ledger"],
@@ -69,6 +75,8 @@ export const merchantRoutes: RouteObject[] = [
         element: <PlaceholderPage title={title} />,
       })),
       { path: MERCHANT_ROUTES.DASHBOARD, element: <OverviewPage /> },
+      { path: MERCHANT_ROUTES.FINANCE, element: <FinanceOverviewPage /> },
+      { path: MERCHANT_ROUTES.INSIGHTS, element: <InsightsOverviewPage /> },
       { path: MERCHANT_ROUTES.ACCOUNTS, element: <AccountsPage /> },
       { path: MERCHANT_ROUTES.ACCOUNT_DETAIL, element: <AccountDetailPage /> },
       {
@@ -93,7 +101,7 @@ export const merchantRoutes: RouteObject[] = [
       },
       {
         path: MERCHANT_ROUTES.COMMERCE,
-        element: <PlaceholderPage title="Commerce Overview" />,
+        element: <CommerceOverviewPage />,
       },
       {
         path: MERCHANT_ROUTES.COMMERCE_PRODUCTS,
@@ -109,7 +117,7 @@ export const merchantRoutes: RouteObject[] = [
       },
       {
         path: MERCHANT_ROUTES.HR,
-        element: <PlaceholderPage title="HR Overview" />,
+        element: <PeopleOverviewPage />,
       },
       {
         path: MERCHANT_ROUTES.HR_EMPLOYEES,
@@ -125,7 +133,7 @@ export const merchantRoutes: RouteObject[] = [
       },
       {
         path: MERCHANT_ROUTES.ACCOUNTING,
-        element: <PlaceholderPage title="Accounting Overview" />,
+        element: <AccountingOverviewPage />,
       },
       {
         path: MERCHANT_ROUTES.ACCOUNTING_INVOICES,
@@ -145,7 +153,7 @@ export const merchantRoutes: RouteObject[] = [
       },
       {
         path: MERCHANT_ROUTES.LOGISTICS,
-        element: <PlaceholderPage title="Logistics Overview" />,
+        element: <LogisticsOverviewPage />,
       },
       {
         path: MERCHANT_ROUTES.LOGISTICS_SHIPMENTS,
@@ -157,7 +165,7 @@ export const merchantRoutes: RouteObject[] = [
       },
       {
         path: MERCHANT_ROUTES.COMPLIANCE,
-        element: <PlaceholderPage title="Compliance" />,
+        element: <ComplianceOverviewPage />,
       },
       {
         path: MERCHANT_ROUTES.DEVELOPERS,
