@@ -1,18 +1,15 @@
-import { authStore } from "@/features/authentication";
-
+import { useNavigate } from "react-router-dom"
+import { DashboardOverview } from "@/features/dashboard"
+import { MERCHANT_ROUTES } from "@/constants"
 
 export function OverviewPage() {
-  const clear = authStore(state => state.clear);
+  const navigate = useNavigate()
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold text-slate-900 mb-6">Dashboard Overview</h1>
-      <button
-        onClick={clear}
-        className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
-      >
-        Test Logout (Clear Session)
-      </button>
-    </div>
-  );
+    <DashboardOverview
+      onCreateTransaction={() => navigate(MERCHANT_ROUTES.FINANCE_TRANSACTIONS)}
+      onViewTransactions={() => navigate(MERCHANT_ROUTES.FINANCE_TRANSACTIONS)}
+      onViewApprovals={() => navigate(MERCHANT_ROUTES.APPROVALS)}
+    />
+  )
 }
