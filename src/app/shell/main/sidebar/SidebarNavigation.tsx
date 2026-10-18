@@ -31,7 +31,6 @@ const productNavigationItems: SidebarNavigationItemDefinition[] = [
     icon: CreditCardIcon,
     items: [
       { label: "Overview", to: MERCHANT_ROUTES.FINANCE },
-      { label: "Accounts", to: MERCHANT_ROUTES.FINANCE_ACCOUNTS },
       { label: "Transactions", to: MERCHANT_ROUTES.FINANCE_TRANSACTIONS },
       { label: "Charges", to: MERCHANT_ROUTES.FINANCE_CHARGES },
       { label: "Transfers", to: MERCHANT_ROUTES.FINANCE_TRANSFERS },

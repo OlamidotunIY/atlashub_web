@@ -241,10 +241,10 @@ export function DataTable<TData extends RowData>({
         </div>
       </div>
 
-      {/* Full-height table container */}
-      <div className="flex-1 min-h-[360px] overflow-auto border-t border-b flex flex-col">
+      {/* Only the empty state reserves vertical space; populated tables size to their rows. */}
+      <div className="overflow-auto border-t border-b">
         {isTableEmpty ? (
-          <div className="flex-1 flex flex-col h-full min-h-[340px]">
+          <div className="flex flex-col min-h-[300px]">
             <Table>
               <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
@@ -261,7 +261,7 @@ export function DataTable<TData extends RowData>({
               </TableHeader>
             </Table>
 
-            <div className="flex-1 flex flex-col items-center justify-center p-8 w-full min-h-[260px]">
+            <div className="flex-1 flex flex-col items-center justify-center p-8 w-full min-h-[220px]">
               {emptyState ?? (
                 <DataTableEmptyState
                   icon={emptyIcon}
