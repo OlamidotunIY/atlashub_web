@@ -27,7 +27,7 @@ export function DashboardMetricCard({
   const isPositive = trend === "up"
 
   return (
-    <Card className={cn("rounded-3xl py-5 shadow-xs", className)}>
+    <Card className={cn("w-full rounded-3xl py-5 shadow-xs", className)}>
       <CardContent className="space-y-5 px-5">
         <div className="flex items-center justify-between">
           <span className="text-xs font-medium text-muted-foreground">

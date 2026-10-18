@@ -1,12 +1,22 @@
 import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
+  type ChartConfig,
 } from "@/shared/ui"
 import { TrendUpIcon } from "@phosphor-icons/react"
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import { Card, CardContent } from "@/shared/ui/card"
+
+const cashFlowChartConfig = {
+  inflow: { label: "Inflow", color: "var(--primary)" },
+  outflow: { label: "Outflow", color: "var(--muted-foreground)" },
+} satisfies ChartConfig
 
 export const CASH_FLOW_PERIODS = [
   {
@@ -14,21 +24,46 @@ export const CASH_FLOW_PERIODS = [
     label: "This month",
     total: "₦1,248,500",
     change: "12.4% from last month",
-    bars: [42, 58, 46, 75, 61, 88, 70, 92, 68, 80, 60, 84],
+    points: [
+      { date: "01", inflow: 86, outflow: 44 },
+      { date: "05", inflow: 122, outflow: 69 },
+      { date: "09", inflow: 112, outflow: 55 },
+      { date: "13", inflow: 158, outflow: 84 },
+      { date: "17", inflow: 134, outflow: 97 },
+      { date: "21", inflow: 171, outflow: 118 },
+      { date: "25", inflow: 144, outflow: 76 },
+      { date: "Today", inflow: 162, outflow: 101 },
+    ],
   },
   {
     value: "last-30-days",
     label: "Last 30 days",
     total: "₦1,106,300",
     change: "8.1% from the preceding 30 days",
-    bars: [48, 35, 62, 55, 78, 66, 72, 58, 81, 69, 75, 63],
+    points: [
+      { date: "Day 1", inflow: 76, outflow: 46 },
+      { date: "Day 5", inflow: 94, outflow: 61 },
+      { date: "Day 9", inflow: 126, outflow: 81 },
+      { date: "Day 13", inflow: 108, outflow: 72 },
+      { date: "Day 17", inflow: 141, outflow: 83 },
+      { date: "Day 21", inflow: 131, outflow: 91 },
+      { date: "Day 25", inflow: 151, outflow: 96 },
+      { date: "Today", inflow: 137, outflow: 78 },
+    ],
   },
   {
     value: "last-quarter",
     label: "Last 3 months",
     total: "₦3,584,900",
     change: "16.8% from the previous quarter",
-    bars: [38, 52, 47, 64, 70, 59, 76, 83, 71, 89, 78, 92],
+    points: [
+      { date: "Jul", inflow: 644, outflow: 412 },
+      { date: "Aug", inflow: 711, outflow: 468 },
+      { date: "Sep", inflow: 802, outflow: 515 },
+      { date: "Oct", inflow: 746, outflow: 439 },
+      { date: "Nov", inflow: 835, outflow: 564 },
+      { date: "Dec", inflow: 902, outflow: 618 },
+    ],
   },
 ] as const
 
@@ -45,13 +80,13 @@ export function CashFlowCard({ period, onPeriodChange }: CashFlowCardProps) {
     CASH_FLOW_PERIODS[0]
 
   return (
-    <Card className="h-full max-h-[360px] rounded-3xl py-5 shadow-xs">
+    <Card className="h-full max-h-[420px] w-full rounded-3xl py-5 shadow-xs">
       <CardContent className="flex h-full flex-col px-5">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="text-sm font-semibold">Cash flow</p>
+            <p className="text-sm font-semibold">Financial performance</p>
             <p className="mt-1 text-xs text-muted-foreground">
-              Money in and out
+              Cash movement across all business accounts
             </p>
           </div>
           <Select
@@ -87,33 +122,53 @@ export function CashFlowCard({ period, onPeriodChange }: CashFlowCardProps) {
               Inflow
             </span>
             <span className="flex items-center gap-1.5">
-              <i className="size-2 rounded-full bg-muted-foreground/35" />
+              <i className="size-2 rounded-full bg-muted-foreground/60" />
               Outflow
             </span>
           </div>
         </div>
 
-        <div className="mt-auto flex h-32 items-end gap-1.5 border-b border-border/70 pt-5">
-          {selectedPeriod.bars.map((height, index) => (
-            <div key={index} className="flex h-full flex-1 items-end gap-0.5">
-              <span
-                className="w-1/2 rounded-t-sm bg-primary/85"
-                style={{ height: `${height}%` }}
-              />
-              <span
-                className="w-1/2 rounded-t-sm bg-muted-foreground/25"
-                style={{ height: `${Math.max(18, height - 24)}%` }}
-              />
-            </div>
-          ))}
-        </div>
-        <div className="mt-2 flex justify-between text-[10px] text-muted-foreground">
-          <span>Start</span>
-          <span>Week 1</span>
-          <span>Week 2</span>
-          <span>Week 3</span>
-          <span>Today</span>
-        </div>
+        <ChartContainer
+          config={cashFlowChartConfig}
+          className="mt-4 aspect-auto h-[200px] w-full flex-1"
+        >
+          <BarChart
+            accessibilityLayer
+            data={selectedPeriod.points}
+            margin={{ top: 4, right: 4, left: -22, bottom: 0 }}
+          >
+            <CartesianGrid vertical={false} strokeDasharray="3 3" />
+            <XAxis
+              dataKey="date"
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+            />
+            <YAxis
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+              tickFormatter={(value) => `₦${value}k`}
+            />
+            <ChartTooltip
+              cursor={{ fill: "var(--muted)" }}
+              content={<ChartTooltipContent />}
+            />
+            <Bar
+              dataKey="inflow"
+              fill="var(--color-inflow)"
+              radius={[5, 5, 0, 0]}
+              maxBarSize={28}
+            />
+            <Bar
+              dataKey="outflow"
+              fill="var(--color-outflow)"
+              fillOpacity={0.45}
+              radius={[5, 5, 0, 0]}
+              maxBarSize={28}
+            />
+          </BarChart>
+        </ChartContainer>
       </CardContent>
     </Card>
   )

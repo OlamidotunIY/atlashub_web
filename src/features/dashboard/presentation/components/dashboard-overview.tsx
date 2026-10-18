@@ -3,6 +3,8 @@ import {
   CalendarBlankIcon,
   ChartLineUpIcon,
   PlusIcon,
+  ReceiptIcon,
+  TruckIcon,
   WalletIcon,
 } from "@phosphor-icons/react"
 import { useState } from "react"
@@ -21,24 +23,31 @@ import {
   type CashFlowPeriod,
 } from "./cash-flow-card"
 import { AttentionCard } from "./attention-card"
-import { RecentActivityCard } from "./recent-activity-card"
-import {
-  BusinessSnapshotCard,
-  type BusinessModule,
-} from "./business-snapshot-card"
+import { CommercePerformanceCard } from "./commerce-performance-card"
+import { LogisticsPerformanceCard } from "./logistics-performance-card"
+import { ActivityTableCard } from "./activity-table-card"
+import { OrganizationStatisticsCard } from "./organization-statistics-card"
 
 interface DashboardOverviewProps {
   onCreateTransaction: () => void
   onViewTransactions: () => void
   onViewApprovals: () => void
-  onModuleSelect: (module: BusinessModule) => void
+  onViewCommerce: () => void
+  onViewLogistics: () => void
+  onViewPeople: () => void
+  onViewAccounting: () => void
+  onViewCompliance: () => void
 }
 
 export function DashboardOverview({
   onCreateTransaction,
   onViewTransactions,
   onViewApprovals,
-  onModuleSelect,
+  onViewCommerce,
+  onViewLogistics,
+  onViewPeople,
+  onViewAccounting,
+  onViewCompliance,
 }: DashboardOverviewProps) {
   const [period, setPeriod] = useState<CashFlowPeriod>("this-month")
   return (
@@ -79,7 +88,7 @@ export function DashboardOverview({
 
       <section
         aria-label="Business summary"
-        className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4"
+        className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6"
       >
         <DashboardMetricCard
           label="Available balance"
@@ -109,6 +118,20 @@ export function DashboardOverview({
           trend="neutral"
           icon={CalendarBlankIcon}
         />
+        <DashboardMetricCard
+          label="Orders this month"
+          value="248"
+          comparison="18 awaiting fulfilment"
+          trend="up"
+          icon={ReceiptIcon}
+        />
+        <DashboardMetricCard
+          label="Shipments in transit"
+          value="14"
+          comparison="2 stock transfers en route"
+          trend="neutral"
+          icon={TruckIcon}
+        />
       </section>
 
       <section className="grid grid-cols-1 gap-6 xl:auto-rows-fr xl:grid-cols-5">
@@ -122,10 +145,23 @@ export function DashboardOverview({
 
       <section className="grid grid-cols-1 gap-6 xl:auto-rows-fr xl:grid-cols-5">
         <div className="flex xl:col-span-3">
-          <RecentActivityCard onViewAll={onViewTransactions} />
+          <CommercePerformanceCard onViewCommerce={onViewCommerce} />
         </div>
         <div className="flex xl:col-span-2">
-          <BusinessSnapshotCard onModuleSelect={onModuleSelect} />
+          <LogisticsPerformanceCard onViewLogistics={onViewLogistics} />
+        </div>
+      </section>
+
+      <section className="grid grid-cols-1 gap-6 xl:auto-rows-fr xl:grid-cols-5">
+        <div className="flex xl:col-span-3">
+          <ActivityTableCard onViewAll={onViewTransactions} />
+        </div>
+        <div className="flex xl:col-span-2">
+          <OrganizationStatisticsCard
+            onViewPeople={onViewPeople}
+            onViewAccounting={onViewAccounting}
+            onViewCompliance={onViewCompliance}
+          />
         </div>
       </section>
     </div>

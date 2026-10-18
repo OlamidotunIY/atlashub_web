@@ -26,7 +26,7 @@ const attentionItems = [
 
 export function AttentionCard({ onViewAll }: { onViewAll: () => void }) {
   return (
-    <Card className="h-full max-h-[360px] rounded-3xl py-5 shadow-xs">
+    <Card className="h-full max-h-[420px] w-full rounded-3xl py-5 shadow-xs">
       <CardContent className="px-5">
         <div className="flex items-center justify-between gap-3">
           <p className="text-sm font-semibold">Needs attention</p>
