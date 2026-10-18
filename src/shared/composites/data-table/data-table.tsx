@@ -242,7 +242,7 @@ export function DataTable<TData extends RowData>({
       </div>
 
       {/* Only the empty state reserves vertical space; populated tables size to their rows. */}
-      <div className="overflow-auto border-t border-b">
+      <div className="overflow-y-auto border-t border-b [scrollbar-color:var(--border)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-border/80 [&::-webkit-scrollbar-thumb:hover]:bg-muted-foreground/50">
         {isTableEmpty ? (
           <div className="flex flex-col min-h-[300px]">
             <Table>

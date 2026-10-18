@@ -27,10 +27,9 @@ const mainNavigationItems: SidebarNavigationItemDefinition[] = [
 const productNavigationItems: SidebarNavigationItemDefinition[] = [
   {
     label: "Finance",
-    to: MERCHANT_ROUTES.FINANCE,
+    to: MERCHANT_ROUTES.FINANCE_TRANSACTIONS,
     icon: CreditCardIcon,
     items: [
-      { label: "Overview", to: MERCHANT_ROUTES.FINANCE },
       { label: "Transactions", to: MERCHANT_ROUTES.FINANCE_TRANSACTIONS },
       { label: "Charges", to: MERCHANT_ROUTES.FINANCE_CHARGES },
       { label: "Transfers", to: MERCHANT_ROUTES.FINANCE_TRANSFERS },
@@ -41,10 +40,9 @@ const productNavigationItems: SidebarNavigationItemDefinition[] = [
   },
   {
     label: "Commerce",
-    to: MERCHANT_ROUTES.COMMERCE,
+    to: MERCHANT_ROUTES.COMMERCE_ORDERS,
     icon: BuildingsIcon,
     items: [
-      { label: "Overview", to: MERCHANT_ROUTES.COMMERCE },
       { label: "Products", to: MERCHANT_ROUTES.COMMERCE_PRODUCTS },
       { label: "Orders", to: MERCHANT_ROUTES.COMMERCE_ORDERS },
       { label: "Customers", to: MERCHANT_ROUTES.COMMERCE_CUSTOMERS },
@@ -54,10 +52,9 @@ const productNavigationItems: SidebarNavigationItemDefinition[] = [
   },
   {
     label: "People",
-    to: MERCHANT_ROUTES.HR,
+    to: MERCHANT_ROUTES.HR_EMPLOYEES,
     icon: UsersThreeIcon,
     items: [
-      { label: "Overview", to: MERCHANT_ROUTES.HR },
       { label: "Employees", to: MERCHANT_ROUTES.HR_EMPLOYEES },
       { label: "Payroll", to: MERCHANT_ROUTES.HR_PAYROLL },
       { label: "Attendance", to: MERCHANT_ROUTES.HR_ATTENDANCE },
@@ -66,10 +63,9 @@ const productNavigationItems: SidebarNavigationItemDefinition[] = [
   },
   {
     label: "Insights & accounting",
-    to: MERCHANT_ROUTES.INSIGHTS,
+    to: MERCHANT_ROUTES.ANALYTICS,
     icon: CalculatorIcon,
     items: [
-      { label: "Overview", to: MERCHANT_ROUTES.INSIGHTS },
       { label: "Analytics", to: MERCHANT_ROUTES.ANALYTICS },
       { label: "Reports", to: MERCHANT_ROUTES.REPORTS },
       { label: "Accounting", to: MERCHANT_ROUTES.ACCOUNTING },
@@ -83,10 +79,9 @@ const productNavigationItems: SidebarNavigationItemDefinition[] = [
   },
   {
     label: "Logistics",
-    to: MERCHANT_ROUTES.LOGISTICS,
+    to: MERCHANT_ROUTES.LOGISTICS_SHIPMENTS,
     icon: TruckIcon,
     items: [
-      { label: "Overview", to: MERCHANT_ROUTES.LOGISTICS },
       { label: "Shipments", to: MERCHANT_ROUTES.LOGISTICS_SHIPMENTS },
       { label: "Warehouses", to: MERCHANT_ROUTES.LOGISTICS_WAREHOUSES },
       {

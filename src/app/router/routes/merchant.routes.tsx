@@ -1,17 +1,10 @@
 import { AuthGuard } from "@/app/guard"
 import { MainLayout } from "@/app/shell"
 import { MERCHANT_ROUTES } from "@/constants"
-import { OverviewPage } from "@/features/dashboard"
+import { DashboardOverviewPage } from "@/features/dashboard"
 import { AccountsPage, AccountDetailPage } from "@/features/account"
-import { FinanceOverviewPage } from "@/features/finance"
-import { CommerceOverviewPage } from "@/features/commerce"
-import { PeopleOverviewPage } from "@/features/people"
-import { LogisticsOverviewPage } from "@/features/logistics"
-import { AccountingOverviewPage } from "@/features/accounting"
-import { InsightsOverviewPage } from "@/features/insights"
-import { ComplianceOverviewPage } from "@/features/compliance"
 import { PlaceholderPage } from "@/app/presentation/pages"
-import type { RouteObject } from "react-router-dom"
+import { Navigate, type RouteObject } from "react-router-dom"
 
 const placeholderRouteDefinitions: ReadonlyArray<readonly [string, string]> = [
   [MERCHANT_ROUTES.NOTIFICATIONS, "Notifications"],
@@ -74,9 +67,15 @@ export const merchantRoutes: RouteObject[] = [
         path,
         element: <PlaceholderPage title={title} />,
       })),
-      { path: MERCHANT_ROUTES.DASHBOARD, element: <OverviewPage /> },
-      { path: MERCHANT_ROUTES.FINANCE, element: <FinanceOverviewPage /> },
-      { path: MERCHANT_ROUTES.INSIGHTS, element: <InsightsOverviewPage /> },
+      { path: MERCHANT_ROUTES.DASHBOARD, element: <DashboardOverviewPage /> },
+      {
+        path: MERCHANT_ROUTES.FINANCE,
+        element: <Navigate to={MERCHANT_ROUTES.FINANCE_TRANSACTIONS} replace />,
+      },
+      {
+        path: MERCHANT_ROUTES.INSIGHTS,
+        element: <Navigate to={MERCHANT_ROUTES.ANALYTICS} replace />,
+      },
       { path: MERCHANT_ROUTES.ACCOUNTS, element: <AccountsPage /> },
       { path: MERCHANT_ROUTES.ACCOUNT_DETAIL, element: <AccountDetailPage /> },
       {
@@ -101,7 +100,7 @@ export const merchantRoutes: RouteObject[] = [
       },
       {
         path: MERCHANT_ROUTES.COMMERCE,
-        element: <CommerceOverviewPage />,
+        element: <Navigate to={MERCHANT_ROUTES.COMMERCE_ORDERS} replace />,
       },
       {
         path: MERCHANT_ROUTES.COMMERCE_PRODUCTS,
@@ -117,7 +116,7 @@ export const merchantRoutes: RouteObject[] = [
       },
       {
         path: MERCHANT_ROUTES.HR,
-        element: <PeopleOverviewPage />,
+        element: <Navigate to={MERCHANT_ROUTES.HR_EMPLOYEES} replace />,
       },
       {
         path: MERCHANT_ROUTES.HR_EMPLOYEES,
@@ -133,7 +132,7 @@ export const merchantRoutes: RouteObject[] = [
       },
       {
         path: MERCHANT_ROUTES.ACCOUNTING,
-        element: <AccountingOverviewPage />,
+        element: <Navigate to={MERCHANT_ROUTES.ACCOUNTING_REPORTS} replace />,
       },
       {
         path: MERCHANT_ROUTES.ACCOUNTING_INVOICES,
@@ -153,7 +152,7 @@ export const merchantRoutes: RouteObject[] = [
       },
       {
         path: MERCHANT_ROUTES.LOGISTICS,
-        element: <LogisticsOverviewPage />,
+        element: <Navigate to={MERCHANT_ROUTES.LOGISTICS_SHIPMENTS} replace />,
       },
       {
         path: MERCHANT_ROUTES.LOGISTICS_SHIPMENTS,
@@ -165,7 +164,7 @@ export const merchantRoutes: RouteObject[] = [
       },
       {
         path: MERCHANT_ROUTES.COMPLIANCE,
-        element: <ComplianceOverviewPage />,
+        element: <PlaceholderPage title="Compliance" />,
       },
       {
         path: MERCHANT_ROUTES.DEVELOPERS,

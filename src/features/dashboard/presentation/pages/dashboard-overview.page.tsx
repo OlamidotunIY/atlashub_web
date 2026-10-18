@@ -7,6 +7,8 @@ import {
   WalletIcon,
 } from "@phosphor-icons/react"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { MERCHANT_ROUTES } from "@/constants"
 import {
   Select,
   SelectContent,
@@ -14,40 +16,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shared/ui"
-import { DashboardMetricCard } from "./dashboard-metric-card"
+import { DashboardMetricCard } from "../widgets/dashboard-metric-card.widget"
 import {
   CASH_FLOW_PERIODS,
   CashFlowCard,
   type CashFlowPeriod,
-} from "./cash-flow-card"
-import { AttentionCard } from "./attention-card"
-import { CommercePerformanceCard } from "./commerce-performance-card"
-import { LogisticsPerformanceCard } from "./logistics-performance-card"
-import { ActivityTableCard } from "./activity-table-card"
-import { OrganizationStatisticsCard } from "./organization-statistics-card"
-import { InventoryUrgencyCard } from "./inventory-urgency-card"
+} from "../widgets/cash-flow.widget"
+import { AttentionCard } from "../widgets/attention.widget"
+import { CommercePerformanceCard } from "../widgets/commerce-performance.widget"
+import { LogisticsPerformanceCard } from "../widgets/logistics-performance.widget"
+import { ActivityTableCard } from "../widgets/activity-table.widget"
+import { OrganizationStatisticsCard } from "../widgets/organization-statistics.widget"
+import { InventoryUrgencyCard } from "../widgets/inventory-urgency.widget"
 
-interface DashboardOverviewProps {
-  onViewTransactions: () => void
-  onViewApprovals: () => void
-  onViewCommerce: () => void
-  onViewLogistics: () => void
-  onViewPeople: () => void
-  onViewAccounting: () => void
-  onViewCompliance: () => void
-  onViewInventory: () => void
-}
-
-export function DashboardOverview({
-  onViewTransactions,
-  onViewApprovals,
-  onViewCommerce,
-  onViewLogistics,
-  onViewPeople,
-  onViewAccounting,
-  onViewCompliance,
-  onViewInventory,
-}: DashboardOverviewProps) {
+export function DashboardOverviewPage() {
+  const navigate = useNavigate()
   const [period, setPeriod] = useState<CashFlowPeriod>("this-month")
   return (
     <div className="flex w-full flex-col gap-6 pb-8">
@@ -134,32 +117,44 @@ export function DashboardOverview({
           <CashFlowCard period={period} onPeriodChange={setPeriod} />
         </div>
         <div className="flex xl:col-span-2">
-          <AttentionCard onViewAll={onViewApprovals} />
+          <AttentionCard
+            onViewAll={() => navigate(MERCHANT_ROUTES.APPROVALS)}
+          />
         </div>
       </section>
 
       <section aria-label="Inventory urgency">
-        <InventoryUrgencyCard onViewInventory={onViewInventory} />
+        <InventoryUrgencyCard
+          onViewInventory={() => navigate(MERCHANT_ROUTES.COMMERCE_INVENTORY)}
+        />
       </section>
 
       <section className="grid grid-cols-1 gap-6 xl:auto-rows-fr xl:grid-cols-5">
         <div className="flex xl:col-span-3">
-          <CommercePerformanceCard onViewCommerce={onViewCommerce} />
+          <CommercePerformanceCard
+            onViewCommerce={() => navigate(MERCHANT_ROUTES.COMMERCE_ORDERS)}
+          />
         </div>
         <div className="flex xl:col-span-2">
-          <LogisticsPerformanceCard onViewLogistics={onViewLogistics} />
+          <LogisticsPerformanceCard
+            onViewLogistics={() => navigate(MERCHANT_ROUTES.LOGISTICS_SHIPMENTS)}
+          />
         </div>
       </section>
 
       <section className="grid grid-cols-1 gap-6 xl:auto-rows-fr xl:grid-cols-5">
         <div className="flex xl:col-span-3">
-          <ActivityTableCard onViewAll={onViewTransactions} />
+          <ActivityTableCard
+            onViewAll={() => navigate(MERCHANT_ROUTES.FINANCE_TRANSACTIONS)}
+          />
         </div>
         <div className="flex xl:col-span-2">
           <OrganizationStatisticsCard
-            onViewPeople={onViewPeople}
-            onViewAccounting={onViewAccounting}
-            onViewCompliance={onViewCompliance}
+            onViewPeople={() => navigate(MERCHANT_ROUTES.HR_EMPLOYEES)}
+            onViewAccounting={() =>
+              navigate(MERCHANT_ROUTES.ACCOUNTING_REPORTS)
+            }
+            onViewCompliance={() => navigate(MERCHANT_ROUTES.COMPLIANCE)}
           />
         </div>
       </section>
