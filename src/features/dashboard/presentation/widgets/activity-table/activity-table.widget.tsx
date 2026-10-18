@@ -1,22 +1,9 @@
 import { useMemo } from "react"
 import { ArrowRightIcon } from "@phosphor-icons/react"
-import { createColumnHelper } from "@tanstack/react-table"
 import { Button } from "@/shared/ui/button"
-import { Badge } from "@/shared/ui/badge"
 import { Card, CardContent } from "@/shared/ui/card"
-import {
-  DataTable,
-  type DataTableFeatures,
-} from "@/shared/composites/data-table"
-
-type ActivityStatus = "Pending" | "In progress" | "Complete" | "Action needed"
-interface ActivityRow {
-  module: string
-  event: string
-  reference: string
-  value: string
-  status: ActivityStatus
-}
+import { DataTable } from "@/shared/composites/data-table"
+import { activityColumns, type ActivityRow } from "./columns"
 
 const activityRows: ActivityRow[] = [
   {
@@ -49,56 +36,10 @@ const activityRows: ActivityRow[] = [
   },
 ]
 
-const statusVariant: Record<
-  ActivityStatus,
-  "secondary" | "outline" | "destructive"
-> = {
-  Pending: "secondary",
-  "In progress": "outline",
-  Complete: "secondary",
-  "Action needed": "destructive",
-}
-const columnHelper = createColumnHelper<DataTableFeatures, ActivityRow>()
-const activityColumns = columnHelper.columns([
-  columnHelper.accessor("module", {
-    header: "Module",
-    enableHiding: false,
-    cell: ({ getValue }) => (
-      <span className="text-xs font-medium">{getValue()}</span>
-    ),
-  }),
-  columnHelper.accessor("event", {
-    header: "Activity",
-    enableHiding: false,
-    cell: ({ row }) => (
-      <div>
-        <p className="text-xs font-medium">{row.original.event}</p>
-        <p className="mt-0.5 text-xs text-muted-foreground">
-          {row.original.value}
-        </p>
-      </div>
-    ),
-  }),
-  columnHelper.accessor("reference", {
-    header: "Reference",
-    cell: ({ getValue }) => (
-      <span className="text-xs text-muted-foreground">{getValue()}</span>
-    ),
-  }),
-  columnHelper.accessor("status", {
-    header: () => <div className="text-right">Status</div>,
-    cell: ({ getValue }) => (
-      <div className="text-right">
-        <Badge variant={statusVariant[getValue()]}>{getValue()}</Badge>
-      </div>
-    ),
-  }),
-])
-
 export function ActivityTableCard({ onViewAll }: { onViewAll: () => void }) {
   const data = useMemo(() => activityRows, [])
   return (
-    <Card className="h-full max-h-[340px] w-full rounded-3xl py-5 shadow-xs">
+    <Card className="h-full max-h-85 w-full rounded-3xl py-5 shadow-xs">
       <CardContent className="flex h-full min-h-0 flex-col px-5">
         <div className="flex items-center justify-between gap-3">
           <div>

@@ -25,9 +25,9 @@ import {
 import { AttentionCard } from "../widgets/attention.widget"
 import { CommercePerformanceCard } from "../widgets/commerce-performance.widget"
 import { LogisticsPerformanceCard } from "../widgets/logistics-performance.widget"
-import { ActivityTableCard } from "../widgets/activity-table.widget"
+import { ActivityTableCard } from "../widgets/activity-table"
 import { OrganizationStatisticsCard } from "../widgets/organization-statistics.widget"
-import { InventoryUrgencyCard } from "../widgets/inventory-urgency.widget"
+import { InventoryUrgencyCard } from "../widgets/inventory-urgency"
 
 export function DashboardOverviewPage() {
   const navigate = useNavigate()
