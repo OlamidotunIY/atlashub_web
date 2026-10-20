@@ -7,15 +7,6 @@ application.
 The client is built with React, TypeScript, Vite, Tailwind CSS, shadcn-style primitives, TanStack Query, and a
 feature-oriented Clean Architecture structure. Backend contracts are generated from the AtlasHub OpenAPI document.
 
-## Current product status
-
-The application is under active development. Routes are deliberately registered before every module is fully
-implemented so navigation and product boundaries remain stable.
-
-- **Implemented** means the screen has its own UI and application/data integration.
-- **Designed** means the screen has a complete visual composition but still uses sample dashboard data.
-- **Reserved** means the route and navigation entry exist, but the screen currently renders `PlaceholderPage`.
-
 ## Features
 
 ### Identity and onboarding
@@ -39,8 +30,7 @@ The overview is a professional cross-module operating snapshot containing:
 - recent business activity in the shared data-table pattern; and
 - people, accounting, and compliance statistics.
 
-The layout is implemented and responsive. Its dashboard values are currently presentation data; connect it to the
-backend `GET /api/v1/analytics/overview` contract when the generated client is refreshed.
+The dashboard uses the cross-module `GET /api/v1/analytics/overview` contract.
 
 ### Accounts
 
@@ -50,9 +40,9 @@ backend `GET /api/v1/analytics/overview` contract when the generated client is r
 - Account transaction history using the shared paginated table system.
 - Create-account API integration is available in the feature application layer.
 
-### Planned operating modules
+### Business operating modules
 
-Stable route trees and sidebar navigation are present for:
+The workspace covers:
 
 - Finance: transactions, charges, transfers, splits, settlements, billing, invoices, and cash flow.
 - Commerce: products, orders, customers, point of sale, inventory, movements, purchase orders, and suppliers.
@@ -67,31 +57,31 @@ Stable route trees and sidebar navigation are present for:
 
 ### Public and onboarding screens
 
-| Route                  | Screen              |      Status | Purpose                                      |
-| ---------------------- | ------------------- | ----------: | -------------------------------------------- |
-| `/login`               | Login               | Implemented | Authenticate an existing user.               |
-| `/register`            | Registration        | Implemented | Create a web account and begin verification. |
-| `/auth/verify-email`   | Verify email        | Implemented | Verify or resend the registration code.      |
-| `/invite/:token`       | Accept invitation   | Implemented | Join an organization from an invitation.     |
-| `/onboarding/products` | Product setup       | Implemented | Configure the business product selection.    |
-| `/onboarding/team`     | Team setup          | Implemented | Prepare the initial organization team.       |
-| `/onboarding/complete` | Onboarding complete | Implemented | Confirm setup and enter the workspace.       |
+| Route                  | Screen              | Purpose                                      |
+| ---------------------- | ------------------- | -------------------------------------------- |
+| `/login`               | Login               | Authenticate an existing user.               |
+| `/register`            | Registration        | Create a web account and begin verification. |
+| `/auth/verify-email`   | Verify email        | Verify or resend the registration code.      |
+| `/invite/:token`       | Accept invitation   | Join an organization from an invitation.     |
+| `/onboarding/products` | Product setup       | Configure the business product selection.    |
+| `/onboarding/team`     | Team setup          | Prepare the initial organization team.       |
+| `/onboarding/complete` | Onboarding complete | Confirm setup and enter the workspace.       |
 
 ### Authenticated workspace
 
-| Area       | Routes                              |      Status | Details                                                                                  |
-| ---------- | ----------------------------------- | ----------: | ---------------------------------------------------------------------------------------- |
-| Overview   | `/dashboard`                        |    Designed | Cross-module metrics, charts, urgency cards, and activity table.                         |
-| Accounts   | `/accounts`, `/accounts/:accountId` | Implemented | Account balances, currencies, details, and transactions.                                 |
-| Finance    | `/finance/*`                        |    Reserved | Transactions, charges, transfers, splits, settlements, billing, invoices, and cash flow. |
-| Commerce   | `/commerce/*`                       |    Reserved | Products, orders, customers, POS, and inventory workflows.                               |
-| People     | `/hr/*`                             |    Reserved | Employees, attendance, leave, payroll, loans, and payslips.                              |
-| Logistics  | `/logistics/*`                      |    Reserved | Shipments, warehouses, transfers, returns, and incentives.                               |
-| Insights   | `/insights/*`                       |    Reserved | Analytics and business reports.                                                          |
-| Accounting | `/accounting/*`                     |    Reserved | Ledger, journals, AR/AP, budgets, assets, expenses, and reports.                         |
-| Compliance | `/compliance`                       |    Reserved | Business compliance status and actions.                                                  |
-| Support    | `/support`                          |    Reserved | Support tickets and service assistance.                                                  |
-| Settings   | `/settings/*`                       |    Reserved | Organization, outlets, access, integrations, audit, developer, and security settings.    |
+| Area       | Routes                              | Details                                                                                  |
+| ---------- | ----------------------------------- | ---------------------------------------------------------------------------------------- |
+| Overview   | `/dashboard`                        | Cross-module metrics, charts, urgency cards, and activity table.                         |
+| Accounts   | `/accounts`, `/accounts/:accountId` | Account balances, currencies, details, and transactions.                                 |
+| Finance    | `/finance/*`                        | Transactions, charges, transfers, splits, settlements, billing, invoices, and cash flow. |
+| Commerce   | `/commerce/*`                       | Products, orders, customers, POS, and inventory workflows.                               |
+| People     | `/hr/*`                             | Employees, attendance, leave, payroll, loans, and payslips.                              |
+| Logistics  | `/logistics/*`                      | Shipments, warehouses, transfers, returns, and incentives.                               |
+| Insights   | `/insights/*`                       | Analytics and business reports.                                                          |
+| Accounting | `/accounting/*`                     | Ledger, journals, AR/AP, budgets, assets, expenses, and reports.                         |
+| Compliance | `/compliance`                       | Business compliance information and actions.                                             |
+| Support    | `/support`                          | Support tickets and service assistance.                                                  |
+| Settings   | `/settings/*`                       | Organization, outlets, access, integrations, audit, developer, and security settings.    |
 
 The application uses a hash router, so deployed URLs appear as `/#/dashboard` and similar paths.
 
@@ -187,4 +177,3 @@ Run type checking, linting, and the production build before merging functional c
 - Add routes through the centralized constants and route configuration.
 - Derive organization and environment from the authenticated session, never from arbitrary form input.
 - Keep backend-generated types at the transport boundary and map them into domain entities.
-- Mark unfinished screens as placeholders in documentation and navigation reviews; do not present them as shipped.
