@@ -177,3 +177,10 @@ Run type checking, linting, and the production build before merging functional c
 - Add routes through the centralized constants and route configuration.
 - Derive organization and environment from the authenticated session, never from arbitrary form input.
 - Keep backend-generated types at the transport boundary and map them into domain entities.
+
+
+## Dedicated Atlas Storefront Portal (architecture proposal)
+
+Atlas Web remains the business operations dashboard. Global User registration is now proposed as **independent** from authenticated Organization creation, with zero-org users supported. Mandatory Atlas-operated Anchor banking/KYB will be retired; merchants optionally connect their own eligible payment/logistics providers; only provider-dependent capabilities require verification. Planned storefront recommendation cards and navigation will open the separate [Atlas Storefront Portal](https://github.com/OlamidotunIY/atlashub_storefront) where merchants buy/install/manage themes, configure their store and domains, and publish. Independent creators use the same portal for SDK/CLI theme publishing, versions and earnings. Central Atlas Hub SSO is a **planned integration**, not currently implemented by this repository. Atlas Hub's Java backend remains commerce and identity authority; the storefront monorepo contains its own management backend and runtime, so no additional backend repository is necessary.
+
+See [Storefront Portal integration architecture](docs/architecture/storefront-portal-integration.md) and the [cross-repository Storefront architecture](https://github.com/OlamidotunIY/atlashub_storefront/blob/main/docs/architecture/system.md).
