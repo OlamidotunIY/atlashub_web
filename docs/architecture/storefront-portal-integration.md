@@ -58,3 +58,8 @@ Canonical cross-project docs:
 - Merchant theme purchase/install/domain/publish stays in Portal; no duplicate configuration or product catalog synchronization. Organization and User are created separately; business without connected payment provider may still use catalog/theme management, but provider-dependent online payment checkout requires activated eligible connection.
 - Changes to Java-authoritative catalog/stock/order data reflect on active storefront through scoped SDK/cache invalidation.
 - Browser origin/cookie boundaries protect customer storefront from merchant admin cookies.
+
+
+## Shared contract repository (2026-10-26)
+
+[atlashub_contracts](https://github.com/OlamidotunIY/atlashub_contracts) is the canonical Protobuf wire schema source for Java, Node, Python and browser-compatible public/management RPC. Atlas Web remains the business frontend and links to Storefront Portal; Atlas Web user authentication remains centralized OIDC/BFF via independent Auth Web, not native browser gRPC. Do not duplicate wire models or import Java/Storefront source across repositories. New browser contract packages expose only scoped methods and must pass server-side IAM, entitlement, tenant and provider eligibility checks. No SDK artifact or new RPC deployment exists yet.
