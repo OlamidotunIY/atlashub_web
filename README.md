@@ -15,7 +15,8 @@ feature-oriented Clean Architecture structure. Backend contracts are generated f
 - Business registration and email verification, including verification-code resend.
 - Invitation acceptance through `/invite/:token`.
 - Product and team onboarding steps with a completion screen.
-- Session refresh, sign-out, organization switching, and test/live environment switching.
+- Session refresh, sign-out and organization switching.
+- TEST/LIVE switching exists only inside the Payment workspace and is sent as explicit payment request context; it does not change the global login session or non-payment modules.
 - Authenticated user hydration from `GET /api/v1/me`.
 
 ### Business overview
