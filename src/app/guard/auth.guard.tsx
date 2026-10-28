@@ -1,14 +1,15 @@
-import { MERCHANT_ROUTES } from '@/constants';
+import { AUTH_WEB_URL, MERCHANT_ROUTES } from '@/constants';
 import { authStore, useMe } from '@/features/authentication';
 import { SplashScreen } from '@/shared/composites';
+import { useEffect } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 
 export function AuthGuard({
   children,
-  fallback,
+  fallback: _fallback,
 }: {
   children: React.ReactNode;
-  fallback: string;
+  fallback?: string;
 }) {
   const isHydrated = authStore((state) => state.isHydrated);
   const isAuthenticated = authStore((state) => state.isAuthenticated());
@@ -17,12 +18,19 @@ export function AuthGuard({
     enabled: isHydrated && isAuthenticated,
   });
 
+  useEffect(() => {
+    if (isHydrated && !isAuthenticated) {
+      const returnTo = `${window.location.origin}/#/auth/callback`;
+      window.location.href = `${AUTH_WEB_URL}/login?return_to=${encodeURIComponent(returnTo)}`;
+    }
+  }, [isHydrated, isAuthenticated]);
+
   if (!isHydrated) {
     return <SplashScreen />;
   }
 
   if (!isAuthenticated) {
-    return <Navigate to={fallback} state={{ from: location }} replace />;
+    return <SplashScreen message="Redirecting to Atlas Auth..." />;
   }
 
   // A 401 is refreshed and retried by the HTTP interceptor. The guard only
@@ -32,7 +40,10 @@ export function AuthGuard({
   }
 
   if (isError || !data) {
-    return <Navigate to={fallback} state={{ from: location }} replace />;
+    authStore.getState().clear();
+    const returnTo = `${window.location.origin}/#/auth/callback`;
+    window.location.href = `${AUTH_WEB_URL}/login?return_to=${encodeURIComponent(returnTo)}`;
+    return <SplashScreen message="Redirecting to Atlas Auth..." />;
   }
 
   const organizations = data.organizations ?? [];

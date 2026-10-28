@@ -1,6 +1,7 @@
 export const MERCHANT_ROUTES = {
   LOGIN: "/login",
   REGISTRATION: "/register",
+  AUTH_CALLBACK: "/auth/callback",
   TWO_FACTOR_AUTH: "/auth/2fa",
   VERIFY_EMAIL: "/auth/verify-email",
   SETUP_PASSWORD: "/auth/setup-password",
