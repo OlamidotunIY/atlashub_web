@@ -1,34 +1,36 @@
 import { useState } from 'react';
 import { useMe } from '@/features/authentication';
-import {
-  useAvailableProviders,
-  useConnections,
-  useConnectCredential,
-  useDisconnectProvider,
-  useVerifyAuthorization,
-} from '../../application/queries/use-integrations.query';
+import
+  {
+    // useAvailableProviders,
+    useConnections,
+    useConnectCredential,
+    useDisconnectProvider,
+    useVerifyAuthorization,
+  } from '../../application/queries/use-integrations.query';
 import { integrationsApi } from '../../infrastructure/rest/integrations.api';
 import type { ProviderType } from '@/domains/integrations/entities/provider-connection.entity';
 import { Button, Input, Label } from '@/shared/ui';
 import { toast } from '@/shared/hooks';
-import {
-  Plug,
-  CheckCircle,
-  WarningCircle,
-  Trash,
-  ArrowSquareOut,
-  ArrowsClockwise,
-  CreditCard,
-  Bank,
-  ShieldCheck,
-} from '@phosphor-icons/react';
+import
+  {
+    Plug,
+    CheckCircle,
+    Trash,
+    ArrowSquareOut,
+    ArrowsClockwise,
+    CreditCard,
+    Bank,
+    ShieldCheck,
+  } from '@phosphor-icons/react';
 
-export function IntegrationsSettingsPage() {
+export function IntegrationsSettingsPage()
+{
   const { data: user } = useMe();
   const country = user?.activeOrganization?.country || user?.country || 'NG';
 
   const { data: connections = [], isLoading: isLoadingConnections } = useConnections();
-  const { data: offerings = [], isLoading: isLoadingOfferings } = useAvailableProviders(country);
+  // const { data: offerings = [], isLoading: isLoadingOfferings } = useAvailableProviders(country);
 
   const { mutateAsync: connectCred, isPending: isConnecting } = useConnectCredential();
   const { mutateAsync: disconnect, isPending: isDisconnecting } = useDisconnectProvider();
@@ -38,29 +40,36 @@ export function IntegrationsSettingsPage() {
   const [credentialValue, setCredentialValue] = useState('');
   const [isStartingStripe, setIsStartingStripe] = useState(false);
 
-  const handleStartStripe = async () => {
+  const handleStartStripe = async () =>
+  {
     setIsStartingStripe(true);
-    try {
+    try
+    {
       const res = await integrationsApi.startStripeOAuth({ merchantCountry: country });
-      if (res.authorizationUrl) {
+      if (res.authorizationUrl)
+      {
         window.location.href = res.authorizationUrl;
       }
-    } catch (err: any) {
+    } catch (err: any)
+    {
       toast.add({
         title: 'Failed to start Stripe Connect',
         description: err?.message || 'Could not initiate Stripe authorization.',
         type: 'error',
       });
-    } finally {
+    } finally
+    {
       setIsStartingStripe(false);
     }
   };
 
-  const handleConnectCredential = async (e: React.FormEvent) => {
+  const handleConnectCredential = async (e: React.FormEvent) =>
+  {
     e.preventDefault();
     if (!modalProvider || !credentialValue.trim()) return;
 
-    try {
+    try
+    {
       await connectCred({
         provider: modalProvider,
         merchantCountry: country,
@@ -73,7 +82,8 @@ export function IntegrationsSettingsPage() {
       });
       setModalProvider(null);
       setCredentialValue('');
-    } catch (err: any) {
+    } catch (err: any)
+    {
       toast.add({
         title: 'Connection Failed',
         description: err?.message || 'Invalid provider credentials.',
@@ -82,16 +92,19 @@ export function IntegrationsSettingsPage() {
     }
   };
 
-  const handleDisconnect = async (connectionId: number, name: string) => {
+  const handleDisconnect = async (connectionId: number, name: string) =>
+  {
     if (!window.confirm(`Are you sure you want to disconnect ${name}? Active checkout methods using this provider will stop working.`)) return;
-    try {
+    try
+    {
       await disconnect(connectionId);
       toast.add({
         title: `${name} disconnected`,
         description: 'The connection has been safely removed.',
         type: 'success',
       });
-    } catch (err: any) {
+    } catch (err: any)
+    {
       toast.add({
         title: 'Disconnect failed',
         description: err?.message || 'Could not disconnect provider.',
@@ -100,15 +113,18 @@ export function IntegrationsSettingsPage() {
     }
   };
 
-  const handleVerify = async (authId: number) => {
-    try {
+  const handleVerify = async (authId: number) =>
+  {
+    try
+    {
       await verifyAuth(authId);
       toast.add({
         title: 'Authorization Verified',
         description: 'Provider health and capabilities have been updated.',
         type: 'success',
       });
-    } catch (err: any) {
+    } catch (err: any)
+    {
       toast.add({
         title: 'Verification failed',
         description: err?.message || 'Could not verify provider authorization.',
@@ -158,7 +174,8 @@ export function IntegrationsSettingsPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-4">
-            {connections.map((conn) => {
+            {connections.map((conn) =>
+            {
               const activeAuth = conn.authorizations[0];
               const capabilities = activeAuth?.capabilities || [];
 

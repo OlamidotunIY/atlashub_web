@@ -1,3 +1,2 @@
-export * from "./login.page"
-export * from "./signup.page"
-export * from "./verify-email.page"
+export * from "./auth-callback.page"
+export * from "./auth-redirect.page"
