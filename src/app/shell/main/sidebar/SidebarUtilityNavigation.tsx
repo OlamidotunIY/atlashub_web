@@ -1,15 +1,19 @@
 import { MERCHANT_ROUTES } from "@/constants"
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/shared/ui"
-import { CodeIcon, ShieldCheckIcon } from "@phosphor-icons/react"
+import { CodeIcon, GearSixIcon } from "@phosphor-icons/react"
 import { NavLink } from "react-router-dom"
 
 const utilityItems = [
   {
-    label: "Compliance",
-    to: MERCHANT_ROUTES.COMPLIANCE,
-    icon: ShieldCheckIcon,
+    label: "Settings",
+    to: MERCHANT_ROUTES.SETTINGS,
+    icon: GearSixIcon,
   },
-  { label: "Developers", to: MERCHANT_ROUTES.DEVELOPERS, icon: CodeIcon },
+  {
+    label: "Developers",
+    to: MERCHANT_ROUTES.DEVELOPERS,
+    icon: CodeIcon,
+  },
 ]
 
 export function SidebarUtilityNavigation() {

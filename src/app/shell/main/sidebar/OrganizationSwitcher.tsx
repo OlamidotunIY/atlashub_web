@@ -1,4 +1,6 @@
+import { MERCHANT_ROUTES } from '@/constants';
 import { useMe, useSwitchOrganization } from '@/features/authentication';
+import { useNavigate } from 'react-router-dom';
 import {
   Avatar,
   AvatarFallback,
@@ -15,9 +17,10 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/shared/ui';
-import { CaretRightIcon, CheckIcon } from '@phosphor-icons/react';
+import { CaretRightIcon, CheckIcon, PlusIcon } from '@phosphor-icons/react';
 
 export function OrganizationSwitcher() {
+  const navigate = useNavigate();
   const { data: user } = useMe();
   const { mutate: switchOrganization, isPending } = useSwitchOrganization();
   const { isMobile } = useSidebar();
@@ -72,7 +75,15 @@ export function OrganizationSwitcher() {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem disabled>Add organization coming soon</DropdownMenuItem>
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onClick={() => navigate(MERCHANT_ROUTES.ONBOARDING_ORGANIZATION)}
+              >
+                <div className="size-6 rounded-md border border-dashed border-border flex items-center justify-center text-muted-foreground mr-1">
+                  <PlusIcon className="size-3.5" />
+                </div>
+                <span>Add organization</span>
+              </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>

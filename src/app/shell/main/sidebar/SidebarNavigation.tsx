@@ -1,10 +1,13 @@
 import { MERCHANT_ROUTES } from "@/constants"
 import {
-  BuildingsIcon,
+  ArchiveIcon,
   CalculatorIcon,
-  CreditCardIcon,
   HouseIcon,
+  PackageIcon,
+  ReceiptIcon,
+  StorefrontIcon,
   TruckIcon,
+  UserListIcon,
   UsersThreeIcon,
   WalletIcon,
 } from "@phosphor-icons/react"
@@ -19,39 +22,32 @@ import {
   type SidebarNavigationItemDefinition,
 } from "./SidebarNavigationItem"
 
-const mainNavigationItems: SidebarNavigationItemDefinition[] = [
+// Core top-level operations navigation
+const primaryNavigationItems: SidebarNavigationItemDefinition[] = [
   { label: "Overview", to: MERCHANT_ROUTES.DASHBOARD, icon: HouseIcon },
+  { label: "Products", to: MERCHANT_ROUTES.COMMERCE_PRODUCTS, icon: PackageIcon },
+  { label: "Inventory", to: MERCHANT_ROUTES.COMMERCE_INVENTORY, icon: ArchiveIcon },
+  { label: "Point of Sale", to: MERCHANT_ROUTES.COMMERCE_POS, icon: StorefrontIcon },
+  { label: "Orders", to: MERCHANT_ROUTES.COMMERCE_ORDERS, icon: ReceiptIcon },
+  { label: "Customers", to: MERCHANT_ROUTES.COMMERCE_CUSTOMERS, icon: UserListIcon },
   { label: "Accounts", to: MERCHANT_ROUTES.ACCOUNTS, icon: WalletIcon },
 ]
 
-const productNavigationItems: SidebarNavigationItemDefinition[] = [
+// Operations & Management
+const operationsNavigationItems: SidebarNavigationItemDefinition[] = [
   {
-    label: "Finance",
-    to: MERCHANT_ROUTES.FINANCE_TRANSACTIONS,
-    icon: CreditCardIcon,
+    label: "Logistics",
+    to: MERCHANT_ROUTES.LOGISTICS_SHIPMENTS,
+    icon: TruckIcon,
     items: [
-      { label: "Transactions", to: MERCHANT_ROUTES.FINANCE_TRANSACTIONS },
-      { label: "Charges", to: MERCHANT_ROUTES.FINANCE_CHARGES },
-      { label: "Transfers", to: MERCHANT_ROUTES.FINANCE_TRANSFERS },
-      { label: "Splits", to: MERCHANT_ROUTES.FINANCE_SPLITS },
-      { label: "Settlements", to: MERCHANT_ROUTES.FINANCE_SETTLEMENTS },
-      { label: "Billing", to: MERCHANT_ROUTES.FINANCE_BILLING },
+      { label: "Shipments", to: MERCHANT_ROUTES.LOGISTICS_SHIPMENTS },
+      { label: "Warehouses", to: MERCHANT_ROUTES.LOGISTICS_WAREHOUSES },
+      { label: "Stock transfers", to: MERCHANT_ROUTES.LOGISTICS_STOCK_TRANSFERS },
+      { label: "Returns", to: MERCHANT_ROUTES.LOGISTICS_RETURNS },
     ],
   },
   {
-    label: "Commerce",
-    to: MERCHANT_ROUTES.COMMERCE_ORDERS,
-    icon: BuildingsIcon,
-    items: [
-      { label: "Products", to: MERCHANT_ROUTES.COMMERCE_PRODUCTS },
-      { label: "Orders", to: MERCHANT_ROUTES.COMMERCE_ORDERS },
-      { label: "Customers", to: MERCHANT_ROUTES.COMMERCE_CUSTOMERS },
-      { label: "Point of sale", to: MERCHANT_ROUTES.COMMERCE_POS },
-      { label: "Inventory", to: MERCHANT_ROUTES.COMMERCE_INVENTORY },
-    ],
-  },
-  {
-    label: "People",
+    label: "People & HR",
     to: MERCHANT_ROUTES.HR_EMPLOYEES,
     icon: UsersThreeIcon,
     items: [
@@ -62,78 +58,25 @@ const productNavigationItems: SidebarNavigationItemDefinition[] = [
     ],
   },
   {
-    label: "Insights & accounting",
-    to: MERCHANT_ROUTES.ANALYTICS,
+    label: "Accounting",
+    to: MERCHANT_ROUTES.ACCOUNTING,
     icon: CalculatorIcon,
     items: [
-      { label: "Analytics", to: MERCHANT_ROUTES.ANALYTICS },
-      { label: "Reports", to: MERCHANT_ROUTES.REPORTS },
-      { label: "Accounting", to: MERCHANT_ROUTES.ACCOUNTING },
+      { label: "Overview", to: MERCHANT_ROUTES.ACCOUNTING },
       { label: "Invoices", to: MERCHANT_ROUTES.ACCOUNTING_INVOICES },
       { label: "Expenses", to: MERCHANT_ROUTES.ACCOUNTING_EXPENSES },
-      {
-        label: "Chart of Accounts",
-        to: MERCHANT_ROUTES.ACCOUNTING_CHART_OF_ACCOUNTS,
-      },
-    ],
-  },
-  {
-    label: "Logistics",
-    to: MERCHANT_ROUTES.LOGISTICS_SHIPMENTS,
-    icon: TruckIcon,
-    items: [
-      { label: "Shipments", to: MERCHANT_ROUTES.LOGISTICS_SHIPMENTS },
-      { label: "Warehouses", to: MERCHANT_ROUTES.LOGISTICS_WAREHOUSES },
-      {
-        label: "Stock transfers",
-        to: MERCHANT_ROUTES.LOGISTICS_STOCK_TRANSFERS,
-      },
-      { label: "Returns", to: MERCHANT_ROUTES.LOGISTICS_RETURNS },
-      {
-        label: "Shipping incentives",
-        to: MERCHANT_ROUTES.LOGISTICS_INCENTIVES,
-      },
+      { label: "Chart of Accounts", to: MERCHANT_ROUTES.ACCOUNTING_CHART_OF_ACCOUNTS },
+      { label: "Reports", to: MERCHANT_ROUTES.ACCOUNTING_REPORTS },
     ],
   },
 ]
-
-const financeNavigationItems = productNavigationItems.filter(
-  (item) => item.label === "Finance"
-)
-const operationsNavigationItems = productNavigationItems.filter((item) =>
-  ["Commerce", "People", "Logistics"].includes(item.label)
-)
-const insightsNavigationItems = productNavigationItems.filter(
-  (item) => item.label === "Insights & accounting"
-)
-
-function NavigationGroup({
-  label,
-  items,
-}: {
-  label: string
-  items: SidebarNavigationItemDefinition[]
-}) {
-  return (
-    <SidebarGroup>
-      <SidebarGroupLabel>{label}</SidebarGroupLabel>
-      <SidebarGroupContent>
-        <SidebarMenu>
-          {items.map((item) => (
-            <SidebarNavigationItem key={item.to} item={item} />
-          ))}
-        </SidebarMenu>
-      </SidebarGroupContent>
-    </SidebarGroup>
-  )
-}
 
 export function SidebarNavigation() {
   return (
     <SidebarGroup>
       <SidebarGroupContent>
         <SidebarMenu>
-          {mainNavigationItems.map((item) => (
+          {primaryNavigationItems.map((item) => (
             <SidebarNavigationItem key={item.to} item={item} />
           ))}
         </SidebarMenu>
@@ -144,10 +87,15 @@ export function SidebarNavigation() {
 
 export function SidebarProductNavigation() {
   return (
-    <>
-      <NavigationGroup label="Finance" items={financeNavigationItems} />
-      <NavigationGroup label="Operations" items={operationsNavigationItems} />
-      <NavigationGroup label="Insights" items={insightsNavigationItems} />
-    </>
+    <SidebarGroup>
+      <SidebarGroupLabel>Operations</SidebarGroupLabel>
+      <SidebarGroupContent>
+        <SidebarMenu>
+          {operationsNavigationItems.map((item) => (
+            <SidebarNavigationItem key={item.to} item={item} />
+          ))}
+        </SidebarMenu>
+      </SidebarGroupContent>
+    </SidebarGroup>
   )
 }
