@@ -8,8 +8,8 @@ import {
   REGISTRATION_TYPE_OPTIONS,
   CreateOrganizationSchema,
   type CreateOrganizationFormValues,
-} from '../domain/schemas/create-organization.schema';
-import { useCreateOrganization } from '../application/mutations/use-create-organization.mutation';
+} from '../../domain/schemas/create-organization.schema';
+import { useCreateOrganization } from '../../application/mutations/use-create-organization.mutation';
 import { Button, Input, Label } from '@/shared/ui';
 import { toast } from '@/shared/hooks';
 import { Buildings, Check, Globe, Image, ShieldCheck } from '@phosphor-icons/react';
