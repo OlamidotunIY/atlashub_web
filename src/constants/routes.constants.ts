@@ -7,6 +7,7 @@ export const MERCHANT_ROUTES = {
   ONBOARDING_ORGANIZATION: "/onboarding/organization",
   ONBOARDING_PRODUCTS: "/onboarding/products",
   ONBOARDING_TEAM: "/onboarding/team",
+  ONBOARDING_SUBSCRIPTION: "/onboarding/subscription",
   ONBOARDING_COMPLETE: "/onboarding/complete",
 
   DASHBOARD: "/dashboard",

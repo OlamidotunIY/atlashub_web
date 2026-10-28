@@ -1,3 +1,4 @@
+import { MERCHANT_ROUTES } from '@/constants';
 import { authStore, useMe } from '@/features/authentication';
 import { SplashScreen } from '@/shared/composites';
 import { Navigate, useLocation } from 'react-router-dom';
@@ -32,6 +33,17 @@ export function AuthGuard({
 
   if (isError || !data) {
     return <Navigate to={fallback} state={{ from: location }} replace />;
+  }
+
+  const organizations = data.organizations ?? [];
+  const hasActiveOrg = Boolean(data.activeOrganization || organizations.length > 0);
+  const isOnboardingRoute =
+    location.pathname.startsWith('/onboarding') ||
+    location.pathname.startsWith('/invite');
+
+  // If the user belongs to zero organizations, route them to Create Organization
+  if (!hasActiveOrg && !isOnboardingRoute) {
+    return <Navigate to={MERCHANT_ROUTES.ONBOARDING_ORGANIZATION} replace />;
   }
 
   return <>{children}</>;
