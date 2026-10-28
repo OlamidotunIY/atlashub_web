@@ -28,7 +28,7 @@ export function MainHeader()
   const customBreadcrumbs = useBreadcrumbsStore((s) => s.customBreadcrumbs);
   const breadcrumbs = customBreadcrumbs ?? resolveBreadcrumbs(pathname);
   const isTestMode = user?.activeEnvironment !== 'LIVE';
-  const canSwitchEnvironment = user?.complianceApproved === true;
+  const canSwitchEnvironment = Boolean(user);
 
   const toggleEnvironment = () =>
   {

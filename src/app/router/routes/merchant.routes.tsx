@@ -3,6 +3,7 @@ import { MainLayout } from "@/app/shell"
 import { MERCHANT_ROUTES } from "@/constants"
 import { DashboardOverviewPage } from "@/features/dashboard"
 import { AccountsPage, AccountDetailPage } from "@/features/account"
+import { IntegrationsSettingsPage } from "@/features/integrations/presentation/pages/integrations-settings.page"
 import { PlaceholderPage } from "@/app/presentation/pages"
 import { Navigate, type RouteObject } from "react-router-dom"
 
@@ -46,7 +47,6 @@ const placeholderRouteDefinitions: ReadonlyArray<readonly [string, string]> = [
   [MERCHANT_ROUTES.SETTINGS_OUTLETS, "Outlets"],
   [MERCHANT_ROUTES.SETTINGS_TEAM, "Team settings"],
   [MERCHANT_ROUTES.SETTINGS_ROLES, "Roles and permissions"],
-  [MERCHANT_ROUTES.SETTINGS_INTEGRATIONS, "Integrations"],
   [MERCHANT_ROUTES.SETTINGS_NOTIFICATIONS, "Notification preferences"],
   [MERCHANT_ROUTES.SETTINGS_AUDIT_LOGS, "Audit logs"],
   [MERCHANT_ROUTES.SETTINGS_DEVELOPER, "Developer settings"],
@@ -163,8 +163,8 @@ export const merchantRoutes: RouteObject[] = [
         element: <PlaceholderPage title="Settings" />,
       },
       {
-        path: MERCHANT_ROUTES.COMPLIANCE,
-        element: <PlaceholderPage title="Compliance" />,
+        path: MERCHANT_ROUTES.SETTINGS_INTEGRATIONS,
+        element: <IntegrationsSettingsPage />,
       },
       {
         path: MERCHANT_ROUTES.DEVELOPERS,
